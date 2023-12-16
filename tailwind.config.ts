@@ -11,13 +11,13 @@ const config: Config = {
     extend: {
       backgroundImage: {
         homeBackground:
-          "linear-gradient(91deg,rgba(67,181,226,.7),rgba(136,197,71,.5)), url('/assets/img/navbarBg.jpg')",
+          "linear-gradient(91deg,rgba(67,181,226,.5),rgba(136,197,71,.3)),linear-gradient(359deg,rgba(0,0,0,.5),rgba(0,0,0,.7)), url('/assets/img/navbarBg.jpg')",
       },
       colors: {
-        "green_blue": "#00bb7e",
+        green_blue: "#00bb7e",
         "aqua-green": "#0ede9b",
         "gray-default": "#4A4B4C",
-        "white-two": "#f8f8f8",
+        "white-two": "#a5a5a5",
       },
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],

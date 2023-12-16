@@ -23,3 +23,12 @@ body {
   min-height: 100vh;
   user-select: none;
 }
+
+@layer components {
+  .icon {
+    @apply w-5 h-5 text-white-two;
+  }
+  .headerLi {
+    @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green_blue before:bottom-0 before:w-0;
+  }
+}

@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import estedadFont from "@/constants/localFonts";
 
+//? import components
+import Header from "@/app/(home)/header";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${estedadFont.variable} font-sans`}>{children}</body>
+      <body className={`${estedadFont.variable} font-sans`}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }

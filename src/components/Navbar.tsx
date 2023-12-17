@@ -9,6 +9,12 @@ import EvaraTextImage from "../../public/assets/img/evaraText.png";
 //? import other libraries
 import { FaGlobe } from "react-icons/fa6";
 import { BsCurrencyDollar } from "react-icons/bs";
+import { IoChevronDownSharp } from "react-icons/io5";
+
+//? import components
+import SelectMenu from "@/common/SelectMenu";
+import LanguageMenu from "@/components/LanguageMenu";
+import CurrencyMenu from "@/components/CurrencyMenu";
 
 function Navbar() {
   return (
@@ -28,7 +34,17 @@ function Navbar() {
             <Link href="/">About us</Link>
           </li>
           <li className="headerLi">
-            <Link href="/">Services</Link>
+            <Link className="flex items-center" href="/">
+              <IoChevronDownSharp className="icon text-white-two" />
+              {/* <SelectMenu
+                name="Service"
+                list={[
+                  { id: 1, name: "Turkish citizenship" },
+                  { id: 2, name: "Citizenship and Residence in Türkiye" },
+                  { id: 3, name: "Buy property in Türkiye" },
+                ]}
+              /> */}
+            </Link>
           </li>
           <li className="headerLi">
             <Link href="/">Property list</Link>
@@ -47,12 +63,8 @@ function Navbar() {
         <button className="px-2 py-1 border-2 border-green_blue rounded-md">
           Add Property
         </button>
-        <button>
-          <FaGlobe className="icon" />
-        </button>
-        <button>
-          <BsCurrencyDollar className="icon" />
-        </button>
+        <LanguageMenu />
+        <CurrencyMenu />
       </div>
     </div>
   );

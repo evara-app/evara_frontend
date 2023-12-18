@@ -27,7 +27,7 @@ const SelectMenu: React.FunctionComponent<Props> = ({
 }) => {
   const open = Boolean(status);
   return (
-    <div>
+    <div className="max-w-[50px] font-sans">
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -39,7 +39,7 @@ const SelectMenu: React.FunctionComponent<Props> = ({
           padding: 0,
           display: "flex",
           justifyContent: "center",
-          gap: "0px 5px",
+          gap: "0px 2px",
         }}
       >
         {name}
@@ -52,7 +52,9 @@ const SelectMenu: React.FunctionComponent<Props> = ({
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
-        sx={{ marginTop: "10px" }}
+        sx={{
+          marginTop: "10px",
+        }}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
       >
@@ -63,7 +65,7 @@ const SelectMenu: React.FunctionComponent<Props> = ({
               key={menuItem.id}
               onClick={handler}
             >
-              {menuItem.name}
+              <span className="w-full text-center">{menuItem.name}</span>
             </MenuItem>
           );
         })}

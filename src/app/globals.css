@@ -26,6 +26,8 @@ body {
   font-family: var(--estedad-font);
   min-height: 100vh;
   user-select: none;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 @layer components {
@@ -34,5 +36,12 @@ body {
   }
   .headerLi {
     @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green_blue before:bottom-0 before:w-0;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  body {
+    font-size: 14px;
+    line-height: 20px;
   }
 }

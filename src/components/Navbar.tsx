@@ -12,7 +12,8 @@ import LanguageMenu from "@/components/LanguageMenu";
 import CurrencyMenu from "@/components/CurrencyMenu";
 import NavbarDrawer from "@/components/NavbarDrawer";
 
-//? import mui components
+//? import icons
+import { IoSearch } from "react-icons/io5";
 
 function Navbar() {
   return (
@@ -72,8 +73,10 @@ function Navbar() {
           <CurrencyMenu />
         </div>
       </div>
-      <div className="md:hidden">
+      <div className="flex items-center justify-between md:hidden py-2 px-4">
         <NavbarDrawer />
+        <Image src={EvaraLogoImage} alt="Evara Logo" width={40} />
+        <IoSearch className="icon w-7 h-7" />
       </div>
     </>
   );

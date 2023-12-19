@@ -20,7 +20,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${estedadFont.variable} font-sans`}>
+      <body
+        suppressHydrationWarning={true}
+        className={`${estedadFont.variable} font-sans`}
+      >
         <Header />
         {children}
       </body>

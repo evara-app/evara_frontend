@@ -24,8 +24,11 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],
       },
+      boxShadow: {
+        SearchPanelButton: "3px -3px 6px 0px rgba(0,0,0,0.28)",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config;

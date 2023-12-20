@@ -1,7 +1,8 @@
 import React from "react";
 
 //? import components
-import Navbar from "@/components/Navbar";
+import Navbar from "@/app/(home)/Navbar";
+import SearchPanel from "@/app/(home)/SearchPanel";
 
 function header() {
   return (
@@ -16,6 +17,9 @@ function header() {
           allows you to buy or <br /> rent your favorite property in Türkiye
           cheaper without intermediaries
         </p>
+      </div>
+      <div>
+        <SearchPanel />
       </div>
     </div>
   );

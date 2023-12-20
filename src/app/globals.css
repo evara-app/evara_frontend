@@ -40,6 +40,12 @@ body {
   .headerLi {
     @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green_blue before:bottom-0 before:w-0;
   }
+  .SearchPanelButton {
+    @apply bg-white-two shadow-SearchPanelButton py-3 px-6 rounded-t-md relative text-white;
+  }
+  .checkBox {
+    @apply w-5 h-5 rounded text-green_blue focus:ring-2 ring-offset-1 ring-offset-green_blue !ring-green_blue;
+  }
 }
 
 @media only screen and (max-width: 1024px) {

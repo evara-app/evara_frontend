@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 //? import images
-import EvaraLogoImage from "../../public/assets/img/evaraLogo.png";
-import EvaraTextImage from "../../public/assets/img/evaraText.png";
+import EvaraLogoImage from "../../../public/assets/img/evaraLogo.png";
+import EvaraTextImage from "../../../public/assets/img/evaraText.png";
 
 //? import components
 import LinkSelectMenu from "@/common/LinkSelectMenu";

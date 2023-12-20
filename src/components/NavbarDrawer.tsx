@@ -36,6 +36,7 @@ export default function SwipeableTemporaryDrawer() {
     right: false,
   });
 
+  //* drawer list items
   const listItems = [
     {
       id: 1,

@@ -26,31 +26,43 @@ const data = [
   },
 ];
 
-function MultiSelect() {
+//? typescript typs
+type Props = {
+  status: boolean | string;
+};
+
+const MultiSelect: React.FunctionComponent<Props> = ({ status }) => {
   return (
-    <div>
-      {data.map((input) => {
-        return (
-          <div>
-            <span>{input.category}</span>
-            {input.options.map((option) => {
-              return (
-                <div className="flex items-center justify-end flex-row-reverse gap-x-2">
-                  <label htmlFor={option.value}>{option.label}</label>
-                  <input
-                    id={option.value}
-                    className="checkBox"
-                    value={option.value}
-                    type="checkbox"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
+    <div className={status ? "block" : "hidden"}>
+      <div className="absolute min-w-full top-20 rounded-md border border-gray-default/20 bg-white/40 backdrop-blur-sm p-2 overflow-y-auto overflow-x-hidden">
+        {data.map((input) => {
+          return (
+            <div>
+              <span className="text-gray-700 text-xl">{input.category}</span>
+              {input.options.map((option) => {
+                return (
+                  <div className="flex items-center justify-end flex-row-reverse gap-x-1 mx-2">
+                    <label
+                      className="cursor-pointer text-lg"
+                      htmlFor={option.value}
+                    >
+                      {option.label}
+                    </label>
+                    <input
+                      id={option.value}
+                      className="checkBox"
+                      value={option.value}
+                      type="checkbox"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default MultiSelect;

@@ -5,7 +5,7 @@ import SearchPanelComponent from "@/components/SearchPanelComponent";
 
 function SearchPanel() {
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-[1536px] mx-auto">
       <div>
         <SearchPanelComponent />
       </div>

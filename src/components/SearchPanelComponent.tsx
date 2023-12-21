@@ -5,6 +5,9 @@ import React, { useState } from "react";
 //? import components
 import MultiSelect from "@/common/MultiSelect";
 
+//? import icons
+import { HiChevronDown } from "react-icons/hi";
+
 const searchButtons = [
   {
     id: 1,
@@ -27,7 +30,7 @@ function SearchPanelComponent() {
   const [activeBtn, setActiveBtn] = useState<number>(1);
 
   return (
-    <div>
+    <div className="relative -bottom-10">
       {/* //* select search type buttons  */}
       <div>
         {/* //* map and make search buttons */}
@@ -62,8 +65,22 @@ function SearchPanelComponent() {
         })}
       </div>
       {/* //* search type select  */}
-      <div>
-        
+      <div className=" bg-white rounded-md rounded-tl-none flex p-4 gap-x-2 border border-gray-default/20 overflow-x-hidden-hidden shadow-greenShaow">
+        {[false, true, false, false, false, false].map((item) => {
+          return (
+            <div className="flex-1 relative flex flex-col border-r border-r-gray-default/40 gap-y-1 cursor-pointer">
+              <div>Category</div>
+              <div className="flex items-center justify-between mx-1">
+                <span className="text-gray-default">Istanbul</span>
+                <HiChevronDown className="icon text-black" />
+              </div>
+              <MultiSelect status={item} />
+            </div>
+          );
+        })}
+        <div className="flex items-center justify-center">
+          <button className="button">Search</button>
+        </div>
       </div>
     </div>
   );

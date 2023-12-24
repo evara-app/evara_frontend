@@ -11,21 +11,19 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { IoChevronDownSharp } from "react-icons/io5";
 
 function LanguageMenu() {
-  const [status, setStatus] = useState<null | HTMLElement>(null);
-  const [language, setLanguage] = useState<string | null>();
+  const [status, setStatus] = useState();
+  const [language, setLanguage] = useState();
 
-  const languageHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const languageHandler = (event) => {
     setLanguage(event.currentTarget.innerText);
     setStatus(null);
   };
 
-  const languageStatusHandler = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const languageStatusHandler = (event) => {
     setStatus(event.currentTarget);
   };
 
-  const closeLanguageHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const closeLanguageHandler = (event) => {
     setStatus(null);
   };
   return (

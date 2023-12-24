@@ -7,25 +7,15 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-//? typescript typs
-type Props = {
-  name: any;
-  list: object[] | string[];
-  status: null | HTMLElement;
-  handler: React.MouseEventHandler;
-  statusHandler: React.MouseEventHandler;
-  handelrClose: React.MouseEventHandler;
-};
-
-const SelectMenu: React.FunctionComponent<Props> = ({
+export default function SelectMenu({
   name,
   list,
   status,
   handler,
   statusHandler,
   handelrClose,
-}) => {
-  const open = Boolean(status);
+}) {
+  const open = status;
   return (
     <div className="max-w-[50px] font-sans">
       <Button
@@ -58,7 +48,7 @@ const SelectMenu: React.FunctionComponent<Props> = ({
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        {list.map((menuItem: any) => {
+        {list.map((menuItem) => {
           return (
             <MenuItem
               className="hover:bg-white-two/30"
@@ -72,6 +62,4 @@ const SelectMenu: React.FunctionComponent<Props> = ({
       </Menu>
     </div>
   );
-};
-
-export default SelectMenu;
+}

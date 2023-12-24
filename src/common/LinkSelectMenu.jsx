@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useState } from "react";
 
 //? import mui components
 import Button from "@mui/material/Button";
@@ -11,16 +11,10 @@ import Link from "next/link";
 //? import other libraries
 import { IoChevronDownSharp } from "react-icons/io5";
 
-//? typescript typs
-type Props = {
-  name: string;
-  links: object[] | string[];
-};
-
-const LinkSelectMenu: React.FunctionComponent<Props> = ({ name, links }) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export default function LinkSelectMenu({ name, links }) {
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -60,7 +54,7 @@ const LinkSelectMenu: React.FunctionComponent<Props> = ({ name, links }) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         transformOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        {links.map((link: any) => {
+        {links.map((link) => {
           return (
             <Link key={link.id} href={link.href}>
               <MenuItem className="hover:bg-white-two/30">{link.name}</MenuItem>
@@ -70,6 +64,4 @@ const LinkSelectMenu: React.FunctionComponent<Props> = ({ name, links }) => {
       </Menu>
     </div>
   );
-};
-
-export default LinkSelectMenu;
+}

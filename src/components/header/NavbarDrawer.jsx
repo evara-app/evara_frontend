@@ -24,12 +24,8 @@ import { HiOutlineInformationCircle } from "react-icons/hi2";
 import { HiOutlineCurrencyDollar } from "react-icons/hi2";
 import { HiGlobeAlt } from "react-icons/hi2";
 
-type Anchor = "left" | "right";
-
 export default function SwipeableTemporaryDrawer() {
-  const [activeLi, setActiveLi] = React.useState<string | null>(
-    "Property List"
-  );
+  const [activeLi, setActiveLi] = React.useState("Property List");
 
   const [state, setState] = React.useState({
     left: false,
@@ -137,23 +133,20 @@ export default function SwipeableTemporaryDrawer() {
   ];
 
   //*   menu open and close handler
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event &&
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
 
-      setState({ ...state, [anchor]: open });
-    };
+    setState({ ...state, [anchor]: open });
+  };
 
   //* list of menu li
-  const list = (anchor: Anchor) => (
+  const list = (anchor) => (
     <Box
       sx={{ width: 250 }}
       role="presentation"
@@ -194,7 +187,7 @@ export default function SwipeableTemporaryDrawer() {
   return (
     //* menu button in ui
     <div>
-      {(["left"] as const).map((anchor) => (
+      {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
           <button
             className="appearance-none"

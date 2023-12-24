@@ -27,7 +27,7 @@ const searchButtons = [
 ];
 
 function SearchPanelComponent() {
-  const [activeBtn, setActiveBtn] = useState<number>(1);
+  const [activeBtn, setActiveBtn] = useState(1);
 
   return (
     <div className="relative -bottom-10">

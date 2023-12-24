@@ -26,12 +26,7 @@ const data = [
   },
 ];
 
-//? typescript typs
-type Props = {
-  status: boolean | string;
-};
-
-const MultiSelect: React.FunctionComponent<Props> = ({ status }) => {
+export default function MultiSelect({ status }) {
   return (
     <div className={status ? "block" : "hidden"}>
       <div className="absolute min-w-full top-20 rounded-md border border-gray-default/20 bg-white/40 backdrop-blur-sm p-2 overflow-y-auto overflow-x-hidden">
@@ -63,6 +58,4 @@ const MultiSelect: React.FunctionComponent<Props> = ({ status }) => {
       </div>
     </div>
   );
-};
-
-export default MultiSelect;
+}

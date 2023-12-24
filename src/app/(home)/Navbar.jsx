@@ -8,9 +8,9 @@ import EvaraTextImage from "../../../public/assets/img/evaraText.png";
 
 //? import components
 import LinkSelectMenu from "@/common/LinkSelectMenu";
-import LanguageMenu from "@/components/LanguageMenu";
-import CurrencyMenu from "@/components/CurrencyMenu";
-import NavbarDrawer from "@/components/NavbarDrawer";
+import LanguageMenu from "@/components/header/LanguageMenu";
+import CurrencyMenu from "@/components/header/CurrencyMenu";
+import NavbarDrawer from "@/components/header/NavbarDrawer";
 
 //? import icons
 import { IoSearch } from "react-icons/io5";

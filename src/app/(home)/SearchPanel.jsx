@@ -1,7 +1,7 @@
 import React from "react";
 
 //? import components
-import SearchPanelComponent from "@/components/SearchPanelComponent";
+import SearchPanelComponent from "@/components/header/SearchPanelComponent";
 
 function SearchPanel() {
   return (

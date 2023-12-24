@@ -58,6 +58,13 @@ body {
   }
 }
 
+.css-d5mev1-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+  border-color: var(--green_blue);
+}
+.css-d5mev1-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{
+  border-color: var(--green_blue);
+}
+
 @media only screen and (max-width: 1024px) {
   body {
     font-size: 14px;

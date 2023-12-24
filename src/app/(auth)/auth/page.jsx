@@ -58,12 +58,18 @@ function page() {
           </button>
         </div>
         {/* //* login inputs  */}
-        <div className="mt-20">
+        <div className="flex flex-col gap-y-5 mt-20">
           <TextField
             label="Username"
             value="Farhan Ahmadi"
             type="text"
-            icon={<HiUserCircle />}
+            icon={<HiUserCircle className="w-8 h-8" />}
+          />
+          <TextField
+            label="Username"
+            value="Farhan Ahmadi"
+            type="text"
+            icon={<HiUserCircle className="w-8 h-8" />}
           />
         </div>
       </div>

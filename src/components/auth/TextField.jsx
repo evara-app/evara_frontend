@@ -15,7 +15,12 @@ function TextField({ label, value, type, icon, iconHandler, fieldHandler }) {
         variant="outlined"
         className="border border-red-700"
       >
-        <InputLabel htmlFor={label}>{label}</InputLabel>
+        <InputLabel
+          sx={{ "&.Mui-focused": { color: "var(--green_blue)" } }}
+          htmlFor={label}
+        >
+          {label}
+        </InputLabel>
         <OutlinedInput
           id={label}
           type={type}

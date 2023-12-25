@@ -6,11 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --green_blue: #00bb7e;
+  --green-blue: #00bb7e;
   --aqua-green: #0ede9b;
   --gray-default: #4a4b4c;
   --white-two: #a5a5a5;
   --cyan-default: #06b6d4;
+  --cyan-green: #03b9a2;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -39,30 +40,28 @@ body {
     @apply w-5 h-5 text-[#555775];
   }
   .headerLi {
-    @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green_blue before:bottom-0 before:w-0;
+    @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green-blue before:bottom-0 before:w-0;
   }
   .SearchPanelButton {
     @apply bg-white-two shadow-SearchPanelButton py-3 px-6 rounded-t-md relative text-white;
   }
   .checkBox {
-    @apply form-checkbox w-5 h-5 rounded text-green_blue focus:ring-2 ring-offset-1 ring-offset-green_blue !ring-green_blue;
+    @apply form-checkbox w-5 h-5 rounded text-green-blue focus:ring-2 ring-offset-1 ring-offset-green-blue !ring-green-blue;
   }
   .button {
-    @apply rounded text-white font-medium bg-gradient-to-tr from-green_blue to-cyan-default py-2 px-6;
+    @apply rounded text-white font-medium bg-gradient-to-tr from-green-blue to-cyan-default py-2 px-6;
   }
   .authActiveButton {
-    @apply rounded-md text-white bg-[#85948b] py-4 px-20;
+    @apply rounded-md text-white bg-[#85948b] py-4 flex-1;
   }
   .authDeactiveButton {
-    @apply rounded-md text-[#8b8b8b] bg-[#e2e2e2] py-4 px-20;
+    @apply rounded-md text-[#8b8b8b] bg-[#e2e2e2] py-4 flex-1;
   }
 }
 
-.css-d5mev1-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
-  border-color: var(--green_blue);
-}
-.css-d5mev1-MuiInputBase-root-MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline{
-  border-color: var(--green_blue);
+.inputOtpField input {
+  width: 100% !important;
+  padding: 15px 10px !important;
 }
 
 @media only screen and (max-width: 1024px) {

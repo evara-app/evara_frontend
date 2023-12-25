@@ -1,42 +1,22 @@
 import React from "react";
 
-//? mui components
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
+//? icons
+import { HiUserCircle } from "react-icons/hi";
 
 function TextField({ label, value, type, icon, iconHandler, fieldHandler }) {
   return (
     <div>
-      <FormControl
-        sx={{ width: "100%" }}
-        variant="outlined"
-        className="border border-red-700"
-      >
-        <InputLabel
-          sx={{ "&.Mui-focused": { color: "var(--green_blue)" } }}
-          htmlFor={label}
-        >
-          {label}
-        </InputLabel>
-        <OutlinedInput
-          id={label}
-          type={type}
-          value={value}
-          onChange={fieldHandler}
-          sx={{ borderRadius: "7px", color: "var(--white-two)" }}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton onClick={iconHandler} edge="end">
-                {icon}
-              </IconButton>
-            </InputAdornment>
-          }
-          label={label}
+      <label className="text-gray-default/90 px-1" htmlFor="">
+        Username or Phone number
+      </label>
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Username or Phone number"
+          className="form-input border border-white-two/60 w-full p-4 rounded-md focus:border-green-blue focus:ring-0 text-white-two placeholder:text-white-two mt-1"
         />
-      </FormControl>
+        <HiUserCircle className="w-10 h-10 text-gray-default/50 absolute top-1/2 -translate-y-1/2 right-3 border-l border-white-two/60 pl-1" />
+      </div>
     </div>
   );
 }

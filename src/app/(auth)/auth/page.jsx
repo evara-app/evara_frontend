@@ -1,16 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { toast } from "react-hot-toast";
 
 //? import image
 import IstanbulImage from "../../../../public/assets/img/auth.jpg";
 
 //? import components
+import CheckOtp from "@/app/(auth)/auth/CheckOtp";
+import SendOtp from "@/app/(auth)/auth/SendOtp";
 import TextField from "@/components/auth/TextField";
 import Loading from "@/common/Loading";
 import OTPInput from "react-otp-input";
+import { Toast } from "@/hooks/Toast";
 
 //? import icons
 import { HiEye } from "react-icons/hi";
@@ -20,8 +24,36 @@ import { HiUserCircle } from "react-icons/hi";
 //? mui
 import Divider from "@mui/material/Divider";
 
+const RESEND_TIME = 90;
+
 function page() {
   const [otp, setOtp] = useState("");
+  const [step, setStep] = useState(2);
+  const [time, setTime] = useState(RESEND_TIME);
+
+  const checkOtpHandler = (event) => {
+    Toast("success", "send code");
+  };
+
+  useEffect(() => {
+    const timer = time > 0 && setInterval(() => setTime((t) => t - 1), 1000);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [time]);
+
+  const renderSteps = () => {
+    switch (step) {
+      case 1:
+        return <SendOtp value={otp} optHandler={setOtp} />;
+        break;
+      case 2:
+        return <CheckOtp checkOtpHandler={checkOtpHandler} time={time} />;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="md:grid md:grid-cols-5 p-5">
       {/* //* image */}
@@ -66,32 +98,7 @@ function page() {
             Sign up
           </button>
         </div>
-        {/* //* login inputs  */}
-        <div className="inputOtpField flex flex-col gap-y-5 mt-12">
-          {/* <TextField
-            label="Username"
-            value="Farhan Ahmadi"
-            type="text"
-            icon={<HiUserCircle className="w-8 h-8" />}
-          /> */}
-          <OTPInput
-            value={otp}
-            onChange={setOtp}
-            numInputs={6}
-            renderSeparator={<span>-</span>}
-            inputStyle="border border-white-two rounded-2xl font-bold focus:outline-none focus:border-green-blue !focus:shadow-greenShaow"
-            containerStyle="containerStyle flex gap-x-2 justify-between"
-            renderInput={(props) => (
-              <div className="flex gap-x-2 justify-center items-center w-full">
-                <input type="number" {...props} />
-              </div>
-            )}
-          />
-        </div>
-        {/* //* login submit button */}
-        <div className="mt-12">
-          <button className="button py-3 w-full">Login</button>
-        </div>
+        {renderSteps()}
         {/* //* divider */}
         <div className="mt-8">
           <Divider

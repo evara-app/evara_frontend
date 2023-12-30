@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(home)/header.jsx", "src/app/(home)/layout.jsx", "src/app/(home)/Navbar.jsx", "src/app/(home)/page.jsx", "src/app/(home)/SearchPanel.jsx", "src/common/LinkSelectMenu.jsx", "src/common/MultiSelect.jsx", "src/common/SelectMenu.jsx", "src/components/header/CurrencyMenu.jsx", "src/components/header/LanguageMenu.jsx", "src/components/header/NavbarDrawer.jsx", "src/components/header/SearchPanelComponent.jsx", "src/app/(auth)/layout.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(home)/header.jsx", "src/app/(home)/layout.jsx", "src/app/(home)/Navbar.jsx", "src/app/(home)/page.jsx", "src/app/(home)/SearchPanel.jsx", "src/common/LinkSelectMenu.jsx", "src/common/MultiSelect.jsx", "src/common/SelectMenu.jsx", "src/components/header/CurrencyMenu.jsx", "src/components/header/LanguageMenu.jsx", "src/components/header/NavbarDrawer.jsx", "src/components/header/SearchPanelComponent.jsx", "src/app/(auth)/layout.jsx", "src/app/(subPages)/layout.jsx"],
   "exclude": ["node_modules"]
 }

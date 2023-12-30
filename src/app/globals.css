@@ -57,6 +57,12 @@ body {
   .authDeactiveButton {
     @apply rounded-md text-[#8b8b8b] bg-[#e2e2e2] py-4 flex-1;
   }
+  .flexItems {
+    @apply flex items-center gap-x-1;
+  }
+  .saveAndShareBtn {
+    @apply w-7 h-7 text-gray-default/80 p-1 bg-white-two/40 rounded-full;
+  }
 }
 
 .inputOtpField input {
@@ -69,4 +75,26 @@ body {
     font-size: 14px;
     line-height: 20px;
   }
+}
+
+.icon-stroke {
+  stroke-width: 2px;
+}
+
+.swiper-button-prev {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 50%;
+  --swiper-navigation-size: 10px;
+  --swiper-navigation-color: #8f8f8f;
+  border: 1px solid #eeeeee;
+}
+
+.swiper-button-next {
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 50%;
+  --swiper-navigation-size: 10px;
+  --swiper-navigation-color: #8f8f8f;
+  border: 1px solid #eeeeee;
 }

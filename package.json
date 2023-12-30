@@ -23,9 +23,11 @@
     "react-loader-spinner": "^6.1.6",
     "react-otp-input": "^3.1.1",
     "react-select": "^5.8.0",
-    "styled-components": "^6.1.1"
+    "styled-components": "^6.1.1",
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@types/node": "^20",
     "@types/react": "^18",

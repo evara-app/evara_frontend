@@ -1,10 +1,9 @@
-"use client";
-
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
+
+//? Import Swiper components & styles
 import {
   Navigation,
-  Pagination,
   Scrollbar,
   A11y,
   Keyboard,
@@ -13,15 +12,13 @@ import {
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+//? import mui
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 
 const style = {
@@ -30,113 +27,99 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "100%",
+  border: "none",
 };
 
-import FullScreenComponent from "./FullScreen";
-function Carousel() {
-  const [fullScreen, setFullScreen] = useState();
+const carouselList = [
+  {
+    id: 1,
+    src: "/assets/img/mac.jpg",
+    alt: "test",
+  },
+  {
+    id: 2,
+    src: "/assets/img/auth.jpg",
+    alt: "test",
+  },
+  {
+    id: 3,
+    src: "/assets/img/navbarBg.jpg",
+    alt: "test",
+  },
+  {
+    id: 4,
+    src: "/assets/img/auth.jpg",
+    alt: "test",
+  },
+];
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+function Carousel({
+  swiper1Ref,
+  swiper2Ref,
+  open,
+  handleClose,
+  fullScreen,
+  fullScreenHandler,
+}) {
   return (
     <>
       <Swiper
+        //   control both swipers with one command
+        onSwiper={(swiper) => {
+          swiper1Ref.current = swiper;
+          swiper1Ref.current.controller.control = swiper2Ref.current;
+        }}
         modules={[Navigation, Scrollbar, A11y, Keyboard, Controller]}
         spaceBetween={50}
         slidesPerView={1}
-        navigation
+        navigation={{ enabled: true }}
         keyboard={{ enabled: true, onlyInViewport: true }}
+        controller
+        className="rounded-xl max-h-[500px]"
+        onClick={fullScreenHandler}
       >
-        <SwiperSlide className="aspect-w-16 aspect-h-9">
-          <Image
-            src="/assets/img/mac.jpg"
-            alt="test"
-            fill={true}
-            objectPosition="bottom"
-            objectFit="cover"
-            quality={100}
-          />
-        </SwiperSlide>
-        <SwiperSlide className="aspect-w-16 aspect-h-9">
-          <Image
-            src="/assets/img/navbarBg.jpg"
-            alt="test"
-            fill={true}
-            objectFit="cover"
-            objectPosition="bottom"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="aspect-w-16 aspect-h-9">
-          <Image
-            src="/assets/img/auth.jpg"
-            alt="test"
-            fill={true}
-            objectFit="cover"
-            objectPosition="bottom"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="aspect-w-16 aspect-h-9">
-          <Image
-            src="/assets/img/navbarBg.jpg"
-            alt="test"
-            fill={true}
-            objectFit="cover"
-            objectPosition="bottom"
-          />
-        </SwiperSlide>
+        {carouselList.map(({ id, src, alt }) => (
+          <SwiperSlide key={id} className="aspect-w-16 aspect-h-9">
+            <Image
+              src={src}
+              alt={alt}
+              fill={true}
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
-      <div>
-        <Button onClick={handleOpen}>Open modal</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          className="bg-white-two bg-opacity-10 backdrop-blur-sm"
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Swiper
-              modules={[Navigation, Scrollbar, A11y, Keyboard, Controller]}
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation
-              keyboard={{ enabled: true, onlyInViewport: true }}
-              className="max-w-5xl"
-            >
-              <SwiperSlide className="aspect-w-16 aspect-h-9">
-                <img
-                  src="/assets/img/mac.jpg"
-                  alt="test"
-                  className="object-contain"
-                />
+      {/* // full screen carousel */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        className="bg-white-two bg-opacity-10 backdrop-blur-sm"
+      >
+        <Box className="outline-none" sx={style}>
+          <Swiper
+            //   control both swipers with one command
+            onSwiper={(swiper) => {
+              swiper2Ref.current = swiper;
+              swiper2Ref.current.controller.control = swiper1Ref.current;
+            }}
+            modules={[Navigation, Scrollbar, A11y, Keyboard, Controller]}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            initialSlide={fullScreen}
+            keyboard={{ enabled: true, onlyInViewport: true }}
+            controller
+            className="max-w-5xl"
+          >
+            {carouselList.map(({ id, src, alt }) => (
+              <SwiperSlide key={id} className="aspect-w-16 aspect-h-9">
+                <img src={src} alt={alt} className="object-contain" />
               </SwiperSlide>
-              <SwiperSlide className="aspect-w-16 aspect-h-9">
-                <img
-                  src="/assets/img/navbarBg.jpg"
-                  alt="test"
-                  className="object-contain"
-                />
-              </SwiperSlide>
-              <SwiperSlide className="aspect-w-16 aspect-h-9">
-                <img
-                  src="/assets/img/auth.jpg"
-                  alt="test"
-                  className="object-contain"
-                />
-              </SwiperSlide>
-              <SwiperSlide className="aspect-w-16 aspect-h-9">
-                <img
-                  src="/assets/img/navbarBg.jpg"
-                  alt="test"
-                  className="object-contain"
-                />
-              </SwiperSlide>
-            </Swiper>
-          </Box>
-        </Modal>
-      </div>
+            ))}
+          </Swiper>
+        </Box>
+      </Modal>
     </>
   );
 }

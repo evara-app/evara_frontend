@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 //? import compontns
-import Carousel from "./Carousel";
+import Header from "@/app/(subPages)/properties/[slug]/Header";
 
 //? icons
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -33,9 +33,9 @@ function page() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 mt-10">
-        <div className="col-span-3">
-          <Carousel />
+      <div className="grid grid-cols-6 mt-10">
+        <div className="col-span-4">
+          <Header />
         </div>
         <div className="col-span-2"></div>
       </div>

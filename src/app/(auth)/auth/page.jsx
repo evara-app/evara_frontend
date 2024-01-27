@@ -28,11 +28,16 @@ const RESEND_TIME = 90;
 
 function page() {
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
+  const [loginMethod, setLoginMethod] = useState(1);
   const [time, setTime] = useState(RESEND_TIME);
 
   const checkOtpHandler = (event) => {
     Toast("success", "send code");
+  };
+
+  const loginMethodHandler = (method) => {
+    setLoginMethod(method);
   };
 
   useEffect(() => {
@@ -45,8 +50,9 @@ function page() {
   const renderSteps = () => {
     switch (step) {
       case 1:
-        return <SendOtp value={otp} optHandler={setOtp} />;
-        break;
+        return (
+          <SendOtp value={otp} optHandler={setOtp} loginMethod={loginMethod} />
+        );
       case 2:
         return <CheckOtp checkOtpHandler={checkOtpHandler} time={time} />;
       default:
@@ -56,7 +62,7 @@ function page() {
 
   return (
     <div className="md:grid md:grid-cols-5 p-5">
-      {/* //* image */}
+      {/* image */}
       <div className="hidden md:block col-span-3 rounded overflow-hidden">
         <Image
           src={IstanbulImage}
@@ -72,9 +78,9 @@ function page() {
           }}
         />
       </div>
-      {/* //* auth inputs and ... */}
+      {/* auth inputs and ... */}
       <div className="md:col-span-2 md:max-w-lg w-full mx-auto my-auto px-2">
-        {/* //* images and link to main page */}
+        {/* images and link to main page */}
         <Link href="/">
           <div className="flex items-center justify-center gap-x-2 mb-10">
             <Image
@@ -91,15 +97,27 @@ function page() {
             />
           </div>
         </Link>
-        {/* //* login or sign up buttons */}
+        {/* login or sign up buttons */}
         <div className="w-full flex items-center justify-center mt-12 relative">
-          <button className="authActiveButton relative z-10">Login</button>
-          <button className="authDeactiveButton relative -left-1 z-0">
-            Sign up
+          <button
+            className={`${
+              loginMethod === 1 ? "authActiveButton" : "authDeactiveButton"
+            } relative z-10`}
+            onClick={() => loginMethodHandler(1)}
+          >
+            Phone Number
+          </button>
+          <button
+            className={`${
+              loginMethod === 2 ? "authActiveButton" : "authDeactiveButton"
+            } relative -left-1 z-0`}
+            onClick={() => loginMethodHandler(2)}
+          >
+            Email
           </button>
         </div>
         {renderSteps()}
-        {/* //* divider */}
+        {/* divider */}
         <div className="mt-8">
           <Divider
             sx={{
@@ -111,14 +129,14 @@ function page() {
             or
           </Divider>
         </div>
-        {/* //* login with google button */}
+        {/* login with google button */}
         <div className="mt-12">
           <button className="rounded text-gray-default/80 w-full border border-white-two/60 font-medium py-3 px-6 flex items-center justify-center gap-x-1">
             <img src="/google.svg" alt="google icon" width={30} height={30} />
             Login with google
           </button>
         </div>
-        {/* //* footer text */}
+        {/* footer text */}
         <div className="mt-12">
           <p className="text-center text-white-two">
             EvAra.life owns all rights to this website

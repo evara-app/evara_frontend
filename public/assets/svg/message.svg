@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="37.538" height="37.538" viewBox="0 0 37.538 37.538">
+    <defs>
+        <style>
+            .prefix__cls-2{fill:currentColor}
+        </style>
+    </defs>
+    <g id="prefix__chatbubble-ellipses-outline" transform="translate(-46.999 -47)">
+        <path id="prefix__Path_925" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2px" d="M51.372 76.362a1.932 1.932 0 0 0-.337-1.269 3.643 3.643 0 0 0-.217-.325A17.069 17.069 0 0 1 48 65.371a17.808 17.808 0 0 1 35.16-3.544 17 17 0 0 1 .378 3.557A17.419 17.419 0 0 1 66.059 82.89a20.913 20.913 0 0 1-4.824-.715c-1.151-.322-2.3-.749-2.6-.864a2.66 2.66 0 0 0-.951-.177 2.623 2.623 0 0 0-1.032.208l-5.8 2.091a1.36 1.36 0 0 1-.4.1.821.821 0 0 1-.818-.832 1.354 1.354 0 0 1 .051-.281z" data-name="Path 925"/>
+        <ellipse id="prefix__Ellipse_58" cx="3" cy="2.5" class="prefix__cls-2" data-name="Ellipse 58" rx="3" ry="2.5" transform="translate(53.999 63.297)"/>
+        <circle id="prefix__Ellipse_59" cx="2.5" cy="2.5" r="2.5" class="prefix__cls-2" data-name="Ellipse 59" transform="translate(62.999 63.297)"/>
+        <ellipse id="prefix__Ellipse_60" cx="3" cy="2.5" class="prefix__cls-2" data-name="Ellipse 60" rx="3" ry="2.5" transform="translate(70.999 63.297)"/>
+    </g>
+</svg>

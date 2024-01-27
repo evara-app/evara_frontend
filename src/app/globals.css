@@ -63,12 +63,33 @@ body {
   .saveAndShareBtn {
     @apply w-7 h-7 text-gray-default/80 p-1 bg-white-two/40 rounded-full;
   }
+  .detailsHeaderDeactiveBtn {
+    @apply rounded-xl bg-none flex flex-col items-center justify-center text-white-two gap-y-4 font-medium text-xl;
+  }
+  .detailsHeaderActiveBtn {
+    @apply rounded-xl bg-gradient-to-tr from-green-blue to-cyan-default flex flex-col items-center justify-center text-white gap-y-4 font-medium text-xl;
+  }
+  .detailsHeaderDeactiveImage {
+    @apply w-16 xl:w-24 invert opacity-25;
+  }
+  .detailsHeaderActiveImage {
+    @apply w-16 xl:w-24;
+  }
+  .svgIcon {
+    @apply text-white-two w-7 h-7;
+  }
+  .authIcon {
+    @apply w-8 h-8 text-gray-default/50 absolute top-1/2 -translate-y-1/2 right-3 border-l border-spacing-2 border-white-two/60 pl-1;
+  }
+  .authTextField {
+    @apply form-input border border-white-two/60 w-full p-4 rounded-md focus:border-green-blue focus:ring-0 text-white-two placeholder:text-white-two;
+  }
 }
 
-.inputOtpField input {
+/* .inputOtpField input {
   width: 100% !important;
   padding: 15px 10px !important;
-}
+} */
 
 @media only screen and (max-width: 1024px) {
   body {

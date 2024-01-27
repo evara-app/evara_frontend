@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.372" height="24.372" viewBox="0 0 24.372 24.372">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:currentColor;stroke:currentColor;stroke-width:.4px}
+        </style>
+    </defs>
+    <g id="prefix__Outline" transform="translate(-15.8 -15.8)">
+        <path id="prefix__Path_929" d="M21.993 29.584H17.6a1.6 1.6 0 0 1-1.6-1.6V17.6a1.6 1.6 0 0 1 1.6-1.6h10.386a1.6 1.6 0 0 1 1.6 1.6v6.79h-.8V17.6a.8.8 0 0 0-.8-.8H17.6a.8.8 0 0 0-.8.8v10.386a.8.8 0 0 0 .8.8h4.395z" class="prefix__cls-1" data-name="Path 929"/>
+        <path id="prefix__Path_930" d="M66.8 58.388h-2.4a.4.4 0 0 1-.4-.4V48.4a.4.4 0 0 1 .4-.4h4.794a3.6 3.6 0 0 1 0 7.191h-2v2.8a.4.4 0 0 1-.394.397zm-2-.8h1.6v-2.8a.4.4 0 0 1 .4-.4h2.4a2.8 2.8 0 0 0 0-5.593h-4.4zm4.395-4.794H66.8a.4.4 0 0 1-.4-.4V50.8a.4.4 0 0 1 .4-.4h2.4a1.2 1.2 0 0 1 0 2.4zm-2-.8h2a.4.4 0 0 0 0-.8h-2z" class="prefix__cls-1" data-name="Path 930" transform="translate(-45.603 -30.402)"/>
+        <path id="prefix__Path_931" d="M130.661 206.509a1.751 1.751 0 0 0-1.193-.515l-1.634-4.9a1.6 1.6 0 0 0-1.516-1.094h-9.459a1.6 1.6 0 0 0-1.516 1.093l-1.634 4.9a1.763 1.763 0 0 0-1.709 1.763v3.031a1.6 1.6 0 0 0 1.6 1.6h2.8v1.6H114v-.8h-.8v.8a.8.8 0 0 0 .8.8h2.4a.8.8 0 0 0 .8-.8v-1.6h8.79v1.6a.8.8 0 0 0 .8.8h2.4a.8.8 0 0 0 .8-.8v-1.649a1.6 1.6 0 0 0 1.2-1.548v-3.031a1.752 1.752 0 0 0-.529-1.25zm-13.8-5.71h9.459a.8.8 0 0 1 .758.546l.084.253h-11.145l.084-.253a.8.8 0 0 1 .758-.546zm-1.109 1.6h11.676l1.2 3.6h-14.076zm13.429 11.586h-2.4v-1.6h2.4v1.6zm1.2-3.2a.8.8 0 0 1-.8.8H113.6a.8.8 0 0 1-.8-.8v-3.031a.965.965 0 0 1 .964-.965h15.65a.965.965 0 0 1 .965.964z" class="prefix__cls-1" data-name="Path 931" transform="translate(-91.206 -174.811)"/>
+        <path id="prefix__Path_932" d="M145.6 352a1.6 1.6 0 1 0 1.6 1.6 1.6 1.6 0 0 0-1.6-1.6zm0 2.4a.8.8 0 1 1 .8-.8.8.8 0 0 1-.8.8z" class="prefix__cls-1" data-name="Path 932" transform="translate(-121.608 -319.22)"/>
+        <path id="prefix__Path_933" d="M401.6 352a1.6 1.6 0 1 0 1.6 1.6 1.6 1.6 0 0 0-1.6-1.6zm0 2.4a.8.8 0 1 1 .8-.8.8.8 0 0 1-.8.8z" class="prefix__cls-1" data-name="Path 933" transform="translate(-364.823 -319.22)"/>
+        <path id="prefix__Path_934" d="M224 360h7.991v.8H224z" class="prefix__cls-1" data-name="Path 934" transform="translate(-197.612 -326.82)"/>
+        <path id="prefix__Path_935" d="M224 392h7.991v.8H224z" class="prefix__cls-1" data-name="Path 935" transform="translate(-197.612 -357.222)"/>
+    </g>
+</svg>

@@ -83,7 +83,7 @@ function Carousel({
             <Image
               src={src}
               alt={alt}
-              fill={true}
+              fill
               objectFit="cover"
               objectPosition="center"
             />

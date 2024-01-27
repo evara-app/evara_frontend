@@ -22,15 +22,51 @@ function Header() {
   };
 
   return (
-    <div>
-      <Carousel
-        swiper1Ref={swiper1Ref}
-        swiper2Ref={swiper2Ref}
-        open={open}
-        fullScreen={fullScreen}
-        fullScreenHandler={fullScreenHandler}
-        handleClose={handleClose}
-      />
+    <div className="grid grid-cols-6 gap-x-2 mt-10">
+      <div className="col-span-4">
+        <Carousel
+          swiper1Ref={swiper1Ref}
+          swiper2Ref={swiper2Ref}
+          open={open}
+          fullScreen={fullScreen}
+          fullScreenHandler={fullScreenHandler}
+          handleClose={handleClose}
+        />
+      </div>
+      <div className="col-span-2 grid grid-cols-2 gap-4">
+        <button className="detailsHeaderActiveBtn">
+          <img
+            className="detailsHeaderActiveImage"
+            src="/assets/svg/location.svg"
+            alt="location"
+          />
+          Location
+        </button>
+        <button className="detailsHeaderDeactiveBtn">
+          <img
+            className="detailsHeaderDeactiveImage"
+            src="/assets/svg/panorama.svg"
+            alt="location"
+          />
+          Location
+        </button>
+        <button className="detailsHeaderDeactiveBtn">
+          <img
+            className="detailsHeaderDeactiveImage"
+            src="/assets/svg/photos.svg"
+            alt="location"
+          />
+          Location
+        </button>
+        <button className="detailsHeaderDeactiveBtn">
+          <img
+            className="detailsHeaderDeactiveImage"
+            src="/assets/svg/photos.svg"
+            alt="location"
+          />
+          Location
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.189" height="22.932" viewBox="0 0 23.189 22.932">
+    <defs>
+        <style>
+            .prefix__cls-1{fill:currentColor}
+        </style>
+    </defs>
+    <g id="prefix__shower" transform="translate(0 -2.844)">
+        <g id="prefix__Group_1994" data-name="Group 1994" transform="translate(0 2.844)">
+            <g id="prefix__Group_1993" data-name="Group 1993">
+                <path id="prefix__Path_927" d="M15.2 2.844a4.387 4.387 0 0 0-4.323 3.675 3.871 3.871 0 0 0-3.15 3.8 1.806 1.806 0 0 0 1.8 1.8h4.123a1.806 1.806 0 0 0 1.8-1.8 3.871 3.871 0 0 0-3.01-3.768A2.839 2.839 0 0 1 15.2 4.39a6.449 6.449 0 0 1 6.441 6.441v4.9H0v.769a8 8 0 0 0 5.153 7.467v1.808H6.7v-1.392a8.007 8.007 0 0 0 1.288.1H15.2a8.007 8.007 0 0 0 1.288-.1v1.393h1.546v-1.809a8 8 0 0 0 5.155-7.467v-5.669A8 8 0 0 0 15.2 2.844zm-1.288 7.472a.258.258 0 0 1-.258.258H9.533a.258.258 0 0 1-.258-.258 2.319 2.319 0 1 1 4.638 0zM15.2 22.941H7.987a6.451 6.451 0 0 1-6.4-5.669H21.6a6.451 6.451 0 0 1-6.4 5.669z" class="prefix__cls-1" data-name="Path 927" transform="translate(0 -2.844)"/>
+            </g>
+        </g>
+        <g id="prefix__Group_1996" data-name="Group 1996" transform="translate(13.914 12.893)">
+            <g id="prefix__Group_1995" data-name="Group 1995">
+                <path id="prefix__Path_928" d="M308.745 224.711H307.2v2.061h1.546v-2.061z" class="prefix__cls-1" data-name="Path 928" transform="translate(-307.199 -224.711)"/>
+            </g>
+        </g>
+        <g id="prefix__Group_1998" data-name="Group 1998" transform="translate(10.822 12.893)">
+            <g id="prefix__Group_1997" data-name="Group 1997">
+                <path id="prefix__Rectangle_468" d="M0 0H1.546V2.061H0z" class="prefix__cls-1" data-name="Rectangle 468"/>
+            </g>
+        </g>
+        <g id="prefix__Group_2000" data-name="Group 2000" transform="translate(7.73 12.893)">
+            <g id="prefix__Group_1999" data-name="Group 1999">
+                <path id="prefix__Rectangle_469" d="M0 0H1.546V2.061H0z" class="prefix__cls-1" data-name="Rectangle 469"/>
+            </g>
+        </g>
+    </g>
+</svg>

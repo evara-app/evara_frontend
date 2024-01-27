@@ -30,6 +30,8 @@ const config: Config = {
         SearchPanelButton: "3px -3px 6px 0px rgba(0,0,0,0.28)",
         greenShaow: "0 15px 50px -15px rgba(0,187,125,0.5)",
         "input-focus": "0 12px 24px -8px rgb(var(--green-blue))",
+        shadowBox:
+          "0px 2px 4px 4px rgba(230,231,233,1),0px 1px 4px 0px rgba(0,0,0,0.11)",
       },
     },
   },

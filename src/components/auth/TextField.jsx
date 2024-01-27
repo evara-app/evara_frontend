@@ -1,23 +1,70 @@
 import React from "react";
 
-//? icons
-import { HiUserCircle } from "react-icons/hi";
+//import constants
+import { isd } from "@/constants/isd";
 
-function TextField({ label, value, type, icon, iconHandler, fieldHandler }) {
+function TextField({
+  method,
+  label,
+  value,
+  type,
+  name,
+  icon,
+  iconHandler,
+  fieldHandler,
+  dataHandler,
+}) {
   return (
-    <div>
-      <label className="text-gray-default/90 px-1" htmlFor="">
-        Username or Phone number
-      </label>
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Username or Phone number"
-          className="form-input border border-white-two/60 w-full p-4 rounded-md focus:border-green-blue focus:ring-0 text-white-two placeholder:text-white-two mt-1"
-        />
-        <HiUserCircle className="w-10 h-10 text-gray-default/50 absolute top-1/2 -translate-y-1/2 right-3 border-l border-white-two/60 pl-1" />
-      </div>
-    </div>
+    <>
+      {method === "phoneNumber" ? (
+        <div className="flex flex-col gap-y-1">
+          <label className="text-gray-default/90 px-1" htmlFor={name}>
+            {label}
+          </label>
+          <div className="relative">
+            <input
+              id={name}
+              className="authTextField !pl-16"
+              type={type}
+              name={name}
+              placeholder={label}
+              value={value}
+              onChange={dataHandler}
+            />
+            {icon}
+            <select
+              className="absolute top-0 left-0 cursor-pointer bg-transparent h-full focus:outline-none border-r border-white-two/60"
+              name="isd"
+              onChange={dataHandler}
+            >
+              {isd.map((item) => (
+                <option value={item.code} key={item.id}>
+                  {item.code}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <label className="text-gray-default/90 px-1" htmlFor={name}>
+            {label}
+          </label>
+          <div className="relative">
+            <input
+              id={name}
+              className="authTextField"
+              type={type}
+              name={name}
+              placeholder={label}
+              value={value}
+              onChange={dataHandler}
+            />
+            {icon}
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

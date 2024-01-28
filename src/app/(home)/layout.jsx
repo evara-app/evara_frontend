@@ -4,6 +4,7 @@ import estedadFont from "@/constants/localFonts";
 
 //? import components
 import Header from "@/app/(home)/header";
+import Provider from "@/app/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,10 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning={true}
         className={`${estedadFont.variable} font-sans`}
       >
-        <Header />
-        {children}
+        <Provider>
+          <Header />
+          {children}
+        </Provider>
       </body>
     </html>
   );

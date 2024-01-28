@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { toast } from "react-hot-toast";
 
 //? import image
 import IstanbulImage from "../../../../public/assets/img/auth.jpg";
@@ -11,33 +10,66 @@ import IstanbulImage from "../../../../public/assets/img/auth.jpg";
 //? import components
 import CheckOtp from "@/app/(auth)/auth/CheckOtp";
 import SendOtp from "@/app/(auth)/auth/SendOtp";
-import TextField from "@/components/auth/TextField";
-import Loading from "@/common/Loading";
-import OTPInput from "react-otp-input";
 import { Toast } from "@/hooks/Toast";
-
-//? import icons
-import { HiEye } from "react-icons/hi";
-import { HiEyeOff } from "react-icons/hi";
-import { HiUserCircle } from "react-icons/hi";
 
 //? mui
 import Divider from "@mui/material/Divider";
 
+//? import react query
+import { useMutation } from "@tanstack/react-query";
+
+//? import service
+import { getOtp, checkOtp } from "@/services/authService";
+
 const RESEND_TIME = 90;
+const GET_OTP_DATA = {
+  email: "",
+  password: "",
+  isd: "",
+  phone_number: "",
+};
 
 function page() {
+  const [data, setData] = useState(GET_OTP_DATA);
+
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1);
   const [loginMethod, setLoginMethod] = useState(1);
   const [time, setTime] = useState(RESEND_TIME);
 
-  const checkOtpHandler = (event) => {
-    Toast("success", "send code");
+  //react query send otp form to db
+  const {
+    error: otpError,
+    data: getOtpData,
+    mutateAsync: getOtpMutate,
+  } = useMutation({
+    mutationFn: getOtp,
+  });
+
+  const sendOtpHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const { message } = await getOtpMutate({ data });
+      Toast("success", message["en"]);
+      setStep(2);
+      setTime(RESEND_TIME);
+      setOtp("");
+    } catch (error) {
+      Toast("error", error?.response?.data?.message);
+    }
+  };
+
+  const dataHandler = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const checkOtpHandler = async (event) => {
+    event.preventDefault();
   };
 
   const loginMethodHandler = (method) => {
     setLoginMethod(method);
+    setData(GET_OTP_DATA);
   };
 
   useEffect(() => {
@@ -51,7 +83,12 @@ function page() {
     switch (step) {
       case 1:
         return (
-          <SendOtp value={otp} optHandler={setOtp} loginMethod={loginMethod} />
+          <SendOtp
+            data={data}
+            dataHandler={dataHandler}
+            loginMethod={loginMethod}
+            sendOtpHandler={sendOtpHandler}
+          />
         );
       case 2:
         return <CheckOtp checkOtpHandler={checkOtpHandler} time={time} />;

@@ -11,19 +11,8 @@ import { HiUserCircle } from "react-icons/hi";
 //? import components
 import TextField from "@/components/auth/TextField";
 
-function CheckOtp({ checkOtpHandler, loginMethod }) {
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-    isd: "",
-    phoneNumber: "",
-  });
+function CheckOtp({ data, dataHandler, sendOtpHandler, loginMethod }) {
   const [passwordStatus, setPasswordStatus] = useState("hidden");
-
-  const dataHandler = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-    console.log(data);
-  };
 
   const passwordIconHandler = (status) => {
     setPasswordStatus(status);
@@ -41,14 +30,14 @@ function CheckOtp({ checkOtpHandler, loginMethod }) {
     );
 
   return (
-    <form onSubmit={checkOtpHandler}>
+    <form onSubmit={sendOtpHandler}>
       <div className="inputOtpField flex flex-col gap-y-5 mt-12">
         {loginMethod === 1 ? (
           <TextField
             label="Phone Number"
-            name="phoneNumber"
+            name="phone_number"
             method="phoneNumber"
-            value={data.phoneNumber}
+            value={data.phone_number}
             dataHandler={dataHandler}
             type="text"
             icon={<HiUserCircle className="authIcon" />}

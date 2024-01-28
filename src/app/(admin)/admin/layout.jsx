@@ -1,11 +1,11 @@
 import { Inter } from "next/font/google";
-import "../globals.css";
+import "../../globals.css";
 import estedadFont from "@/constants/localFonts";
 import { Toaster } from "react-hot-toast";
 
 //? import components
-import Header from "@/app/(home)/header";
 import Provider from "@/app/Providers";
+import SideBar from "@/app/(admin)/admin/SideBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,14 @@ export default function RootLayout({ children }) {
       >
         <Provider>
           <Toaster position="top-center" />
-          {children}
+          <div className="grid grid-cols-6 bg-white h-screen">
+            <div className="col-span-1 bg-white overflow-y-auto p-4">
+              <SideBar />
+            </div>
+            <div className="col-span-5 overflow-y-auto p-4 bg-gray-100">
+              {children}
+            </div>
+          </div>
         </Provider>
       </body>
     </html>

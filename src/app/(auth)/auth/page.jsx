@@ -3,7 +3,6 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-
 //? import image
 import IstanbulImage from "../../../../public/assets/img/auth.jpg";
 
@@ -24,47 +23,58 @@ import { getOtp, checkOtp } from "@/services/authService";
 const RESEND_TIME = 90;
 const GET_OTP_DATA = {
   email: "",
-  password: "",
-  isd: "",
+  isd: "+98",
   phone_number: "",
 };
 
 function page() {
   const [data, setData] = useState(GET_OTP_DATA);
-
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1);
   const [loginMethod, setLoginMethod] = useState(1);
   const [time, setTime] = useState(RESEND_TIME);
 
-  //react query send otp form to db
+  //send email/phone number to get otp code
   const {
-    error: otpError,
-    data: getOtpData,
-    mutateAsync: getOtpMutate,
+    data: getOtpResponse,
+    isPending: getOtpPending,
+    mutateAsync: mutateGetOtp,
   } = useMutation({
     mutationFn: getOtp,
   });
 
+  //verify otp code
+  const {
+    data: checkOtpResponse,
+    isPending: checkOtpPending,
+    mutateAsync: mutateCheckOtp,
+  } = useMutation({ mutationFn: checkOtp });
+
   const sendOtpHandler = async (event) => {
     event.preventDefault();
     try {
-      const { message } = await getOtpMutate({ data });
-      Toast("success", message["en"]);
+      const { en } = await mutateGetOtp(data);
+      Toast("success", en);
       setStep(2);
       setTime(RESEND_TIME);
       setOtp("");
     } catch (error) {
-      Toast("error", error?.response?.data?.message);
+      Toast("error", error?.response?.data["en"]);
+    }
+  };
+
+  const checkOtpHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const { en } = await mutateCheckOtp({ ...data, otp });
+      Toast("success", en);
+    } catch (error) {
+      Toast("error", error?.response?.data["en"]);
     }
   };
 
   const dataHandler = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
-  };
-
-  const checkOtpHandler = async (event) => {
-    event.preventDefault();
   };
 
   const loginMethodHandler = (method) => {
@@ -86,12 +96,24 @@ function page() {
           <SendOtp
             data={data}
             dataHandler={dataHandler}
+            loading={getOtpPending}
             loginMethod={loginMethod}
             sendOtpHandler={sendOtpHandler}
           />
         );
       case 2:
-        return <CheckOtp checkOtpHandler={checkOtpHandler} time={time} />;
+        return (
+          <CheckOtp
+            data={data}
+            otp={otp}
+            setOtp={setOtp}
+            setStep={setStep}
+            time={time}
+            loading={checkOtpPending}
+            checkOtpHandler={checkOtpHandler}
+            sendOtpHandler={sendOtpHandler}
+          />
+        );
       default:
         break;
     }
@@ -110,7 +132,6 @@ function page() {
           style={{
             objectFit: "cover",
             width: "100%",
-            height: "calc(100vh - 50px)",
             objectPosition: "30% 50%",
           }}
         />

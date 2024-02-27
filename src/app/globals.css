@@ -12,6 +12,7 @@
   --white-two: #a5a5a5;
   --cyan-default: #06b6d4;
   --cyan-green: #03b9a2;
+  --blue-gray: #f8f9fd;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -85,23 +86,17 @@ body {
     @apply form-input border border-white-two/60 w-full p-4 rounded-md focus:border-green-blue focus:ring-0 text-white-two placeholder:text-white-two;
   }
   .adminLi {
-    @apply py-3 px-2 rounded-md hover:bg-gray-100 hover:text-green-blue text-gray-default/80 transition cursor-pointer flex items-center gap-x-2;
+    @apply py-3 px-2 rounded-md bg-gray-100 cursor-pointer flex items-center gap-x-2;
   }
-  .svgIconAdmin {
-    @apply fill-gray-default/80 w-7 h-7 group-hover:fill-green-blue;
-  }
-  .adminLiActive {
-    @apply py-3 px-2 rounded-md hover:bg-gray-100 hover:text-green-blue transition cursor-pointer flex items-center gap-x-2 font-medium text-gray-default bg-gray-100;
-  }
-  .svgIconAdminActive {
-    @apply fill-gray-default w-7 h-7 group-hover:fill-green-blue;
+  .outlineGrayBtn{
+    @apply px-4 py-2 text-white-two border border-white-two rounded-md text-center hover:bg-white-two hover:text-white transition
   }
 }
 
-.inputOtpField input[type="text"] {
+/* .inputOtpField input {
   width: 100% !important;
-  padding: 15px 5px !important;
-}
+  padding: 15px 10px !important;
+} */
 
 @media only screen and (max-width: 1024px) {
   body {

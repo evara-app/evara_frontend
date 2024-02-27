@@ -22,6 +22,7 @@ const config: Config = {
         "white-two": "#a5a5a5",
         "cyan-default": "#06b6d4",
         "--cyan-green": "#03B9A2",
+        "blue-gray": "#f8f9fd"
       },
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],

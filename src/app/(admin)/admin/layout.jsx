@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
         <Provider>
           <Toaster position="top-center" />
           <div className="grid grid-cols-6 bg-white h-screen">
-            <div className="col-span-1 bg-white overflow-y-auto">
+            <div className="col-span-1 bg-blue-gray overflow-y-auto">
               <SideBar />
             </div>
-            <div className="col-span-5 overflow-y-auto p-4 bg-gray-100">
+            <div className="col-span-5 overflow-y-auto p-4 bg-white">
               {children}
             </div>
           </div>

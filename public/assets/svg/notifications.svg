@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.253" height="15.333" viewBox="0 0 13.253 15.333">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1px;
+      }
+    </style>
+  </defs>
+  <g id="notifications-outline" transform="translate(0.769 0.75)">
+    <path id="Path_909" data-name="Path 909" class="cls-1" d="M91.405,58.09c-.854-1.045-1.457-1.577-1.457-4.458,0-2.639-1.347-3.579-2.456-4.035a.592.592,0,0,1-.331-.351,1.483,1.483,0,0,0-2.928,0,.587.587,0,0,1-.331.35c-1.11.457-2.456,1.394-2.456,4.035,0,2.881-.6,3.413-1.458,4.458a.671.671,0,0,0,.575,1.083H90.834A.671.671,0,0,0,91.405,58.09Z" transform="translate(-79.839 -48)"/>
+    <path id="Path_910" data-name="Path 910" class="cls-1" d="M196.256,384v.532a2.128,2.128,0,1,1-4.256,0V384" transform="translate(-188.27 -372.827)"/>
+  </g>
+</svg>

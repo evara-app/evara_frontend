@@ -89,3 +89,43 @@ export const userField = [
     name: "phoneNumber",
   },
 ];
+
+export const supportSelect = [
+  {
+    id: 1,
+    label: "support",
+    value: "support",
+  },
+  {
+    id: 2,
+    label: "sale",
+    value: "sale",
+  },
+];
+
+export const supportTableHeads = [
+  {
+    id: 1,
+    label: "#",
+  },
+  {
+    id: 2,
+    label: "Ticket Number",
+  },
+  {
+    id: 3,
+    label: "Section",
+  },
+  {
+    id: 4,
+    label: "Topic",
+  },
+  {
+    id: 5,
+    label: "Status",
+  },
+  {
+    id: 6,
+    label: "Last Update",
+  },
+];

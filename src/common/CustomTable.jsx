@@ -1,72 +1,34 @@
-import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import React from "react";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-export default function CustomTable({ tableHeads }) {
+function CustomTable({ tableHeads }) {
   return (
-    <TableContainer component={Paper} className="shadow-none">
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow className="flex items-center w-full rounded-full bg-red-200">
-            {tableHeads.map((head) => (
-              <TableCell className="text-sm p-2 flex-auto" key={head.id}>
-                {head.label}
-              </TableCell>
+    <div className="overflow-scroll">
+      <table className="border-collapse table-auto w-full min-w-[800px] text-sm rounded border-white-two">
+        <thead>
+          <tr className="text-gray-default bg-white-two/25">
+            {tableHeads.map((item) => (
+              <th key={item.id} className="table__th">
+                {item.label}
+              </th>
             ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
-              <StyledTableCell align="right">{row.fat}</StyledTableCell>
-              <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-              <StyledTableCell align="right">{row.protein}</StyledTableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="table__td">1</td>
+            <td className="table__td">#824856</td>
+            <td className="table__td">website support</td>
+            <td className="table__td">
+              website 404 error when i want to open website i have problem with
+              that please fix that thanks im farhan ahmadi
+            </td>
+            <td className="table__td">open</td>
+            <td className="table__td">1402/12/10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 }
+
+export default CustomTable;

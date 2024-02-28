@@ -88,8 +88,14 @@ body {
   .adminLi {
     @apply py-3 px-2 rounded-md bg-gray-100 cursor-pointer flex items-center gap-x-2;
   }
-  .outlineGrayBtn{
-    @apply px-4 py-2 text-white-two border border-white-two rounded-md text-center hover:bg-white-two hover:text-white transition
+  .outlineGrayBtn {
+    @apply px-4 py-2 text-white-two border border-white-two rounded-md text-center hover:bg-white-two hover:text-white transition;
+  }
+  .table__th {
+    @apply whitespace-nowrap first:rounded-l-full last:rounded-r-full text-left font-medium p-3 pl-5 pb-3;
+  }
+  .table__td {
+    @apply text-sm text-gray-default text-left pl-5 whitespace-nowrap truncate max-w-[200px] py-5 border-b-2 border-white-two;
   }
 }
 

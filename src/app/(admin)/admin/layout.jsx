@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 //? import components
 import Provider from "@/app/Providers";
-import SideBar from "@/app/(admin)/admin/SideBar";
+import Header from "@/app/(admin)/admin/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,18 +19,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${estedadFont.variable} font-sans`}
+        className={`${estedadFont.variable} font-sans relative`}
       >
         <Provider>
           <Toaster position="top-center" />
-          <div className="grid grid-cols-6 bg-white h-screen">
-            <div className="col-span-1 bg-blue-gray overflow-y-auto">
-              <SideBar />
-            </div>
-            <div className="col-span-5 overflow-y-auto p-4 bg-white">
-              {children}
-            </div>
-          </div>
+          <Header>{children}</Header>
         </Provider>
       </body>
     </html>

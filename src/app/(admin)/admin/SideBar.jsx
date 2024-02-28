@@ -15,7 +15,7 @@ import { profileList } from "@/constants/profile";
 
 function SideBar() {
   return (
-    <div>
+    <div className="border-r border-white-two shadow-md md:border-none md:shadow-none">
       <div className="p-4">
         <div className="w-full flex items-center justify-center mt-5">
           <img

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 //? import components
-import SideBar from "@/app/(admin)/admin/SideBar";
+import SideBar from "@/app/(profile)/profile/SideBar";
 
 //? import icons
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -34,13 +34,13 @@ function header({ children }) {
       </div>
       <div className="grid grid-cols-6 bg-white h-screen">
         <div
-          className={`absolute top-0 left-0 z-20 md:static md:col-span-1 bg-blue-gray overflow-y-auto md:translate-x-0 transition-all ${
+          className={`absolute top-0 left-0 z-20 md:static md:col-span-2 lg:col-span-1 bg-blue-gray overflow-y-auto md:translate-x-0 transition-all ${
             open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <SideBar />
         </div>
-        <div className="col-span-6 md:col-span-5 overflow-y-auto p-4 bg-white">
+        <div className="col-span-6 md:col-span-4 lg:col-span-5 overflow-y-auto p-4 bg-white">
           {children}
         </div>
       </div>

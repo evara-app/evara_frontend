@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 //? import components
 import Provider from "@/app/Providers";
+import SideBar from "@/app/(profile)/profile/SideBar";
 import Header from "@/app/(profile)/profile/header";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,15 @@ export default function RootLayout({ children }) {
       >
         <Provider>
           <Toaster position="top-center" />
-          <Header>{children}</Header>
+          <Header />
+          <div className="grid grid-cols-6 bg-white h-screen">
+            <div className="hidden md:block md:col-span-2 lg:col-span-1 bg-blue-gray overflow-y-auto ">
+              <SideBar />
+            </div>
+            <div className="col-span-6 md:col-span-4 lg:col-span-5 p-4 bg-white">
+              {children}
+            </div>
+          </div>
         </Provider>
       </body>
     </html>

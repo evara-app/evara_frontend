@@ -2,7 +2,7 @@ import React from "react";
 
 function CustomTable({ tableHeads }) {
   return (
-    <div className="overflow-scroll">
+    <div className="overflow-scroll h-full">
       <table className="border-collapse table-auto w-full min-w-[800px] text-sm rounded border-white-two">
         <thead>
           <tr className="text-gray-default bg-white-two/25">

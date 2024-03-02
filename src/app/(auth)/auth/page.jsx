@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 //? import image
 import IstanbulImage from "../../../../public/assets/img/auth.jpg";
@@ -23,15 +24,15 @@ import { getOtp, checkOtp } from "@/services/authService";
 
 const RESEND_TIME = 90;
 const GET_OTP_DATA = {
-  email: "",
   password: "",
-  isd: "",
+  isd: "+98",
   phone_number: "",
 };
 
 function page() {
-  const [data, setData] = useState(GET_OTP_DATA);
+  const router = useRouter();
 
+  const [data, setData] = useState(GET_OTP_DATA);
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1);
   const [loginMethod, setLoginMethod] = useState(1);
@@ -46,11 +47,20 @@ function page() {
     mutationFn: getOtp,
   });
 
+  //react query check otp & set cookies
+  const {
+    error: checkOtpError,
+    data: checkOtpData,
+    mutateAsync: checkOtpMutate,
+  } = useMutation({
+    mutationFn: checkOtp,
+  });
+
   const sendOtpHandler = async (event) => {
     event.preventDefault();
     try {
-      const { message } = await getOtpMutate({ data });
-      Toast("success", message["en"]);
+      const message = await getOtpMutate({ data });
+      Toast("success", message.en);
       setStep(2);
       setTime(RESEND_TIME);
       setOtp("");
@@ -59,17 +69,28 @@ function page() {
     }
   };
 
-  const dataHandler = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  };
-
   const checkOtpHandler = async (event) => {
     event.preventDefault();
+    // change the varibale otp to password
+    const CHECK_OTP_DATA = {
+      password: otp,
+      isd: data.isd,
+      phone_number: data.phone_number,
+    };
+    try {
+      const message = await checkOtpMutate({ CHECK_OTP_DATA });
+      Toast("success", message.en);
+      setStep(1);
+      setTime(RESEND_TIME);
+      setOtp("");
+      router.push("/");
+    } catch (error) {
+      Toast("error", error?.response?.data?.message);
+    }
   };
 
-  const loginMethodHandler = (method) => {
-    setLoginMethod(method);
-    setData(GET_OTP_DATA);
+  const dataHandler = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
   };
 
   useEffect(() => {
@@ -91,7 +112,15 @@ function page() {
           />
         );
       case 2:
-        return <CheckOtp checkOtpHandler={checkOtpHandler} time={time} />;
+        return (
+          <CheckOtp
+            time={time}
+            setOtp={setOtp}
+            value={otp}
+            sendOtpHandler={sendOtpHandler}
+            checkOtpHandler={checkOtpHandler}
+          />
+        );
       default:
         break;
     }
@@ -135,7 +164,7 @@ function page() {
           </div>
         </Link>
         {/* login or sign up buttons */}
-        <div className="w-full flex items-center justify-center mt-12 relative">
+        {/* <div className="w-full flex items-center justify-center mt-12 relative">
           <button
             className={`${
               loginMethod === 1 ? "authActiveButton" : "authDeactiveButton"
@@ -152,7 +181,7 @@ function page() {
           >
             Email
           </button>
-        </div>
+        </div> */}
         {renderSteps()}
         {/* divider */}
         <div className="mt-8">

@@ -95,7 +95,7 @@ body {
     @apply whitespace-nowrap first:rounded-l-full last:rounded-r-full text-left font-medium p-3 pl-5 pb-3;
   }
   .table__td {
-    @apply text-sm text-gray-default text-left pl-5 whitespace-nowrap truncate max-w-[200px] py-5 border-b-2 border-white-two;
+    @apply text-sm text-gray-default text-left pl-5 whitespace-nowrap truncate max-w-[200px] last:border-none py-5 border-b-2 border-white-two;
   }
 }
 
@@ -109,6 +109,11 @@ body {
     font-size: 14px;
     line-height: 20px;
   }
+}
+
+.inputOtpField input[type="text"] {
+  padding: 15px 0px !important;
+  width: 3.5rem !important;
 }
 
 .icon-stroke {
@@ -131,4 +136,26 @@ body {
   --swiper-navigation-size: 10px;
   --swiper-navigation-color: #8f8f8f;
   border: 1px solid #eeeeee;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c0c0c0;
 }

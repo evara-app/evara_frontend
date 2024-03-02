@@ -16,6 +16,9 @@ import { supportSelect, supportTableHeads } from "@/constants/profile";
 //? import mui
 import Divider from "@mui/material/Divider";
 
+//? import hooks
+import { useSendTicket, useGetAllTickets } from "@/hooks/useTicket";
+
 function page() {
   const [data, setData] = useState({
     section: "",
@@ -31,6 +34,17 @@ function page() {
     setOpen(false);
     setData({ ...data, section: value });
   };
+
+  // react query
+  const { mutateAsync } = useSendTicket();
+  const { data: allTicketsData } = useGetAllTickets();
+
+  const submitHandler = async () => {
+    // send ticket fields
+    const { message } = await mutateAsync({ data });
+  };
+
+  console.log(allTicketsData);
 
   return (
     <div className="max-w-3xl flex flex-col gap-y-3">
@@ -78,7 +92,9 @@ function page() {
         ></textarea>
       </div>
       <div className="flex gap-x-2">
-        <button className="button">Submit</button>
+        <button onClick={submitHandler} className="button">
+          Submit
+        </button>
         <button className="outlineGrayBtn">Cancel</button>
       </div>
       <Divider />

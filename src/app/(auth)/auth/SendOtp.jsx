@@ -31,7 +31,7 @@ function CheckOtp({ data, dataHandler, sendOtpHandler, loginMethod }) {
 
   return (
     <form onSubmit={sendOtpHandler}>
-      <div className="inputOtpField flex flex-col gap-y-5 mt-12">
+      <div className="flex flex-col gap-y-5 mt-12">
         {loginMethod === 1 ? (
           <TextField
             label="Phone Number"

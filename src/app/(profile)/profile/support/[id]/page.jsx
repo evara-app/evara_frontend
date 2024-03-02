@@ -1,5 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
 //? import mui
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -10,13 +13,14 @@ import Avatar from "@mui/material/Avatar";
 import { HiChevronRight } from "react-icons/hi";
 
 function page() {
+  const { id } = useParams();
   return (
     <div className="p-4 max-w-3xl">
       <div>
         <Breadcrumbs separator={<HiChevronRight />} aria-label="breadcrumb">
           <Link href="#">Support</Link>
           <Link href="#" className="text-black">
-            Ticket : 11223344
+            Ticket : {id}
           </Link>
         </Breadcrumbs>
       </div>

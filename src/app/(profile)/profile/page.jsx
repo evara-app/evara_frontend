@@ -19,7 +19,6 @@ function page() {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
-  console.log(data);
   return (
     <div className="grid grid-cols-3 items-center md:p-6 gap-x-20">
       {/* user information section */}

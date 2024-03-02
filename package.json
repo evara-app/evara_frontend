@@ -16,7 +16,7 @@
     "@mui/material": "^5.15.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.8",
     "@svgr/webpack": "^8.1.0",
-    "@tanstack/react-query": "^5.17.19",
+    "@tanstack/react-query": "^5.24.2",
     "axios": "^1.6.7",
     "next": "14.0.3",
     "react": "^18",

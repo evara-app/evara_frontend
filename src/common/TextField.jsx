@@ -1,11 +1,11 @@
 import React from "react";
 
-function TextField({ key, label, type, placeHolder, value, name, handler }) {
+function TextField({ id, label, type, placeHolder, value, name, handler }) {
   return (
-    <div className="flex flex-col gap-y-1 mt-2" key={key}>
-      <label htmlFor={key}>{label}</label>
+    <div className="flex flex-col gap-y-1 mt-2">
+      <label htmlFor={id}>{label}</label>
       <input
-        id={key}
+        id={id}
         className="border border-white-two p-2 rounded focus:border-green-blue outline-none"
         type={type}
         placeholder={placeHolder}

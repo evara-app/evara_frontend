@@ -9,3 +9,11 @@ export function checkOtp({ CHECK_OTP_DATA }) {
     .post("/api/v2/login-register-verify/", CHECK_OTP_DATA)
     .then(({ data }) => data);
 }
+
+export function completeProfile(data) {
+  return http.patch("/api/v2/front/profile/", data).then(({ data }) => data);
+}
+
+export function getUserProfile() {
+  return http.get("/api/v2/front/profile/").then(({ data }) => data);
+}

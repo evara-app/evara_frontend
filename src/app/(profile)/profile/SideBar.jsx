@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 
@@ -13,7 +15,12 @@ import { PiUserLight } from "react-icons/pi";
 //? import constants
 import { profileList } from "@/constants/profile";
 
+//? import hooks
+import { useGetUser } from "@/hooks/useAuth";
+
 function SideBar() {
+  const { data } = useGetUser();
+  console.log(data);
   return (
     <div className="border-r border-white-two shadow-md md:border-none md:shadow-none">
       <div className="p-4">

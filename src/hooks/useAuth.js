@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getUserProfile } from "@/services/authService";
+import { getUserProfile, setCookies } from "@/services/authService";
 
 export const useGetUser = () =>
   useQuery({

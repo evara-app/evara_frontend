@@ -4,9 +4,8 @@ import { getCookie } from "cookies-next";
 const accessToken = getCookie("access") || {};
 const app = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  withCredentials: true,
   headers: {
-    Authorization: "Bearer " + accessToken,
+    Authorization: `Bearer ${accessToken}`,
   },
 });
 

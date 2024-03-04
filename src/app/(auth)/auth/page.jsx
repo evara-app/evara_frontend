@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 //? import image
 import IstanbulImage from "../../../../public/assets/img/auth.jpg";
 
@@ -60,6 +60,7 @@ function page() {
     event.preventDefault();
     try {
       const message = await getOtpMutate({ data });
+      console.log(message);
       Toast("success", message.en);
       setStep(2);
       setTime(RESEND_TIME);
@@ -79,11 +80,10 @@ function page() {
     };
     try {
       const message = await checkOtpMutate({ CHECK_OTP_DATA });
-      Toast("success", message.en);
-      setStep(1);
-      setTime(RESEND_TIME);
-      setOtp("");
-      router.push("/");
+      const { messages } = message;
+      axios.post("/api/auth", message);
+      Toast("success", messages.en);
+      // router.push("/");
     } catch (error) {
       Toast("error", error?.response?.data?.message);
     }

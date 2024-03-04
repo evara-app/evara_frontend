@@ -3,7 +3,6 @@ export default async function middlewareAuth(req) {
     `${process.env.NEXT_PUBLIC_API_URL}/api/v2/front/profile/`,
     {
       method: "GET",
-      credentials: "include",
       headers: {
         Authorization: `Bearer ${req.cookies.get("access").value}`,
       },

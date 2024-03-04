@@ -4,7 +4,7 @@ import Home from "&/assets/svg/home.svg";
 import Calendar from "&/assets/svg/CalendarProfile.svg";
 import Eye from "&/assets/svg/eye.svg";
 import Rent from "&/assets/svg/rent.svg";
-import Heart from "&/assets/svg/heartProfile.svg";
+import { AiOutlineHeart } from "react-icons/ai";
 import Notifications from "&/assets/svg/notifications.svg";
 import Support from "&/assets/svg/supportProfile.svg";
 import Exit from "&/assets/svg/exit.svg";
@@ -44,7 +44,7 @@ export const profileList = [
     id: 6,
     label: "Liked properties",
     value: "Liked properties",
-    icon: <Heart className="svgIcon" />,
+    icon: <AiOutlineHeart className="svgIcon" />,
   },
   {
     id: 7,

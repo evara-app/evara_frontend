@@ -159,3 +159,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #c0c0c0;
 }
+
+.MuiPagination-ul .Mui-selected {
+  background-color: #0ede9b;
+  color: white;
+}
+.MuiPagination-ul .MuiPaginationItem-outlined:hover {
+  background-color: #0ede9b;
+  color: white;
+  transition: all;
+}

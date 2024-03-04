@@ -41,7 +41,7 @@ function SideBar() {
           {profileList.map((item) => (
             <li
               key={item.id}
-              className={`flex items-center p-3 gap-x-2 hover:bg-white text-white-two hover:shadow-sm hover:text-green-blue hover:fill-green-blue hover:stroke-green-blue stroke-white-two stroke-0 rounded-l cursor-pointer transition ${
+              className={`flex items-center p-3 gap-x-2 hover:bg-white text-white-two hover:shadow-sm !hover:text-green-blue hover:fill-green-blue hover:stroke-green-blue stroke-white-two stroke-0 rounded-l cursor-pointer transition ${
                 item.value === "Profile" &&
                 "bg-white shadow-sm text-green-blue fill-green-blue"
               }`}

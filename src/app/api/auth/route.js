@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 const cookieOptions = {
   maxAge: 1000 * 60 * 60 * 6,
-  httpOnly: true,
+  httpOnly: false,
   sameSite: "lax",
   secure: process.env.NODE_ENV === "development" ? false : true,
   domain: process.env.NODE_ENV === "development" ? "localhost" : "evara.com.tr",

@@ -1,5 +1,4 @@
 import http from "./httpService";
-import axios from "axios";
 
 export function getOtp({ data }) {
   return http.post("/api/v2/login-register/", data).then(({ data }) => data);

@@ -1,17 +1,26 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
-const accessToken = getCookie("access") || {};
+const pathnames = ["/api/v2/front/profile/"];
+
 const app = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    Authorization: `Bearer ${accessToken}`,
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
 app.interceptors.request.use(
-  (res) => res,
-  (err) => Promise.reject(err)
+  async (config) => {
+    const token = getCookie("access");
+    if (token && pathnames.includes(config.url)) {
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  async (error) => {
+    return Promise.reject(error);
+  }
 );
 
 // app.interceptors.response.use(

@@ -20,9 +20,14 @@ import { useGetUser } from "@/hooks/useAuth";
 
 function SideBar() {
   const { data } = useGetUser();
-  console.log(data);
+  const { results: user } = data || {};
+
   return (
-    <div className="border-r border-white-two shadow-md md:border-none md:shadow-none">
+    <div
+      className={`border-r border-white-two shadow-md md:border-none md:shadow-none transition duration-300 ${
+        !user && "blur"
+      }`}
+    >
       <div className="p-4">
         <div className="w-full flex items-center justify-center mt-5">
           <img
@@ -32,8 +37,10 @@ function SideBar() {
           />
         </div>
         <div className="flex flex-col items-center mt-5">
-          <h1 className="text-3xl">Farhan Ahmadi</h1>
-          <p className="text-white-two">farhan@gmail.com</p>
+          <h1 className="text-3xl">
+            {user?.first_name} {user?.last_name}
+          </h1>
+          <p className="text-white-two">Evara user</p>
         </div>
       </div>
       <div className="mt-5 pl-4">

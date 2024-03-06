@@ -52,7 +52,7 @@ async function getData() {
 async function page() {
   const data = await getData();
   return (
-    <div className="md:container mx-auto">
+    <div>
       {/* //* title and location ... */}
       <div>
         <div>

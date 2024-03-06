@@ -169,3 +169,7 @@ body {
   color: white;
   transition: all;
 }
+
+.MuiStepLabel-iconContainer .Mui-active {
+  color: #00a06b !important;
+}

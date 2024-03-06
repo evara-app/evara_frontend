@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${estedadFont.variable} font-sans`}
+        className={`${estedadFont.variable} font-sans className="md:container md:max-w-[1440px] mx-auto`}
       >
         <Provider>{children}</Provider>
       </body>

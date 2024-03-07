@@ -17,8 +17,6 @@ function SelectCategory({ buttonItem, handler }) {
     setOpen(event.target.id);
   };
 
-  console.log(open);
-
   return (
     <div className="flex items-center flex-wrap md:flex-nowrap gap-y-4 gap-x-2">
       {buttonItem.map((button) => (

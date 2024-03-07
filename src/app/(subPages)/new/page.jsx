@@ -5,6 +5,7 @@ import React, { useState } from "react";
 //? import components
 import Stepper from "@/app/(subPages)/new/Stepper";
 import SelectCategory from "@/app/(subPages)/new/SelectCategory";
+import SelectImage from "@/app/(subPages)/new/SelectImage";
 
 const buttonItem = [
   {
@@ -106,7 +107,7 @@ const buttonItem = [
 ];
 
 function page() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   const categoryHandler = (value) => {
     console.log(value);
@@ -119,6 +120,8 @@ function page() {
           <SelectCategory buttonItem={buttonItem} handler={categoryHandler} />
         );
         break;
+      case 1:
+        return <SelectImage />;
 
       default:
         break;

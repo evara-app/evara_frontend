@@ -7,7 +7,7 @@ function CustomSelect({ items, handler }) {
         {items.map((item) => (
           <li
             key={item.id}
-            className="p-2 rounded hover:bg-gray-100 flex justify-start"
+            className="p-2 rounded hover:text-white hover:font-medium hover:bg-green-400 flex justify-start"
             onClick={() => handler(item.value)}
           >
             {item.label}

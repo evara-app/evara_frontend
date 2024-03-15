@@ -22,7 +22,8 @@ const config: Config = {
         "white-two": "#a5a5a5",
         "cyan-default": "#06b6d4",
         "--cyan-green": "#03B9A2",
-        "blue-gray": "#f8f9fd"
+        "blue-gray": "#f8f9fd",
+        "border-gray": "#9ca3af",
       },
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],
@@ -33,6 +34,7 @@ const config: Config = {
         "input-focus": "0 12px 24px -8px rgb(var(--green-blue))",
         shadowBox:
           "0px 2px 4px 4px rgba(230,231,233,1),0px 1px 4px 0px rgba(0,0,0,0.11)",
+        cardShadow: "rgba(0,0,0,0.1),0px 4px 12px",
       },
     },
   },

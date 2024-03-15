@@ -11,12 +11,12 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { IoChevronDownSharp } from "react-icons/io5";
 
 function CurrencyMenu() {
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(false);
   const [currency, setCurrency] = useState();
 
   const currencyHandler = (event) => {
     setCurrency(event.currentTarget.innerText);
-    setStatus(null);
+    setStatus(false);
   };
 
   const currencyStatusHandler = (event) => {
@@ -24,7 +24,7 @@ function CurrencyMenu() {
   };
 
   const closecurrencyHandler = (event) => {
-    setStatus(null);
+    setStatus(false);
   };
   return (
     <div>

@@ -5,12 +5,9 @@ import * as React from "react";
 //? import mui
 import Box from "@mui/material/Box";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 
 //? import icons
@@ -61,7 +58,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 3,
       label: "Log in",
       icon: (
         <HiOutlineUser
@@ -72,7 +69,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 4,
       label: "FAQ",
       icon: (
         <HiOutlineQuestionMarkCircle
@@ -83,7 +80,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 5,
       label: "Evara Blog",
       icon: (
         <HiOutlineNewspaper
@@ -94,7 +91,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 6,
       label: "About us",
       icon: (
         <HiOutlineInformationCircle
@@ -105,7 +102,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 7,
       label: "Choose Currency",
       icon: (
         <HiOutlineCurrencyDollar
@@ -118,7 +115,7 @@ export default function SwipeableTemporaryDrawer() {
       ),
     },
     {
-      id: 1,
+      id: 8,
       label: "Choose language",
       icon: (
         <HiGlobeAlt
@@ -187,9 +184,10 @@ export default function SwipeableTemporaryDrawer() {
   return (
     //* menu button in ui
     <div>
-      {["left"].map((anchor) => (
+      {["left"].map((anchor, index) => (
         <React.Fragment key={anchor}>
           <button
+            key={index}
             className="appearance-none"
             onClick={toggleDrawer(anchor, true)}
           >

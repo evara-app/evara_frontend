@@ -9,8 +9,6 @@ function SearchPanel() {
       <div>
         <SearchPanelComponent />
       </div>
-
-      <div></div>
     </div>
   );
 }

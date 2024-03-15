@@ -2,9 +2,6 @@
 
 import React, { useState } from "react";
 
-//? import components
-import MultiSelect from "@/common/MultiSelect";
-
 //? import icons
 import { HiChevronDown } from "react-icons/hi";
 
@@ -37,6 +34,7 @@ function SearchPanelComponent() {
         {searchButtons.map((btn) => {
           return (
             <button
+              key={btn.id}
               className={
                 btn.value === 2
                   ? `-left-3 z-10 ${
@@ -56,7 +54,6 @@ function SearchPanelComponent() {
                         : "SearchPanelButton"
                     }`
               }
-              key={btn.id}
               value={btn.value}
             >
               {btn.label}
@@ -66,15 +63,18 @@ function SearchPanelComponent() {
       </div>
       {/* //* search type select  */}
       <div className=" bg-white rounded-md rounded-tl-none flex p-4 gap-x-2 border border-gray-default/20 overflow-x-hidden-hidden shadow-greenShaow">
-        {[false, true, false, false, false, false].map((item) => {
+        {[false, true, false, false, false, false].map((item, index) => {
           return (
-            <div className="flex-1 relative flex flex-col border-r border-r-gray-default/40 gap-y-1 cursor-pointer">
+            <div
+              key={index}
+              className="flex-1 relative flex flex-col border-r border-r-gray-default/40 gap-y-1 cursor-pointer"
+            >
               <div>Category</div>
               <div className="flex items-center justify-between mx-1">
                 <span className="text-gray-default">Istanbul</span>
                 <HiChevronDown className="icon text-black" />
               </div>
-              <MultiSelect status={item} />
+              {/* <MultiSelect status={item} /> */}
             </div>
           );
         })}

@@ -11,12 +11,12 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { IoChevronDownSharp } from "react-icons/io5";
 
 function LanguageMenu() {
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(false);
   const [language, setLanguage] = useState();
 
   const languageHandler = (event) => {
     setLanguage(event.currentTarget.innerText);
-    setStatus(null);
+    setStatus(false);
   };
 
   const languageStatusHandler = (event) => {
@@ -24,7 +24,7 @@ function LanguageMenu() {
   };
 
   const closeLanguageHandler = (event) => {
-    setStatus(null);
+    setStatus(false);
   };
   return (
     <div>

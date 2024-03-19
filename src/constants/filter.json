@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Buy",
+    "type": "Buy"
+  },
+  {
+    "id": 2,
+    "title": "Mortgage & Rent",
+    "type": "Rent"
+  },
+  {
+    "id": 3,
+    "title": "General search",
+    "type": "General"
+  }
+]

@@ -30,7 +30,7 @@ function RoundedCard() {
           </div>
         </div>
         <div className="text-start rounded-b-md p-2 bg-white shadow-[0_10px_20px_0_rgb(0,0,0,10%)]">
-          <h5 className="text-xl text-gray-default font-bold">
+          <h5 className="relative text-xl text-gray-default font-bold">
             Ankara villa house
           </h5>
           <p className="text-white-two text-sm mb-2">Shiraz - Qasrdasht</p>

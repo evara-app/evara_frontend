@@ -8,7 +8,9 @@ function SpecialAds() {
   return (
     <div className="mt-20 grid grid-cols-6 gap-x-6 items-center">
       <div className="col-span-2 flex flex-col gap-y-10">
-        <h1 className="text-4xl font-medium">Special ads</h1>
+        <h1 className="relative text-4xl font-medium pt-2 before:absolute before:top-0 before:w-1/3 before:bg-green-blue before:h-1 before:rounded">
+          Special ads
+        </h1>
         <p className="text-lg text-white-two leading-6">
           Dwelling and commercial units with special conditions Discount and
           immediate sale of profitable projects in the best regions of Turkey

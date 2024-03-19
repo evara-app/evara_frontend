@@ -1,0 +1,15 @@
+[
+  {
+    "type": "Buy",
+    "fields": ["category", "city", "region", "quarter", "price", "room"]
+  }
+  ,
+  {
+    "type": "Rent",
+    "fields": ["city", "region", "quarter"]
+  },
+  {
+    "type": "General",
+    "fields": ["search"]
+  }
+]

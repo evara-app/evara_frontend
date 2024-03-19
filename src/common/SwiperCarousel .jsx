@@ -12,7 +12,6 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 
 function SwiperCarousel({ list, children }) {
-  console.log(list);
   return (
     <Swiper
       slidesPerView={3}

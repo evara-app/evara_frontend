@@ -5,79 +5,130 @@ import React, { useState } from "react";
 //? import icons
 import { HiChevronDown } from "react-icons/hi";
 
-const searchButtons = [
+//? import constants
+import Filter from "@/constants/filter.json";
+import FilterTypes from "@/constants/filterTypes.json";
+
+const searchButtonsClass = [
   {
     id: 1,
-    label: "Buy",
-    value: 1,
+    class: "z-20",
   },
   {
     id: 2,
-    label: "Mortgage & Rent",
-    value: 2,
+    class: "-left-3 z-10",
   },
   {
     id: 3,
-    label: "General search",
-    value: 3,
+    class: "-left-4 z-0",
+  },
+];
+
+const inputsList = [
+  {
+    id: 1,
+    label: "Category",
+    name: "category",
+  },
+  {
+    id: 2,
+    label: "City",
+    name: "city",
+  },
+  {
+    id: 3,
+    label: "District | Region",
+    name: "region",
+  },
+  {
+    id: 4,
+    label: "Quarter",
+    name: "quarter",
+  },
+  {
+    id: 5,
+    label: "Price",
+    name: "price",
+  },
+  {
+    id: 6,
+    label: "Room",
+    name: "room",
+  },
+  {
+    id: 7,
+    label: "Search",
+    placeholder:
+      "Search in address, title and the information related to the property ...",
+    name: "search",
+    type: "text",
   },
 ];
 
 function SearchPanelComponent() {
-  const [activeBtn, setActiveBtn] = useState(1);
+  const [activeBtn, setActiveBtn] = useState("Buy");
 
+  const buttonClass = () => {
+    const data = Filter.map(
+      (item) => searchButtonsClass.find((btn) => btn.id == item.id).class
+    );
+    return data;
+  };
+
+  const renderInputs = () => {
+    const activeFields = FilterTypes.find(
+      (item) => item.type === activeBtn
+    ).fields;
+    const inputs = inputsList.filter((input) =>
+      activeFields.includes(input.name)
+    );
+    return inputs;
+  };
   return (
     <div className="relative -bottom-10">
       {/* //* select search type buttons  */}
       <div>
         {/* //* map and make search buttons */}
-        {searchButtons.map((btn) => {
+        {Filter.map((btn, index) => {
           return (
             <button
               key={btn.id}
-              className={
-                btn.value === 2
-                  ? `-left-3 z-10 ${
-                      btn.value === activeBtn
-                        ? "text-black bg-white SearchPanelButton"
-                        : "SearchPanelButton"
-                    }`
-                  : btn.value === 3
-                  ? `-left-4 z-0 ${
-                      btn.value === activeBtn
-                        ? "text-black bg-white SearchPanelButton"
-                        : "SearchPanelButton"
-                    }`
-                  : `z-20 ${
-                      btn.value === activeBtn
-                        ? "text-black bg-white SearchPanelButton"
-                        : "SearchPanelButton"
-                    }`
-              }
-              value={btn.value}
+              className={`${buttonClass()[index]} ${
+                activeBtn == btn.type && "text-black bg-white"
+              } SearchPanelButton`}
+              value={btn.title}
+              onClick={() => setActiveBtn(btn.type)}
             >
-              {btn.label}
+              {btn.title}
             </button>
           );
         })}
       </div>
       {/* //* search type select  */}
-      <div className=" bg-white rounded-md rounded-tl-none flex p-4 gap-x-2 border border-gray-default/20 overflow-x-hidden-hidden shadow-greenShaow">
-        {[false, true, false, false, false, false].map((item, index) => {
-          return (
+      <div className=" bg-white rounded-md rounded-tl-none flex items-center p-4 gap-x-2 border border-gray-default/20 overflow-x-hidden-hidden shadow-greenShaow">
+        {renderInputs().map((item, index) =>
+          !item.type ? (
             <div
               key={index}
               className="flex-1 relative flex flex-col border-r border-r-gray-default/40 gap-y-1 cursor-pointer"
             >
-              <div>Category</div>
+              <div>{item.label}</div>
               <div className="flex items-center justify-between mx-1">
-                <span className="text-gray-default">Istanbul</span>
+                <span className="text-gray-default text-sm">{item.label}</span>
                 <HiChevronDown className="icon text-black" />
               </div>
               {/* <MultiSelect status={item} /> */}
             </div>
-          );
-        })}
+          ) : (
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder={item.placeholder}
+                className="w-full rounded-md border border-border-gray focus:border-green-blue outline-none p-2"
+              />
+            </div>
+          )
+        )}
         <div className="flex items-center justify-center">
           <button className="button">Search</button>
         </div>

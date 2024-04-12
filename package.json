@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.540.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.1.1",
@@ -17,6 +18,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.8",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query": "^5.24.2",
+    "@tinymce/tinymce-react": "^5.0.1",
     "aws-sdk": "^2.1569.0",
     "axios": "^1.6.7",
     "cookies-next": "^4.1.1",

@@ -8,12 +8,18 @@ import SelectCategory from "@/app/(subPages)/new/SelectCategory";
 import SelectImage from "@/app/(subPages)/new/SelectImage";
 
 function page() {
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [step, setStep] = useState(1);
 
-  const categoryHandler = (name, value) => {
+  const dataHandler = (name, value) => {
     setData({ ...data, [name]: value });
   };
+
+  const imageHandler = (locations) => {
+    setData({ ...data, ...locations });
+  };
+
+  console.log(data);
 
   const renderSteps = () => {
     switch (step) {
@@ -21,13 +27,20 @@ function page() {
         return (
           <SelectCategory
             defaultValue={data}
-            handler={categoryHandler}
+            handler={dataHandler}
             setHandler={setStep}
           />
         );
         break;
       case 1:
-        return <SelectImage />;
+        return (
+          <SelectImage
+            data={data}
+            setData={setData}
+            dataHandler={dataHandler}
+            handler={imageHandler}
+          />
+        );
       default:
         break;
     }

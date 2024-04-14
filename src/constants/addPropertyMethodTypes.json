@@ -1,0 +1,54 @@
+[
+  {
+    "type": "Sell",
+    "category": "All",
+    "fields": [
+      "price",
+      "monthly_administrative_fees",
+      "room",
+      "gross",
+      "net",
+      "bathroom",
+      "age",
+      "total_floors",
+      "floor",
+      "name",
+      "parking",
+      "view",
+      "building_status",
+      "furnished",
+      "title_deed",
+      "using_status",
+      "other_features",
+      "city",
+      "region",
+      "quarter"
+    ]
+  },
+  {
+    "type": "Rent",
+    "category": "All",
+    "fields": [
+      "price",
+      "payment_method",
+      "deposit",
+      "room",
+      "gross",
+      "net",
+      "bathroom",
+      "age",
+      "total_floors",
+      "floor",
+      "name",
+      "parking",
+      "view",
+      "furnished",
+      "using_status",
+      "monthly_administrative_fees",
+      "other_features",
+      "city",
+      "region",
+      "quarter"
+    ]
+  }
+]

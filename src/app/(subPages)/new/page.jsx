@@ -6,10 +6,11 @@ import React, { useState } from "react";
 import Stepper from "@/app/(subPages)/new/Stepper";
 import SelectCategory from "@/app/(subPages)/new/SelectCategory";
 import SelectImage from "@/app/(subPages)/new/SelectImage";
+import Details from "@/app/(subPages)/new/Details";
 
 function page() {
   const [data, setData] = useState({});
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   const dataHandler = (name, value) => {
     setData({ ...data, [name]: value });
@@ -41,6 +42,8 @@ function page() {
             handler={imageHandler}
           />
         );
+      case 2:
+        return <Details data={data} handler={dataHandler} />;
       default:
         break;
     }

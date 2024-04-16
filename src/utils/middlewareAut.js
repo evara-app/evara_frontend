@@ -4,7 +4,7 @@ export default async function middlewareAuth(req) {
     {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${req.cookies.get("access").value}`,
+        Authorization: `Bearer ${req.cookies.get("access")?.value}`,
       },
     }
   ).then((res) => res.json());

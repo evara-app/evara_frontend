@@ -20,7 +20,7 @@
       "title_deed",
       "using_status",
       "other_features",
-      "city",
+      "country",
       "region",
       "quarter"
     ]
@@ -46,7 +46,7 @@
       "using_status",
       "monthly_administrative_fees",
       "other_features",
-      "city",
+      "country",
       "region",
       "quarter"
     ]

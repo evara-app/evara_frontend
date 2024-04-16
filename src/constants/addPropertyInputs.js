@@ -119,10 +119,10 @@ export const AddPropertyInputs = [
   },
   {
     id: 18,
-    label: "City",
+    label: "Countries",
     type: "Select",
-    name: "city",
-    placeholder: "Select City ...",
+    name: "country",
+    placeholder: "Select Countries ...",
   },
   {
     id: 19,

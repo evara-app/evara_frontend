@@ -10,19 +10,20 @@
       "net",
       "bathroom",
       "age",
-      "total_floors",
+      "total_floor",
       "floor",
       "name",
       "parking",
       "view",
       "building_status",
+      "completion_date",
       "furnished",
-      "title_deed",
+      "title_deed_type",
       "using_status",
-      "other_features",
+      "another_features",
       "country",
-      "region",
-      "quarter"
+      "city",
+      "province"
     ]
   },
   {
@@ -37,7 +38,7 @@
       "net",
       "bathroom",
       "age",
-      "total_floors",
+      "total_floor",
       "floor",
       "name",
       "parking",
@@ -45,10 +46,10 @@
       "furnished",
       "using_status",
       "monthly_administrative_fees",
-      "other_features",
+      "another_features",
       "country",
-      "region",
-      "quarter"
+      "city",
+      "province"
     ]
   }
 ]

@@ -52,7 +52,7 @@ export const AddPropertyInputs = [
     id: 8,
     label: "Building total floors",
     type: "Select",
-    name: "total_floors",
+    name: "total_floor",
     placeholder: "Building total floors ...",
   },
   {
@@ -79,7 +79,7 @@ export const AddPropertyInputs = [
   {
     id: 12,
     label: "Property profile",
-    type: "Select",
+    type: "Checkbox",
     name: "view",
     placeholder: "Select property profile ...",
   },
@@ -89,6 +89,13 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "building_status",
     placeholder: "Select Building status ...",
+  },
+  {
+    id: 21,
+    label: "Completion date",
+    type: "Select",
+    name: "completion_date",
+    placeholder: "Select Completion date ...",
   },
   {
     id: 14,
@@ -115,7 +122,8 @@ export const AddPropertyInputs = [
     id: 17,
     label: "Other features",
     type: "Checkbox",
-    name: "other_features",
+    name: "another_features",
+    placeholder: "Select Other features ...",
   },
   {
     id: 18,
@@ -126,16 +134,16 @@ export const AddPropertyInputs = [
   },
   {
     id: 19,
-    label: "Region",
+    label: "City",
     type: "Select",
-    name: "region",
-    placeholder: "Select Region ...",
+    name: "city",
+    placeholder: "Select City ...",
   },
   {
     id: 20,
-    label: "Quarter",
+    label: "Province",
     type: "Select",
-    name: "quarter",
-    placeholder: "Select Quarter ...",
+    name: "province",
+    placeholder: "Select Province ...",
   },
 ];

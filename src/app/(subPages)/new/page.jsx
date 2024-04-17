@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 //? import components
 import Stepper from "@/app/(subPages)/new/Stepper";
@@ -8,12 +9,61 @@ import SelectCategory from "@/app/(subPages)/new/SelectCategory";
 import SelectImage from "@/app/(subPages)/new/SelectImage";
 import Details from "@/app/(subPages)/new/Details";
 
+//? import service
+import { getCity, getProvince } from "@/services/addProperty";
+
 function page() {
   const [data, setData] = useState({});
+  const [selectValues, setSelectValues] = useState({});
   const [step, setStep] = useState(2);
 
-  const dataHandler = (name, value) => {
+  //get city details from db
+  const {
+    data: getCityData,
+    isPending: getCityPending,
+    mutateAsync: getCityMutateAsync,
+  } = useMutation({
+    mutationFn: getCity,
+  });
+
+  //get province details from db
+  const {
+    data: getProvinceData,
+    isPending: getProvincePending,
+    mutateAsync: getProvinceMutateAsync,
+  } = useMutation({
+    mutationFn: getProvince,
+  });
+
+  const dataHandler = async (name, value, type) => {
+    // if input is multi select define that and save array
+    if (type === "Checkbox") {
+      data[name]
+        ? setData({ ...data, [name]: [...data[name], value] })
+        : setData({ ...data, [name]: [value] });
+
+      return;
+    }
+
+    // normal set state
     setData({ ...data, [name]: value });
+
+    // define input country & city and get data from db
+    switch (name) {
+      case "country":
+        try {
+          const cityData = await getCityMutateAsync({ value });
+          setSelectValues({ ...selectValues, city: cityData });
+        } catch (error) {}
+        break;
+      case "city":
+        try {
+          const provinceData = await getProvinceMutateAsync({ value });
+          setSelectValues({ ...selectValues, province: provinceData });
+        } catch (error) {}
+      default:
+        break;
+    }
   };
 
   const imageHandler = (locations) => {
@@ -43,7 +93,14 @@ function page() {
           />
         );
       case 2:
-        return <Details data={data} handler={dataHandler} />;
+        return (
+          <Details
+            data={data}
+            handler={dataHandler}
+            selectValues={selectValues}
+            setSelectValues={setSelectValues}
+          />
+        );
       default:
         break;
     }

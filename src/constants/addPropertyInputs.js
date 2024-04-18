@@ -5,6 +5,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "price",
     placeholder: "price ...",
+    required: true,
+    requiredError: "Price is required field",
   },
   {
     id: 2,
@@ -12,6 +14,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "monthly_administrative_fees",
     placeholder: "Monthly administrative fees ...",
+    required: true,
+    requiredError: "Monthly administrative is required field",
   },
   {
     id: 3,
@@ -19,6 +23,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "room",
     placeholder: "Select room Number ...",
+    required: true,
+    requiredError: "Room is required field",
   },
   {
     id: 4,
@@ -26,6 +32,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "gross",
     placeholder: "Gross area ...",
+    required: true,
+    requiredError: "Gross area is required field",
   },
   {
     id: 5,
@@ -33,6 +41,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "net",
     placeholder: "Net area ...",
+    required: true,
+    requiredError: "Net area is required field",
   },
   {
     id: 6,
@@ -40,6 +50,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "bathroom",
     placeholder: "Select Bathroom ...",
+    required: true,
+    requiredError: "Bathroom is required field",
   },
   {
     id: 7,
@@ -47,6 +59,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "age",
     placeholder: "Building age ...",
+    required: true,
+    requiredError: "Building age is required field",
   },
   {
     id: 8,
@@ -54,6 +68,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "total_floor",
     placeholder: "Building total floors ...",
+    required: true,
+    requiredError: "Building total floors is required field",
   },
   {
     id: 9,
@@ -61,6 +77,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "floor",
     placeholder: "Floor ...",
+    required: true,
+    requiredError: "Floor is required field",
   },
   {
     id: 10,
@@ -75,6 +93,8 @@ export const AddPropertyInputs = [
     type: "Number",
     name: "parking",
     placeholder: "Parking ...",
+    required: true,
+    requiredError: "Parking is required field",
   },
   {
     id: 12,
@@ -82,6 +102,8 @@ export const AddPropertyInputs = [
     type: "Checkbox",
     name: "view",
     placeholder: "Select property profile ...",
+    required: true,
+    requiredError: "Property profile is required field",
   },
   {
     id: 13,
@@ -89,6 +111,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "building_status",
     placeholder: "Select Building status ...",
+    required: true,
+    requiredError: "Building status is required field",
   },
   {
     id: 21,
@@ -96,6 +120,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "completion_date",
     placeholder: "Select Completion date ...",
+    required: true,
+    requiredError: "Completion date is required field",
   },
   {
     id: 14,
@@ -103,6 +129,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "furnished",
     placeholder: "Select Furnished ...",
+    required: true,
+    requiredError: "Furnished is required field",
   },
   {
     id: 15,
@@ -110,6 +138,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "title_deed",
     placeholder: "Select Title deed type ...",
+    required: true,
+    requiredError: "Title deed type is required field",
   },
   {
     id: 16,
@@ -117,6 +147,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "using_status",
     placeholder: "Select Using status ...",
+    required: true,
+    requiredError: "Using status is required field",
   },
   {
     id: 17,
@@ -131,6 +163,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "country",
     placeholder: "Select Countries ...",
+    required: true,
+    requiredError: "Country is required field",
   },
   {
     id: 19,
@@ -138,6 +172,8 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "city",
     placeholder: "Select City ...",
+    required: true,
+    requiredError: "City is required field",
   },
   {
     id: 20,
@@ -145,5 +181,7 @@ export const AddPropertyInputs = [
     type: "Select",
     name: "province",
     placeholder: "Select Province ...",
+    required: true,
+    requiredError: "province is required field",
   },
 ];

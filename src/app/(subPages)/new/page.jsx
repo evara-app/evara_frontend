@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 //? import components
 import Stepper from "@/app/(subPages)/new/Stepper";
@@ -11,6 +13,9 @@ import Details from "@/app/(subPages)/new/Details";
 
 //? import service
 import { getCity, getProvince } from "@/services/addProperty";
+
+//? import inputs json file
+import { AddPropertyInputs } from "@/constants/addPropertyInputs";
 
 function page() {
   const [data, setData] = useState({});
@@ -70,7 +75,28 @@ function page() {
     setData({ ...data, ...locations });
   };
 
-  console.log(data);
+  const yupShapeFields = () => {
+    const yupFields = {};
+    AddPropertyInputs.forEach(
+      (input) => input.required && (yupFields[input.name] = input.requiredError)
+    );
+    return yupFields;
+  };
+
+  console.log(yupShapeFields());
+
+  const schema = Yup.object().shape(yupShapeFields());
+
+  const formik = useFormik({
+    initialValues: data || {},
+    validationSchema: schema,
+    // onSubmit,
+    validateOnChange: true,
+    validateOnBlur: true,
+    validateOnMount: true,
+  });
+
+  console.log(formik.errors);
 
   const renderSteps = () => {
     switch (step) {

@@ -17,19 +17,34 @@ function SelectInput({
   type,
   placeHolder,
   value,
+  error,
   items,
   name,
   handler,
 }) {
   return (
     <div className="flex flex-col gap-y-1 mt-2 relative">
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="flex items-center justify-between">
+        {label}
+        <span className="text-red-500 text-xs truncate max-w-xs">
+          {error && error}
+        </span>
+      </label>
       <button
-        className="border border-white-two p-2 rounded focus:border-green-blue outline-none w-full text-start flex justify-between items-center"
+        type="button"
+        className={`border border-white-two p-2 rounded outline-none w-full text-start flex justify-between items-center ${
+          error ? "focus:border-red-500" : "focus:border-green-blue"
+        }`}
         onClick={() => selectOpenHandler(name)}
       >
         {value ? (
-          <span className="text-gray-default">{Separator(value)}</span>
+          <span className="text-gray-default">
+            {!Array.isArray(value)
+              ? items.find((item) => item.id == value).name
+              : Separator(
+                  value.map((val) => items.find((item) => item.id == val).name)
+                )}
+          </span>
         ) : (
           <span className="text-white-two">{placeHolder}</span>
         )}
@@ -50,7 +65,7 @@ function SelectInput({
                       : ""
                   }`}
                   onClick={() => {
-                    handler(name, item.id, type);
+                    handler(name, item.id, type, item?.lat, item?.long);
                     selectOpenHandler(name);
                   }}
                 >

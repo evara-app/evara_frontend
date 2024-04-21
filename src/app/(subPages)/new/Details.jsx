@@ -12,6 +12,7 @@ import { AddPropertyInputs } from "@/constants/addPropertyInputs";
 import TextField from "@/common/TextField";
 import CustomSelect from "@/common/CustomSelect";
 import SelectInput from "@/components/addProperty/SelectInput";
+import Map from "@/components/addProperty/Map";
 
 //? import hooks
 import {
@@ -25,7 +26,15 @@ import Divider from "@mui/material/Divider";
 
 const selectNames = ["room", "countries"];
 
-function Details({ data, handler, selectValues, setSelectValues }) {
+function Details({
+  data,
+  handler,
+  mapHandler,
+  selectValues,
+  setSelectValues,
+  validation,
+  submit,
+}) {
   // get property details data
   const { data: rooms } = useGetRooms();
   const { data: countries } = useGetCountry();
@@ -67,7 +76,7 @@ function Details({ data, handler, selectValues, setSelectValues }) {
   }, [rooms, countries, propertyFields]);
 
   return (
-    <div>
+    <form onSubmit={submit}>
       <div className="grid grid-cols-3 gap-x-2 gap-y-4">
         {renderInputs().map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
@@ -78,7 +87,8 @@ function Details({ data, handler, selectValues, setSelectValues }) {
                   label={input.label}
                   name={input.name}
                   type={input.type}
-                  value={data[input.name] || ""}
+                  value={validation.values[input.name] || ""}
+                  error={validation.errors[input.name] || ""}
                   placeHolder={input.placeholder}
                   handler={(e) => handler(input.name, e.target.value)}
                 />
@@ -98,7 +108,8 @@ function Details({ data, handler, selectValues, setSelectValues }) {
                   label={input.label}
                   type={input.type}
                   name={input.name}
-                  value={data[input.name]}
+                  value={validation.values[input.name] || ""}
+                  error={validation.errors[input.name] || ""}
                   placeHolder={input.placeholder}
                   items={selectValues[input.name]}
                   handler={handler}
@@ -117,7 +128,13 @@ function Details({ data, handler, selectValues, setSelectValues }) {
           marginBottom: "25px",
         }}
       />
-    </div>
+      <Map data={data} handler={mapHandler} validation={validation} />
+      <div>
+        <button type="submit" className="button px-10">
+          Next
+        </button>
+      </div>
+    </form>
   );
 }
 

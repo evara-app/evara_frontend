@@ -185,3 +185,27 @@ export const AddPropertyInputs = [
     requiredError: "province is required field",
   },
 ];
+
+export const InputsError = [
+  {
+    id: 1,
+    type: "Text",
+    name: "image1",
+    required: true,
+    requiredError: "You must choose at least 3 photos",
+  },
+  {
+    id: 2,
+    type: "Text",
+    name: "image2",
+    required: true,
+    requiredError: "You must choose at least 3 photos",
+  },
+  {
+    id: 3,
+    type: "Text",
+    name: "image3",
+    required: true,
+    requiredError: "You must choose at least 3 photos",
+  },
+];

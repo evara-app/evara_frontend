@@ -15,12 +15,12 @@ import Details from "@/app/(subPages)/new/Details";
 import { getCity, getProvince } from "@/services/addProperty";
 
 //? import inputs json file
-import { AddPropertyInputs } from "@/constants/addPropertyInputs";
+import { AddPropertyInputs, InputsError } from "@/constants/addPropertyInputs";
 
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   //get city details from db
   const {
@@ -40,19 +40,8 @@ function page() {
     mutationFn: getProvince,
   });
 
-  const dataHandler = async (name, value, type) => {
-    // if input is multi select define that and save array
-    if (type === "Checkbox") {
-      data[name]
-        ? setData({ ...data, [name]: [...data[name], value] })
-        : setData({ ...data, [name]: [value] });
-
-      return;
-    }
-
-    // normal set state
-    setData({ ...data, [name]: value });
-
+  const dataHandler = async (name, value, type, lat, lng) => {
+    const coordinateFields = ["country", "city", "province"];
     // define input country & city and get data from db
     switch (name) {
       case "country":
@@ -69,34 +58,85 @@ function page() {
       default:
         break;
     }
+
+    // if input is multi select define that and save array
+    if (type === "Checkbox") {
+      data[name]
+        ? setData({ ...data, [name]: [...data[name], value] })
+        : setData({ ...data, [name]: [value] });
+
+      return;
+    } else if (coordinateFields.includes(name)) {
+      setData({ ...data, [name]: value, lat: lat, lng: lng });
+      return;
+    }
+
+    // normal set state
+    setData({ ...data, [name]: value });
   };
 
   const imageHandler = (locations) => {
     setData({ ...data, ...locations });
   };
 
+  const mapHandler = (event) => {
+    const latitude = event.latLng.lat();
+    const longitude = event.latLng.lng();
+    setData({ ...data, latitude: latitude, longitude: longitude });
+  };
+
+  // make formik fields validation with map
   const yupShapeFields = () => {
     const yupFields = {};
+    yupFields.title = Yup.string()
+      .required("Title is required field")
+      .min(3, "The title must have at least 3 characters");
+    yupFields.description = Yup.string()
+      .required("Description is required field")
+      .min(3, "The description must have at least 3 characters");
+    InputsError.forEach(
+      (input) =>
+        input.required &&
+        (yupFields[input.name] = Yup.string().required(input.requiredError))
+    );
     AddPropertyInputs.forEach(
-      (input) => input.required && (yupFields[input.name] = input.requiredError)
+      (input) =>
+        input.required &&
+        (yupFields[input.name] =
+          input.type === "Number" || input.type === "Text"
+            ? Yup.string().required(input.requiredError)
+            : Yup.mixed().required(input.requiredError))
     );
     return yupFields;
   };
 
-  console.log(yupShapeFields());
-
   const schema = Yup.object().shape(yupShapeFields());
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    switch (step) {
+      case 0:
+        break;
+      case 1:
+
+      default:
+        break;
+    }
+    console.log("send ");
+  };
 
   const formik = useFormik({
     initialValues: data || {},
     validationSchema: schema,
-    // onSubmit,
-    validateOnChange: true,
-    validateOnBlur: true,
-    validateOnMount: true,
+    onSubmit,
+    validateOnChange: false,
+    validateOnBlur: false,
+    validateOnMount: false,
+    enableReinitialize: true,
   });
 
-  console.log(formik.errors);
+  console.log(data);
+  // console.log(formik.errors);
 
   const renderSteps = () => {
     switch (step) {
@@ -115,6 +155,8 @@ function page() {
             data={data}
             setData={setData}
             dataHandler={dataHandler}
+            validation={formik}
+            submit={formik.handleSubmit}
             handler={imageHandler}
           />
         );
@@ -123,8 +165,11 @@ function page() {
           <Details
             data={data}
             handler={dataHandler}
+            mapHandler={mapHandler}
             selectValues={selectValues}
             setSelectValues={setSelectValues}
+            validation={formik}
+            submit={formik.handleSubmit}
           />
         );
       default:

@@ -12,7 +12,14 @@ import { imageUpload } from "@/services/images";
 //? import components
 import TeaxtField from "@/common/TextField";
 
-function SelectImage({ data, setData, dataHandler, handler }) {
+function SelectImage({
+  data,
+  setData,
+  dataHandler,
+  handler,
+  validation,
+  submit,
+}) {
   const uploadImage = useRef();
   const oneImageReplaceRef = useRef();
   const editorRef = useRef(null);
@@ -71,10 +78,17 @@ function SelectImage({ data, setData, dataHandler, handler }) {
   const submitHandler = async () => {};
 
   return (
-    <div>
+    <form onSubmit={submit}>
+      <label className="flex items-center justify-between mb-2">
+        Property images
+        <span className="text-red-500 text-xs truncate max-w-xs">
+          {validation.errors.image3 && validation.errors.image3}
+        </span>
+      </label>
       <div className="w-full flex flex-wrap gap-4">
         <div>
           <button
+            type="button"
             className="border-dashed border-2 dash border-white-two rounded-lg w-64 h-64 flex items-center justify-center hover:text-green-500"
             onClick={() => uploadImage.current.click()}
           >
@@ -113,17 +127,26 @@ function SelectImage({ data, setData, dataHandler, handler }) {
       </div>
       <div className="mt-5 flex flex-col gap-y-5">
         <TeaxtField
-          id="propertyName"
-          label="Property Name"
-          name="propertyName"
-          placeHolder="Write your property name"
-          value={data?.propertyName || ""}
+          id="title"
+          label="Title"
+          name="title"
+          placeHolder="Write your title"
+          value={data?.title || ""}
           type="Text"
-          handler={(e) => dataHandler("propertyName", e.target.value)}
+          error={validation.errors.title || ""}
+          handler={(e) => dataHandler("title", e.target.value)}
         />
         {/* tinymce for description */}
         <div>
-          <label htmlFor="description">Description</label>
+          <label
+            htmlFor="description"
+            className="flex items-center justify-between"
+          >
+            Description
+            <span className="text-red-500 text-xs truncate max-w-xs">
+              {validation.errors.description && validation.errors.description}
+            </span>
+          </label>
           <Editor
             id="description"
             onInit={(evt, editor) => (editorRef.current = editor)}
@@ -152,21 +175,20 @@ function SelectImage({ data, setData, dataHandler, handler }) {
         </div>
       </div>
       <div className="mt-5">
-        {images.length > 0 && (
-          <div className="flex items-center gap-x-2 ">
-            <button className="button px-10" onClick={submitHandler}>
-              Next
-            </button>
-            <button
-              className="rounded text-white font-medium bg-red-500 py-2 px-6"
-              onClick={clearHandler}
-            >
-              Clear
-            </button>
-          </div>
-        )}
+        <div className="flex items-center gap-x-2 ">
+          <button type="submit" className="button px-10">
+            Next
+          </button>
+          <button
+            type="button"
+            className="rounded text-white font-medium bg-red-500 py-2 px-6"
+            onClick={clearHandler}
+          >
+            Clear
+          </button>
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
 

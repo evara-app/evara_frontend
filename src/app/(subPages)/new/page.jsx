@@ -10,6 +10,7 @@ import Stepper from "@/app/(subPages)/new/Stepper";
 import SelectCategory from "@/app/(subPages)/new/SelectCategory";
 import SelectImage from "@/app/(subPages)/new/SelectImage";
 import Details from "@/app/(subPages)/new/Details";
+import Note from "@/app/(subPages)/new/Note";
 
 //? import service
 import { getCity, getProvince } from "@/services/addProperty";
@@ -20,7 +21,7 @@ import { AddPropertyInputs, InputsError } from "@/constants/addPropertyInputs";
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
 
   //get city details from db
   const {
@@ -94,6 +95,9 @@ function page() {
     yupFields.description = Yup.string()
       .required("Description is required field")
       .min(3, "The description must have at least 3 characters");
+    yupFields.note = Yup.string()
+      .required("Note is required field")
+      .min(3, "The Note must have at least 3 characters");
     InputsError.forEach(
       (input) =>
         input.required &&
@@ -114,6 +118,12 @@ function page() {
 
   const onSubmit = (event) => {
     event.preventDefault();
+    const stepValidations = [
+      {
+        firstStep: ["category", "SellOrBuy"],
+        secoundStep: []
+      },
+    ];
     switch (step) {
       case 0:
         break;
@@ -129,14 +139,14 @@ function page() {
     initialValues: data || {},
     validationSchema: schema,
     onSubmit,
-    validateOnChange: false,
-    validateOnBlur: false,
-    validateOnMount: false,
+    validateOnChange: true,
+    validateOnBlur: true,
+    validateOnMount: true,
     enableReinitialize: true,
   });
 
-  console.log(data);
-  // console.log(formik.errors);
+  // console.log(data);
+  console.log(formik.touched);
 
   const renderSteps = () => {
     switch (step) {
@@ -146,6 +156,7 @@ function page() {
             defaultValue={data}
             handler={dataHandler}
             setHandler={setStep}
+            submit={formik.handleSubmit}
           />
         );
         break;
@@ -168,6 +179,15 @@ function page() {
             mapHandler={mapHandler}
             selectValues={selectValues}
             setSelectValues={setSelectValues}
+            validation={formik}
+            submit={formik.handleSubmit}
+          />
+        );
+      case 3:
+        return (
+          <Note
+            data={data}
+            handler={dataHandler}
             validation={formik}
             submit={formik.handleSubmit}
           />

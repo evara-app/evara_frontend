@@ -18,24 +18,30 @@ function SelectInput({
   placeHolder,
   value,
   error,
+  touched,
   items,
   name,
   handler,
+  blurHandler,
 }) {
   return (
     <div className="flex flex-col gap-y-1 mt-2 relative">
       <label htmlFor={id} className="flex items-center justify-between">
         {label}
         <span className="text-red-500 text-xs truncate max-w-xs">
-          {error && error}
+          {touched && error && error}
         </span>
       </label>
       <button
         type="button"
+        name={name}
         className={`border border-white-two p-2 rounded outline-none w-full text-start flex justify-between items-center ${
           error ? "focus:border-red-500" : "focus:border-green-blue"
         }`}
-        onClick={() => selectOpenHandler(name)}
+        onClick={(e) => {
+          selectOpenHandler(name);
+          blurHandler(e);
+        }}
       >
         {value ? (
           <span className="text-gray-default">

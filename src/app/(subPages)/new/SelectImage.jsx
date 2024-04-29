@@ -82,12 +82,15 @@ function SelectImage({
       <label className="flex items-center justify-between mb-2">
         Property images
         <span className="text-red-500 text-xs truncate max-w-xs">
-          {validation.errors.image3 && validation.errors.image3}
+          {validation.touched.image3 &&
+            validation.errors.image3 &&
+            validation.errors.image3}
         </span>
       </label>
       <div className="w-full flex flex-wrap gap-4">
         <div>
           <button
+            name="images"
             type="button"
             className="border-dashed border-2 dash border-white-two rounded-lg w-64 h-64 flex items-center justify-center hover:text-green-500"
             onClick={() => uploadImage.current.click()}
@@ -97,9 +100,11 @@ function SelectImage({
           <input
             type="file"
             multiple
+            name="image3"
             ref={uploadImage}
             className="hidden"
             onChange={thumbnailHandler}
+            onClick={(e) => validation.handleBlur(e)}
           />
         </div>
         {images.map((image) => (
@@ -134,7 +139,9 @@ function SelectImage({
           value={data?.title || ""}
           type="Text"
           error={validation.errors.title || ""}
+          touched={validation.touched.title}
           handler={(e) => dataHandler("title", e.target.value)}
+          blurHandler={validation.handleBlur}
         />
         {/* tinymce for description */}
         <div>
@@ -144,18 +151,23 @@ function SelectImage({
           >
             Description
             <span className="text-red-500 text-xs truncate max-w-xs">
-              {validation.errors.description && validation.errors.description}
+              {validation.touched.description &&
+                validation.errors.description &&
+                validation.errors.description}
             </span>
           </label>
           <Editor
             id="description"
+            name="description"
             onInit={(evt, editor) => (editorRef.current = editor)}
             onSelectionChange={() =>
               dataHandler("description", editorRef.current.getContent())
             }
+            onBlur={(e) => validation.handleBlur(e)}
             initialValue=""
             apiKey="zc1euwls8684f7d9ag3r5q5iec187sjbhlvls32ibw1ra6hl"
             init={{
+              highlight_on_focus: false,
               selector: "textarea#open-source-plugins",
               plugins:
                 "preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons",

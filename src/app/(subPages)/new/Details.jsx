@@ -75,6 +75,9 @@ function Details({
     setSelectValues(updatedSelectValues);
   }, [rooms, countries, propertyFields]);
 
+  renderInputs().forEach((input) =>
+    console.log(Object.keys(validation.errors).includes(input.name))
+  );
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-3 gap-x-2 gap-y-4">
@@ -89,8 +92,10 @@ function Details({
                   type={input.type}
                   value={validation.values[input.name] || ""}
                   error={validation.errors[input.name] || ""}
+                  touched={validation.touched[input.name]}
                   placeHolder={input.placeholder}
                   handler={(e) => handler(input.name, e.target.value)}
+                  blurHandler={validation.handleBlur}
                 />
               </div>
             );
@@ -110,9 +115,11 @@ function Details({
                   name={input.name}
                   value={validation.values[input.name] || ""}
                   error={validation.errors[input.name] || ""}
+                  touched={validation.touched[input.name]}
                   placeHolder={input.placeholder}
                   items={selectValues[input.name]}
                   handler={handler}
+                  blurHandler={validation.handleBlur}
                 />
               </div>
             );

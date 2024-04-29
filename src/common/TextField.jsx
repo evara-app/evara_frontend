@@ -9,13 +9,15 @@ function TextField({
   name,
   handler,
   error,
+  touched,
+  blurHandler,
 }) {
   return (
     <div className="flex flex-col gap-y-1 mt-2">
       <label htmlFor={id} className="flex items-center justify-between">
         {label}
         <span className="text-red-500 text-xs truncate max-w-xs">
-          {error && error}
+          {touched && error && error}
         </span>
       </label>
       <input
@@ -28,6 +30,7 @@ function TextField({
         value={value}
         name={name}
         onChange={handler}
+        onBlur={blurHandler}
       />
     </div>
   );

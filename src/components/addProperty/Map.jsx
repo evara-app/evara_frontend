@@ -20,7 +20,6 @@ function Map({ data, handler, validation }) {
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyDdBi-i25sCVM7TPAkDElGLX5z7J7S_mpM",
   });
-  console.log(validation);
   return (
     <div className="rounded overflow-hidden mb-4">
       <label className="flex items-center justify-between mb-2">

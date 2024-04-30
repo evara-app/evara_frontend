@@ -28,6 +28,7 @@ const selectNames = ["room", "countries"];
 
 function Details({
   data,
+  inputs,
   handler,
   mapHandler,
   selectValues,
@@ -42,17 +43,6 @@ function Details({
 
   // states
   const [selectOpen, setSelectOpen] = useState(false);
-
-  // render property details page inputs
-  const renderInputs = () => {
-    const activeFields = AddPropertyMethodTypes.find(
-      (item) => item.type === "Sell" && item.category === "All"
-    ).fields;
-    const inputs = AddPropertyInputs.filter((input) =>
-      activeFields.includes(input.name)
-    );
-    return inputs;
-  };
 
   const selectOpenHandler = (name) => {
     if (name === selectOpen) {
@@ -75,13 +65,11 @@ function Details({
     setSelectValues(updatedSelectValues);
   }, [rooms, countries, propertyFields]);
 
-  renderInputs().forEach((input) =>
-    console.log(Object.keys(validation.errors).includes(input.name))
-  );
+  console.log(validation.errors);
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-3 gap-x-2 gap-y-4">
-        {renderInputs().map((input) => {
+        {inputs.map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
             return (
               <div key={input.id} className="col-span-1">

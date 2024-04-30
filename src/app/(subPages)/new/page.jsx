@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -17,11 +17,12 @@ import { getCity, getProvince } from "@/services/addProperty";
 
 //? import inputs json file
 import { AddPropertyInputs, InputsError } from "@/constants/addPropertyInputs";
+import AddPropertyMethodTypes from "@/constants/addPropertyMethodTypes.json";
 
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
 
   //get city details from db
   const {
@@ -86,6 +87,17 @@ function page() {
     setData({ ...data, latitude: latitude, longitude: longitude });
   };
 
+  // render property details page inputs
+  const renderInputs = () => {
+    const activeFields = AddPropertyMethodTypes.find(
+      (item) => item.type === data.SellOrBuy && item.category === data.category
+    ).fields;
+    const inputs = AddPropertyInputs.filter((input) =>
+      activeFields.includes(input.name)
+    );
+    return inputs;
+  };
+
   // make formik fields validation with map
   const yupShapeFields = () => {
     const yupFields = {};
@@ -103,7 +115,7 @@ function page() {
         input.required &&
         (yupFields[input.name] = Yup.string().required(input.requiredError))
     );
-    AddPropertyInputs.forEach(
+    renderInputs().forEach(
       (input) =>
         input.required &&
         (yupFields[input.name] =
@@ -114,14 +126,12 @@ function page() {
     return yupFields;
   };
 
-  const schema = Yup.object().shape(yupShapeFields());
-
   const onSubmit = (event) => {
     event.preventDefault();
     const stepValidations = [
       {
         firstStep: ["category", "SellOrBuy"],
-        secoundStep: []
+        secoundStep: [],
       },
     ];
     switch (step) {
@@ -135,6 +145,9 @@ function page() {
     console.log("send ");
   };
 
+  // update formik schema dynamic
+  let schema = Yup.object().shape();
+
   const formik = useFormik({
     initialValues: data || {},
     validationSchema: schema,
@@ -145,8 +158,14 @@ function page() {
     enableReinitialize: true,
   });
 
-  // console.log(data);
-  console.log(formik.touched);
+  useEffect(() => {
+    if (data.SellOrBuy && data.category) {
+      formik.validationSchema = Yup.object().shape(yupShapeFields());
+      console.log(yupShapeFields());
+    }
+  }, [data.SellOrBuy, data.category]);
+
+  console.log(formik);
 
   const renderSteps = () => {
     switch (step) {
@@ -175,6 +194,7 @@ function page() {
         return (
           <Details
             data={data}
+            inputs={renderInputs()}
             handler={dataHandler}
             mapHandler={mapHandler}
             selectValues={selectValues}

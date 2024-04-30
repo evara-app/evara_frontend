@@ -27,6 +27,38 @@
     ]
   },
   {
+    "type": "Sell",
+    "category": "Garden",
+    "fields": [
+      "price",
+      "gross",
+      "net",
+      "name",
+      "view",
+      "furnished",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  },
+  {
+    "type": "Sell",
+    "category": "Farm",
+    "fields": [
+      "price",
+      "gross",
+      "net",
+      "name",
+      "view",
+      "furnished",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  },
+  {
     "type": "Rent",
     "category": "All",
     "fields": [

@@ -5,6 +5,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 //? import icons
 import { IoImagesOutline } from "react-icons/io5";
+import { FaTrashCan } from "react-icons/fa6";
 
 //? import service
 import { imageUpload } from "@/services/images";
@@ -24,29 +25,41 @@ function SelectImage({
   const oneImageReplaceRef = useRef();
   const editorRef = useRef(null);
 
+  const [locations, setLocations] = useState([]);
   const [currentImage, setCurrentImage] = useState();
   const [imagesFinished, setImagesFinished] = useState([]);
   const [images, setImages] = useState([]);
-  const [imagesLink, setImagesLink] = useState([]);
+  const [imagesBlob, setImagesBlob] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
+  // upload images to amazon server and get location of images
   async function uploadImagesAws() {
+    const locations = [];
     const locationsArray = {};
     images.forEach(async (image, index, array) => {
       const { Location } = await imageUpload(image).then((data) =>
         data.promise()
       );
       locationsArray[`image${[image.id]}`] = Location;
-      if (Object.keys(locationsArray).length === array.length)
-        handler(locationsArray);
+      locations.push(Location);
+      if (locations.length === array.length) {
+        handler(locations);
+        setLocations(locationsArray);
+      }
     });
   }
 
   // show thumbnail for user
   const thumbnailHandler = (event) => {
+    let id = images.length && images[images.length - 1].id;
     const files = event.target.files;
     Object.keys(files).forEach((item, index) => {
-      files[item].id = index + 1;
+      files[item].id = id ? id + index + 1 : index + 1;
       setImages((prevstate) => [...prevstate, files[item]]);
+      setImagesBlob((prevstate) => [
+        ...prevstate,
+        { id: files[item].id, blob: URL.createObjectURL(files[item]) },
+      ]);
     });
     setImagesFinished(files);
   };
@@ -61,21 +74,32 @@ function SelectImage({
     setCurrentImage(image);
   };
 
-  // replace one image function
-  const oneImageHandler = (event) => {
-    const files = event.target.files;
-    const imagelClone = [...images];
-    const currentImageIndex = images.findIndex((src) => src == currentImage);
-    //replace the selected image with new image file
-    imagelClone.splice(currentImageIndex, 1, files[0]);
-    setImages(imagelClone);
+  //delete image handler
+  const imageDelHandler = (id) => {
+    delete locations[`image${id}`];
+    handler(locations);
+    setImages(images.filter((img) => img.id !== id));
+    setImagesBlob(imagesBlob.filter((img) => img.id !== id));
   };
 
   const clearHandler = () => {
     setImages([]);
   };
 
-  const submitHandler = async () => {};
+  // check is all inputs validated
+  const isValidated = () => {
+    const inputs = ["image3", "title", "description"];
+    const errors = Object.keys(validation.errors);
+    const inputNames = inputs.flatMap((input) => errors.includes(input));
+    if (inputNames.includes(true)) return;
+    return true;
+  };
+
+  // useEffect(() => {
+  //   if (isValidated()) setIsDisabled(isValidated());
+  // }, [validation.errors]);
+
+  // console.log(isValidated());
 
   return (
     <form onSubmit={submit}>
@@ -107,14 +131,19 @@ function SelectImage({
             onClick={(e) => validation.handleBlur(e)}
           />
         </div>
-        {images.map((image) => (
+        {imagesBlob.map((image) => (
           <div
             key={image.id}
             className="image-upload-preview"
             style={{
-              backgroundImage: `url(${URL.createObjectURL(image)})`,
+              backgroundImage: `url(${image.blob})`,
             }}
           >
+            <div className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-50 hover:bg-gray-700/60 transition">
+              <button onClick={() => imageDelHandler(image.id)} type="button">
+                <FaTrashCan className="w-4 h-4 text-white" />
+              </button>
+            </div>
             <div
               id={`image_preview${image.id}`}
               className="image-upload-preview-overlay bg-gray-200/80"

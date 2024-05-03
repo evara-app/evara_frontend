@@ -43,6 +43,7 @@ function Details({
 
   // states
   const [selectOpen, setSelectOpen] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const selectOpenHandler = (name) => {
     if (name === selectOpen) {
@@ -65,7 +66,18 @@ function Details({
     setSelectValues(updatedSelectValues);
   }, [rooms, countries, propertyFields]);
 
-  console.log(validation.errors);
+  // check is all inputs validated
+  const isValidated = () => {
+    const errors = Object.keys(validation.errors);
+    const inputNames = inputs.flatMap((input) => errors.includes(input.name));
+    if (inputNames.includes(true)) return false;
+    return true;
+  };
+
+  useEffect(() => {
+    if (isValidated()) setIsDisabled(isValidated());
+  }, [validation.errors]);
+
   return (
     <form onSubmit={submit}>
       <div className="grid grid-cols-3 gap-x-2 gap-y-4">
@@ -125,7 +137,11 @@ function Details({
       />
       <Map data={data} handler={mapHandler} validation={validation} />
       <div>
-        <button type="submit" className="button px-10">
+        <button
+          disabled={!isDisabled}
+          type="submit"
+          className={`${!isDisabled ? "disableButton" : "button"} px-10`}
+        >
           Next
         </button>
       </div>

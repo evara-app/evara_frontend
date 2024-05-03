@@ -129,12 +129,15 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
       </div>
       <div className="flex items-center gap-x-2 mt-5">
         <button
+          disabled={
+            defaultValue?.category && defaultValue?.SellOrBuy ? false : true
+          }
           className={
             defaultValue?.category && defaultValue?.SellOrBuy
               ? "button px-10"
               : "disableButton px-10"
           }
-          onClick={() => setHandler((prevstate) => prevstate + 2)}
+          onClick={() => setHandler((prevstate) => prevstate + 1)}
         >
           Next
         </button>

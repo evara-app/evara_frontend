@@ -22,7 +22,7 @@ import AddPropertyMethodTypes from "@/constants/addPropertyMethodTypes.json";
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
 
   //get city details from db
   const {
@@ -78,7 +78,7 @@ function page() {
   };
 
   const imageHandler = (locations) => {
-    setData({ ...data, ...locations });
+    setData({ ...data, images: locations });
   };
 
   const mapHandler = (event) => {
@@ -89,8 +89,10 @@ function page() {
 
   // render property details page inputs
   const renderInputs = () => {
+    const limitedTypes = ["Garden", "Farm"];
+    const type = limitedTypes.includes(data.category) ? data.category : "All";
     const activeFields = AddPropertyMethodTypes.find(
-      (item) => item.type === data.SellOrBuy && item.category === data.category
+      (item) => item.type === data.SellOrBuy && item.category === type
     ).fields;
     const inputs = AddPropertyInputs.filter((input) =>
       activeFields.includes(input.name)
@@ -128,12 +130,6 @@ function page() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    const stepValidations = [
-      {
-        firstStep: ["category", "SellOrBuy"],
-        secoundStep: [],
-      },
-    ];
     switch (step) {
       case 0:
         break;
@@ -146,7 +142,8 @@ function page() {
   };
 
   // update formik schema dynamic
-  let schema = Yup.object().shape();
+  const schema =
+    data.SellOrBuy && data.category && Yup.object().shape(yupShapeFields());
 
   const formik = useFormik({
     initialValues: data || {},
@@ -157,15 +154,6 @@ function page() {
     validateOnMount: true,
     enableReinitialize: true,
   });
-
-  useEffect(() => {
-    if (data.SellOrBuy && data.category) {
-      formik.validationSchema = Yup.object().shape(yupShapeFields());
-      console.log(yupShapeFields());
-    }
-  }, [data.SellOrBuy, data.category]);
-
-  console.log(formik);
 
   const renderSteps = () => {
     switch (step) {

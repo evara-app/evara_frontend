@@ -22,7 +22,7 @@ import AddPropertyMethodTypes from "@/constants/addPropertyMethodTypes.json";
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
 
   //get city details from db
   const {
@@ -112,11 +112,9 @@ function page() {
     yupFields.note = Yup.string()
       .required("Note is required field")
       .min(3, "The Note must have at least 3 characters");
-    InputsError.forEach(
-      (input) =>
-        input.required &&
-        (yupFields[input.name] = Yup.string().required(input.requiredError))
-    );
+    yupFields.images = Yup.array()
+      .required("Images is required field")
+      .min(3, "You must choose at least 3 photos");
     renderInputs().forEach(
       (input) =>
         input.required &&
@@ -130,14 +128,6 @@ function page() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    switch (step) {
-      case 0:
-        break;
-      case 1:
-
-      default:
-        break;
-    }
     console.log("send ");
   };
 

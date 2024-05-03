@@ -5,7 +5,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 //? import icons
 import { IoImagesOutline } from "react-icons/io5";
-import { FaTrashCan } from "react-icons/fa6";
+import { FaTrashCan, FaTruckFieldUn } from "react-icons/fa6";
 
 //? import service
 import { imageUpload } from "@/services/images";
@@ -88,27 +88,25 @@ function SelectImage({
 
   // check is all inputs validated
   const isValidated = () => {
-    const inputs = ["image3", "title", "description"];
-    const errors = Object.keys(validation.errors);
-    const inputNames = inputs.flatMap((input) => errors.includes(input));
-    if (inputNames.includes(true)) return;
-    return true;
+    const inputs = ["images", "title", "description"];
+    const errors = validation.errors;
+    const result = inputs.flatMap((input) => (errors[input] ? true : false));
+    if (result.indexOf(true) < 0) return setIsDisabled(true);
+    setIsDisabled(false);
   };
 
-  // useEffect(() => {
-  //   if (isValidated()) setIsDisabled(isValidated());
-  // }, [validation.errors]);
-
-  // console.log(isValidated());
+  useEffect(() => {
+    isValidated();
+  }, [validation.errors]);
 
   return (
     <form onSubmit={submit}>
       <label className="flex items-center justify-between mb-2">
         Property images
         <span className="text-red-500 text-xs truncate max-w-xs">
-          {validation.touched.image3 &&
-            validation.errors.image3 &&
-            validation.errors.image3}
+          {validation.touched.images &&
+            validation.errors.images &&
+            validation.errors.images}
         </span>
       </label>
       <div className="w-full flex flex-wrap gap-4">
@@ -139,14 +137,16 @@ function SelectImage({
               backgroundImage: `url(${image.blob})`,
             }}
           >
-            <div className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-50 hover:bg-gray-700/60 transition">
-              <button onClick={() => imageDelHandler(image.id)} type="button">
-                <FaTrashCan className="w-4 h-4 text-white" />
-              </button>
-            </div>
+            <button
+              onClick={() => imageDelHandler(image.id)}
+              type="button"
+              className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-10 hover:bg-gray-700/60 transition"
+            >
+              <FaTrashCan className="w-4 h-4 text-white" />
+            </button>
             <div
               id={`image_preview${image.id}`}
-              className="image-upload-preview-overlay bg-gray-200/80"
+              className="image-upload-preview-overlay bg-gray-200/80 z-30"
             ></div>
             <div className="image-upload-preview-overlay flex items-center justify-center">
               <div
@@ -217,7 +217,11 @@ function SelectImage({
       </div>
       <div className="mt-5">
         <div className="flex items-center gap-x-2 ">
-          <button type="submit" className="button px-10">
+          <button
+            disabled={!isDisabled}
+            type="submit"
+            className={`${!isDisabled ? "disableButton" : "button"} px-10`}
+          >
             Next
           </button>
           <button

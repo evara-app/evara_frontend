@@ -14,9 +14,8 @@ import { useGetAllCategories } from "@/hooks/useCategories";
 import { includeObj } from "@/utils/objectUtils";
 
 function SelectCategory({ defaultValue, handler, setHandler }) {
-  const { data: allCategories } = useGetAllCategories();
+  const { data: allCategories, isLoading } = useGetAllCategories();
   const { results } = allCategories || {};
-
   const [category, setCategory] = useState([]);
 
   const [sellOrRent, setSellOrRent] = useState([
@@ -60,7 +59,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
         return (
           <div className="absolute border border-white-two/40 w-full rounded top-12 bg-white start-0 z-20 max-h-60 overflow-y-scroll">
             <ul className="flex p-1 flex-col gap-y-1 cursor-pointer transition text-gray-default">
-              {!category ? (
+              {isLoading ? (
                 <Loading />
               ) : (
                 category.map((item) => (

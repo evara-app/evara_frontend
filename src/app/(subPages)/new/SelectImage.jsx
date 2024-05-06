@@ -20,6 +20,7 @@ function SelectImage({
   handler,
   validation,
   submit,
+  stepHandler,
 }) {
   const uploadImage = useRef();
   const oneImageReplaceRef = useRef();
@@ -221,6 +222,7 @@ function SelectImage({
             disabled={!isDisabled}
             type="submit"
             className={`${!isDisabled ? "disableButton" : "button"} px-10`}
+            onClick={() => stepHandler((prevstate) => prevstate + 1)}
           >
             Next
           </button>

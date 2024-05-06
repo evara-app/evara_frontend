@@ -166,6 +166,7 @@ function page() {
             validation={formik}
             submit={formik.handleSubmit}
             handler={imageHandler}
+            stepHandler={setStep}
           />
         );
       case 2:

@@ -105,7 +105,9 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
           <h5 className="ps-1 mb-1">Category</h5>
           <button
             id={1}
-            className="flex flex-auto text-white-two items-center justify-between p-2 border border-white-two/40 rounded relative"
+            className={`flex flex-auto items-center justify-between p-2 border border-white-two/40 rounded relative ${
+              defaultValue?.category ? "text-gray-default" : "text-white-two"
+            }`}
             onClick={openHandler}
           >
             {defaultValue?.category || "Select one category"}
@@ -117,7 +119,9 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
           <h5 className="ps-1 mb-1">Sell or by</h5>
           <button
             id={2}
-            className="flex flex-auto text-white-two items-center justify-between p-2 border border-white-two/40 rounded relative"
+            className={`flex flex-auto items-center justify-between p-2 border border-white-two/40 rounded relative ${
+              defaultValue?.SellOrBuy ? "text-gray-default" : "text-white-two"
+            }`}
             onClick={openHandler}
           >
             {defaultValue?.SellOrBuy || "Select one  Select Sell or by"}
@@ -136,7 +140,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
               ? "button px-10"
               : "disableButton px-10"
           }
-          onClick={() => setHandler((prevstate) => prevstate + 1)}
+          onClick={() => setHandler((prevstate) => prevstate + 3)}
         >
           Next
         </button>

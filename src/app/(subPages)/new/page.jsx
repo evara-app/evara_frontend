@@ -109,9 +109,6 @@ function page() {
     yupFields.description = Yup.string()
       .required("Description is required field")
       .min(3, "The description must have at least 3 characters");
-    yupFields.note = Yup.string()
-      .required("Note is required field")
-      .min(3, "The Note must have at least 3 characters");
     yupFields.images = Yup.array()
       .required("Images is required field")
       .min(3, "You must choose at least 3 photos");
@@ -128,7 +125,7 @@ function page() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("send ");
+    console.log("send");
   };
 
   // update formik schema dynamic

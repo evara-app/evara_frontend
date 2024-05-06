@@ -27,7 +27,6 @@ function SelectImage({
   const editorRef = useRef(null);
 
   const [locations, setLocations] = useState([]);
-  const [currentImage, setCurrentImage] = useState();
   const [imagesFinished, setImagesFinished] = useState([]);
   const [images, setImages] = useState([]);
   const [imagesBlob, setImagesBlob] = useState([]);
@@ -35,16 +34,16 @@ function SelectImage({
 
   // upload images to amazon server and get location of images
   async function uploadImagesAws() {
-    const locations = [];
+    let imagesLocation = [];
     const locationsArray = {};
     images.forEach(async (image, index, array) => {
       const { Location } = await imageUpload(image).then((data) =>
         data.promise()
       );
       locationsArray[`image${[image.id]}`] = Location;
-      locations.push(Location);
-      if (locations.length === array.length) {
-        handler(locations);
+      imagesLocation.push(Location);
+      if (imagesLocation.length === array.length) {
+        handler(imagesLocation);
         setLocations(locationsArray);
       }
     });
@@ -68,12 +67,6 @@ function SelectImage({
   useEffect(() => {
     if (imagesFinished.length) uploadImagesAws();
   }, [imagesFinished]);
-
-  // open the input to change the image
-  const oneImageReplaceRefHandler = (image) => {
-    oneImageReplaceRef.current.click();
-    setCurrentImage(image);
-  };
 
   //delete image handler
   const imageDelHandler = (id) => {
@@ -123,7 +116,7 @@ function SelectImage({
           <input
             type="file"
             multiple
-            name="image3"
+            name="images"
             ref={uploadImage}
             className="hidden"
             onChange={thumbnailHandler}

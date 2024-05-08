@@ -29,3 +29,8 @@ export function getProvince({ value }) {
     .get(`/api/v2/location/province/nested/${value}/`)
     .then(({ data }) => data.results);
 }
+
+export function addProperty(data) {
+  console.log(data);
+  // return http.post(`/api/v2/property`, data).then(({ data }) => data.data);
+}

@@ -1,6 +1,11 @@
 "use client";
 
-import React, { ChangeEvent, KeyboardEventHandler, useState } from "react";
+import React, {
+  ChangeEvent,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from "react";
 
 //? import components
 import SelectMenu from "@/common/SelectMenu";
@@ -10,12 +15,18 @@ import { FaGlobe } from "react-icons/fa6";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { IoChevronDownSharp } from "react-icons/io5";
 
+//? import hooks
+import { useGetCurrency } from "@/hooks/common";
+
 function CurrencyMenu() {
+  const { data } = useGetCurrency();
+
   const [status, setStatus] = useState(false);
   const [currency, setCurrency] = useState();
 
-  const currencyHandler = (event) => {
-    setCurrency(event.currentTarget.innerText);
+  const currencyHandler = (id) => {
+    localStorage.setItem("currency", id);
+    setCurrency(id);
     setStatus(false);
   };
 
@@ -26,6 +37,7 @@ function CurrencyMenu() {
   const closecurrencyHandler = (event) => {
     setStatus(false);
   };
+
   return (
     <div>
       <SelectMenu
@@ -35,12 +47,8 @@ function CurrencyMenu() {
             <BsCurrencyDollar className="icon" />
           </>
         }
-        list={[
-          { id: 1, name: "TRY" },
-          { id: 2, name: "EUR" },
-          { id: 3, name: "USD" },
-          { id: 4, name: "IRT" },
-        ]}
+        type="currency"
+        list={data || []}
         status={status}
         handler={currencyHandler}
         statusHandler={currencyStatusHandler}

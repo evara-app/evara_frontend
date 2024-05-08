@@ -13,7 +13,7 @@ import Details from "@/app/(subPages)/new/Details";
 import Note from "@/app/(subPages)/new/Note";
 
 //? import service
-import { getCity, getProvince } from "@/services/addProperty";
+import { getCity, getProvince, addProperty } from "@/services/addProperty";
 
 //? import inputs json file
 import { AddPropertyInputs, InputsError } from "@/constants/addPropertyInputs";
@@ -40,6 +40,15 @@ function page() {
     mutateAsync: getProvinceMutateAsync,
   } = useMutation({
     mutationFn: getProvince,
+  });
+
+  //add property request
+  const {
+    data: addPropertyData,
+    isPending: addPropertyPending,
+    mutateAsync: addPropertyMutateAsync,
+  } = useMutation({
+    mutationFn: addProperty,
   });
 
   const dataHandler = async (name, value, type, lat, lng) => {
@@ -123,9 +132,10 @@ function page() {
     return yupFields;
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
-    console.log("send");
+    const addProp = await addPropertyMutateAsync(data);
+    console.log(addProp);
   };
 
   // update formik schema dynamic
@@ -141,6 +151,7 @@ function page() {
     validateOnMount: true,
     enableReinitialize: true,
   });
+  // console.log(data);
 
   const renderSteps = () => {
     switch (step) {
@@ -148,7 +159,7 @@ function page() {
         return (
           <SelectCategory
             defaultValue={data}
-            handler={dataHandler}
+            handler={setData}
             setHandler={setStep}
             submit={formik.handleSubmit}
           />

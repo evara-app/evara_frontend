@@ -20,6 +20,7 @@ import {
   useGetCountry,
   useGetPropertyFields,
 } from "@/hooks/propertyDetails";
+import { useGetCurrency } from "@/hooks/common";
 
 //? import mui
 import Divider from "@mui/material/Divider";
@@ -40,6 +41,8 @@ function Details({
   const { data: rooms } = useGetRooms();
   const { data: countries } = useGetCountry();
   const { data: propertyFields } = useGetPropertyFields();
+  const { data: currency, isLoading } = useGetCurrency();
+  const currencyId = localStorage.getItem("currency") || 1;
 
   // states
   const [selectOpen, setSelectOpen] = useState(false);
@@ -70,6 +73,8 @@ function Details({
   const isValidated = () => {
     const errors = Object.keys(validation.errors);
     const inputNames = inputs.flatMap((input) => errors.includes(input.name));
+    if (data?.building_status === "ready")
+      errors.splice(errors.indexOf("completion_date"), 1);
     if (inputNames.includes(true)) return false;
     return true;
   };
@@ -90,6 +95,10 @@ function Details({
                   label={input.label}
                   name={input.name}
                   type={input.type}
+                  currency={
+                    !isLoading &&
+                    currency.find((item) => item.id == currencyId).abbreviation
+                  }
                   value={validation.values[input.name] || ""}
                   error={validation.errors[input.name] || ""}
                   touched={validation.touched[input.name]}

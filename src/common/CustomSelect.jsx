@@ -3,7 +3,7 @@ import React from "react";
 //? import components
 import Loading from "@/common/Loading";
 
-function CustomSelect({ items, name, handler }) {
+function CustomSelect({ items, name, handler, defaultValue }) {
   return (
     <div className="absolute border border-white-two/40 w-full rounded top-12 bg-white start-0 z-20">
       {items ? (
@@ -12,7 +12,13 @@ function CustomSelect({ items, name, handler }) {
             <li
               key={item.id}
               className="p-2 rounded hover:text-white hover:font-medium hover:bg-green-400 flex justify-start"
-              onClick={() => handler(name, item.value)}
+              onClick={() => {
+                handler({
+                  ...defaultValue,
+                  [name]: item.value,
+                  listing: item.id,
+                });
+              }}
             >
               {item.label}
             </li>

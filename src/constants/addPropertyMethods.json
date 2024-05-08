@@ -1,12 +1,17 @@
 [
   {
-    "id": 1,
+    "id": 2,
     "title": "Sell",
     "type": "Sell"
   },
   {
-    "id": 2,
+    "id": 1,
     "title": "Rent",
+    "type": "Rent"
+  },
+  {
+    "id": 3,
+    "title": "Daily rent",
     "type": "Rent"
   }
 ]

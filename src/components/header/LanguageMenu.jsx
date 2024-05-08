@@ -42,6 +42,7 @@ function LanguageMenu() {
           { id: 4, name: "русский" },
           { id: 5, name: "العربية" },
         ]}
+        type="default"
         status={status}
         handler={languageHandler}
         statusHandler={languageStatusHandler}

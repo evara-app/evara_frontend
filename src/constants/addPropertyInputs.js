@@ -3,7 +3,7 @@ export const AddPropertyInputs = [
     id: 1,
     label: "price",
     type: "Number",
-    name: "price",
+    name: "amount",
     placeholder: "price ...",
     required: true,
     requiredError: "Price is required field",

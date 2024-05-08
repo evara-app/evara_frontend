@@ -14,6 +14,7 @@ export default function SelectMenu({
   handler,
   statusHandler,
   handelrClose,
+  type,
 }) {
   const open = status;
   return (
@@ -53,9 +54,11 @@ export default function SelectMenu({
             <MenuItem
               className="hover:bg-white-two/30"
               key={menuItem.id}
-              onClick={handler}
+              onClick={() => handler(menuItem.id)}
             >
-              <span className="w-full text-center">{menuItem.name}</span>
+              <span className="w-full text-center">
+                {type === "currency" ? menuItem.abbreviation : menuItem.name}
+              </span>
             </MenuItem>
           );
         })}

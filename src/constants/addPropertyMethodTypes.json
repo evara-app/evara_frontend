@@ -3,7 +3,7 @@
     "type": "Sell",
     "category": "All",
     "fields": [
-      "price",
+      "amount",
       "monthly_administrative_fees",
       "room",
       "gross",
@@ -30,7 +30,7 @@
     "type": "Sell",
     "category": "Garden",
     "fields": [
-      "price",
+      "amount",
       "gross",
       "net",
       "name",
@@ -46,7 +46,7 @@
     "type": "Sell",
     "category": "Farm",
     "fields": [
-      "price",
+      "amount",
       "gross",
       "net",
       "name",

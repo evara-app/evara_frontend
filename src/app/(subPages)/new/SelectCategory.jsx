@@ -20,13 +20,18 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
 
   const [sellOrRent, setSellOrRent] = useState([
     {
-      id: 1,
+      id: 3,
       label: "Sell",
       value: "Sell",
     },
     {
-      id: 2,
+      id: 1,
       label: "Rent",
+      value: "Rent",
+    },
+    {
+      id: 2,
+      label: "Daily rent",
       value: "Rent",
     },
   ]);
@@ -74,7 +79,13 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
                       <li
                         key={child.id}
                         className="p-2 ps-4 rounded hover:text-white hover:font-medium hover:bg-green-400 flex justify-start"
-                        onClick={() => handler("category", child.name)}
+                        onClick={() => {
+                          handler({
+                            ...defaultValue,
+                            category: child.name,
+                            type: child.id,
+                          });
+                        }}
                       >
                         {child.name}
                       </li>
@@ -88,6 +99,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
       case 2:
         return (
           <CustomSelect
+            defaultValue={defaultValue}
             items={sellOrRent}
             name={"SellOrBuy"}
             handler={handler}
@@ -140,7 +152,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
               ? "button px-10"
               : "disableButton px-10"
           }
-          onClick={() => setHandler((prevstate) => prevstate + 3)}
+          onClick={() => setHandler((prevstate) => prevstate + 1)}
         >
           Next
         </button>

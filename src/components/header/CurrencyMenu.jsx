@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 //? import components
 import SelectMenu from "@/common/SelectMenu";
@@ -18,7 +19,9 @@ import { IoChevronDownSharp } from "react-icons/io5";
 //? import hooks
 import { useGetCurrency } from "@/hooks/common";
 
-function CurrencyMenu() {
+function CurrencyMenu({ subpage }) {
+  const queryClient = useQueryClient();
+
   const { data } = useGetCurrency();
 
   const [status, setStatus] = useState(false);
@@ -26,6 +29,7 @@ function CurrencyMenu() {
 
   const currencyHandler = (id) => {
     localStorage.setItem("currency", id);
+    queryClient.invalidateQueries({ queryKey: ["get-live-currency"] });
     setCurrency(id);
     setStatus(false);
   };
@@ -43,8 +47,12 @@ function CurrencyMenu() {
       <SelectMenu
         name={
           <>
-            <IoChevronDownSharp className="icon" />
-            <BsCurrencyDollar className="icon" />
+            <IoChevronDownSharp
+              className={`icon ${subpage && "text-white-two"}  `}
+            />
+            <BsCurrencyDollar
+              className={`icon ${subpage && "text-white-two"} `}
+            />
           </>
         }
         type="currency"

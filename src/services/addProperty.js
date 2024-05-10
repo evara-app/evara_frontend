@@ -30,7 +30,6 @@ export function getProvince({ value }) {
     .then(({ data }) => data.results);
 }
 
-export function addProperty(data) {
-  console.log(data);
-  // return http.post(`/api/v2/property`, data).then(({ data }) => data.data);
+export function addProperty({ data }) {
+  return http.post(`/api/v2/front/property/`, data).then(({ data }) => data.data);
 }

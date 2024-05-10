@@ -1,6 +1,7 @@
 import React from "react";
 
 function Note({ data, handler, validation, submit }) {
+  console.log(validation);
   return (
     <form onSubmit={submit} className="flex flex-col gap-y-2">
       <label htmlFor="note" className="flex items-center justify-between">

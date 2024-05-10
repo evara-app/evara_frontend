@@ -13,7 +13,7 @@ function TextField({
   touched,
   blurHandler,
 }) {
-  const items = ["price", "monthly_administrative_fees"];
+  const items = ["amount", "monthly_administrative_fees"];
   return (
     <div className="flex flex-col gap-y-1 mt-2 relative">
       <label htmlFor={id} className="flex items-center justify-between">
@@ -37,7 +37,7 @@ function TextField({
         />
         {items.includes(name) && (
           <div className="absolute end-0 top-0 text-white-two h-full flex items-center justify-center p-2">
-            USD
+            {currency}
           </div>
         )}
       </div>

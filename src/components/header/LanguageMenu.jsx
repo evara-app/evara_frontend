@@ -10,7 +10,7 @@ import { FaGlobe } from "react-icons/fa6";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { IoChevronDownSharp } from "react-icons/io5";
 
-function LanguageMenu() {
+function LanguageMenu({ subpage }) {
   const [status, setStatus] = useState(false);
   const [language, setLanguage] = useState();
 
@@ -31,8 +31,10 @@ function LanguageMenu() {
       <SelectMenu
         name={
           <>
-            <IoChevronDownSharp className="icon" />
-            <FaGlobe className="icon" />
+            <IoChevronDownSharp
+              className={`icon ${subpage && "text-white-two"}  `}
+            />
+            <FaGlobe className={`icon ${subpage && "text-white-two"}  `} />
           </>
         }
         list={[

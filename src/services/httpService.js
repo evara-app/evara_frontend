@@ -1,7 +1,7 @@
 import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
-const pathnames = ["/api/v2/front/profile/"];
+const pathnames = ["/api/v2/front/profile/" , "/api/v2/front/property/"];
 
 const app = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

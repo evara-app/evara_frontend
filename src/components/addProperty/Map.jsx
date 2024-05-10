@@ -25,10 +25,7 @@ function Map({ data, handler, validation }) {
       <label className="flex items-center justify-between mb-2">
         Select your coordinates
         <span className="text-red-500 text-xs truncate max-w-xs">
-          {!!validation.submitCount &&
-            !data.lat &&
-            !data.lng &&
-            "Coordinates is required field"}
+          {validation.errors.longitude && validation.errors.longitude}
         </span>
       </label>
       {isLoaded ? (

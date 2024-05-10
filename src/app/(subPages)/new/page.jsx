@@ -19,49 +19,48 @@ import { getCity, getProvince, addProperty } from "@/services/addProperty";
 import { AddPropertyInputs, InputsError } from "@/constants/addPropertyInputs";
 import AddPropertyMethodTypes from "@/constants/addPropertyMethodTypes.json";
 
+//? import hooks
+import { useGetLocalCurrency } from "@/hooks/common";
+
 function page() {
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
   const [step, setStep] = useState(0);
 
   //get city details from db
-  const {
-    data: getCityData,
-    isPending: getCityPending,
-    mutateAsync: getCityMutateAsync,
-  } = useMutation({
+  const { mutateAsync: getCityMutateAsync } = useMutation({
     mutationFn: getCity,
   });
 
   //get province details from db
-  const {
-    data: getProvinceData,
-    isPending: getProvincePending,
-    mutateAsync: getProvinceMutateAsync,
-  } = useMutation({
+  const { mutateAsync: getProvinceMutateAsync } = useMutation({
     mutationFn: getProvince,
   });
 
   //add property request
-  const {
-    data: addPropertyData,
-    isPending: addPropertyPending,
-    mutateAsync: addPropertyMutateAsync,
-  } = useMutation({
+  const { mutateAsync: addPropertyMutateAsync } = useMutation({
     mutationFn: addProperty,
   });
+
+  const { data: lcoalCurrency } = useGetLocalCurrency();
+  const currencyId = lcoalCurrency || 1;
 
   const dataHandler = async (name, value, type, lat, lng) => {
     const coordinateFields = ["country", "city", "province"];
     // define input country & city and get data from db
     switch (name) {
       case "country":
+        //delete city and province from data when country changed
+        data.city && delete data.city;
+        data.province && delete data.province;
         try {
           const cityData = await getCityMutateAsync({ value });
           setSelectValues({ ...selectValues, city: cityData });
         } catch (error) {}
         break;
       case "city":
+        //delete province from data when city changed
+        data.province && delete data.province;
         try {
           const provinceData = await getProvinceMutateAsync({ value });
           setSelectValues({ ...selectValues, province: provinceData });
@@ -72,6 +71,13 @@ function page() {
 
     // if input is multi select define that and save array
     if (type === "Checkbox") {
+      // remove the selected item from data
+      if (data[name] && data[name].includes(value)) {
+        return setData({
+          ...data,
+          [name]: data[name].filter((item) => item !== value),
+        });
+      }
       data[name]
         ? setData({ ...data, [name]: [...data[name], value] })
         : setData({ ...data, [name]: [value] });
@@ -121,6 +127,7 @@ function page() {
     yupFields.images = Yup.array()
       .required("Images is required field")
       .min(3, "You must choose at least 3 photos");
+    yupFields.longitude = Yup.string().required("Map is required field");
     renderInputs().forEach(
       (input) =>
         input.required &&
@@ -129,13 +136,13 @@ function page() {
             ? Yup.string().required(input.requiredError)
             : Yup.mixed().required(input.requiredError))
     );
+
     return yupFields;
   };
 
   const onSubmit = async (event) => {
-    event.preventDefault();
-    const addProp = await addPropertyMutateAsync(data);
-    console.log(addProp);
+    const { results } = await addPropertyMutateAsync({ data });
+    console.log(results.en);
   };
 
   // update formik schema dynamic
@@ -151,7 +158,10 @@ function page() {
     validateOnMount: true,
     enableReinitialize: true,
   });
-  // console.log(data);
+
+  useEffect(() => {
+    setData({ ...data, currency: currencyId });
+  }, []);
 
   const renderSteps = () => {
     switch (step) {
@@ -188,6 +198,7 @@ function page() {
             setSelectValues={setSelectValues}
             validation={formik}
             submit={formik.handleSubmit}
+            stepHandler={setStep}
           />
         );
       case 3:
@@ -212,3 +223,6 @@ function page() {
 }
 
 export default page;
+
+// 1 - check formik {...formik.getFieldProps(name)}
+// 2 - number inputs should separate

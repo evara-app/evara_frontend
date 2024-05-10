@@ -46,7 +46,7 @@ function SelectInput({
         {value ? (
           <span className="text-gray-default">
             {!Array.isArray(value)
-              ? items.find((item) => item.id == value).name
+              ? items?.find((item) => item.id == value)?.name
               : Separator(
                   value.map((val) => items.find((item) => item.id == val).name)
                 )}
@@ -64,9 +64,9 @@ function SelectInput({
                 <li
                   key={item.id}
                   className={`p-2 rounded hover:text-white hover:font-medium hover:bg-green-400 flex justify-start ${
-                    value === item.id
+                    value == item.id
                       ? "bg-green-400/70 text-white"
-                      : value?.includes(item.id)
+                      : Array.isArray(value) && value?.includes(item.id)
                       ? "bg-green-400/70 text-white"
                       : ""
                   }`}

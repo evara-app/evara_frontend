@@ -103,7 +103,7 @@ function SelectImage({
             validation.errors.images}
         </span>
       </label>
-      <div className="w-full flex flex-wrap gap-4">
+      <div className="w-full flex flex-wrap gap-4 justify-center md:justify-start">
         <div>
           <button
             name="images"

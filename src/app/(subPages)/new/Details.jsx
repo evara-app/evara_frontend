@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 //? import inputs json file
 import AddPropertyMethods from "@/constants/addPropertyMethods.json";
@@ -20,7 +20,7 @@ import {
   useGetCountry,
   useGetPropertyFields,
 } from "@/hooks/propertyDetails";
-import { useGetCurrency } from "@/hooks/common";
+import { useGetCurrency, useGetLocalCurrency } from "@/hooks/common";
 
 //? import mui
 import Divider from "@mui/material/Divider";
@@ -36,13 +36,15 @@ function Details({
   setSelectValues,
   validation,
   submit,
+  stepHandler,
 }) {
   // get property details data
   const { data: rooms } = useGetRooms();
   const { data: countries } = useGetCountry();
   const { data: propertyFields } = useGetPropertyFields();
   const { data: currency, isLoading } = useGetCurrency();
-  const currencyId = localStorage.getItem("currency") || 1;
+  const { data: lcoalCurrency } = useGetLocalCurrency();
+  const currencyId = lcoalCurrency || 1;
 
   // states
   const [selectOpen, setSelectOpen] = useState(false);
@@ -73,8 +75,6 @@ function Details({
   const isValidated = () => {
     const errors = Object.keys(validation.errors);
     const inputNames = inputs.flatMap((input) => errors.includes(input.name));
-    if (data?.building_status === "ready")
-      errors.splice(errors.indexOf("completion_date"), 1);
     if (inputNames.includes(true)) return false;
     return true;
   };
@@ -83,9 +83,11 @@ function Details({
     if (isValidated()) setIsDisabled(isValidated());
   }, [validation.errors]);
 
+  console.log(data);
+
   return (
     <form onSubmit={submit}>
-      <div className="grid grid-cols-3 gap-x-2 gap-y-4">
+      <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
         {inputs.map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
             return (
@@ -150,6 +152,7 @@ function Details({
           disabled={!isDisabled}
           type="submit"
           className={`${!isDisabled ? "disableButton" : "button"} px-10`}
+          onClick={() => stepHandler((prevstate) => prevstate + 1)}
         >
           Next
         </button>

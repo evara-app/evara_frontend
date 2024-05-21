@@ -104,10 +104,9 @@ function Details({
                   error={validation.errors[input.name] || ""}
                   touched={validation.touched[input.name]}
                   placeHolder={input.placeholder}
-                  handler={(e) => {
-                    handler(input.name, e.target.value);
-                    featuresHandler(input.name, e.target.value, input.features);
-                  }}
+                  handler={(e) =>
+                    handler(input.name, e.target.value, input.features)
+                  }
                   blurHandler={validation.handleBlur}
                 />
               </div>
@@ -132,7 +131,6 @@ function Details({
                   placeHolder={input.placeholder}
                   items={selectValues[input.name]}
                   handler={handler}
-                  featuresHandler={featuresHandler}
                   feature={input.features}
                   blurHandler={validation.handleBlur}
                 />

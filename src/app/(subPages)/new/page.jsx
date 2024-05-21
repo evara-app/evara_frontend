@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 //? import components
 import Stepper from "@/app/(subPages)/new/Stepper";
@@ -21,8 +22,11 @@ import AddPropertyMethodTypes from "@/constants/addPropertyMethodTypes.json";
 
 //? import hooks
 import { useGetLocalCurrency } from "@/hooks/common";
+import { Toast } from "@/hooks/Toast";
 
 function page() {
+  const router = useRouter();
+
   const [data, setData] = useState({});
   const [selectValues, setSelectValues] = useState({});
   const [step, setStep] = useState(0);
@@ -45,7 +49,8 @@ function page() {
   const { data: lcoalCurrency } = useGetLocalCurrency();
   const currencyId = lcoalCurrency || 1;
 
-  const dataHandler = async (name, value, type, lat, lng) => {
+  // our backend accept unnecessary fields in an object named "features" because of that we had to make object named "features" in data state and in the other hand we need to validate fields to handel this we need to set field directly in data. we send "features" object to data
+  const dataHandler = async (name, value, feature = false, type, lat, lng) => {
     const coordinateFields = ["country", "city", "province"];
     // define input country & city and get data from db
     switch (name) {
@@ -76,28 +81,39 @@ function page() {
         return setData({
           ...data,
           [name]: data[name].filter((item) => item !== value),
+          features: {
+            ...data.features,
+            [name]: data[name].filter((item) => item !== value),
+          },
         });
       }
       data[name]
-        ? setData({ ...data, [name]: [...data[name], value] })
-        : setData({ ...data, [name]: [value] });
+        ? setData({
+            ...data,
+            [name]: [...data[name], value],
+            features: { ...data.features, [name]: [...data[name], value] },
+          })
+        : setData({
+            ...data,
+            [name]: [value],
+            features: { ...data.features, [name]: [value] },
+          });
 
       return;
     } else if (coordinateFields.includes(name)) {
       setData({ ...data, [name]: value, lat: lat, lng: lng });
       return;
     }
-
     // normal set state
-    setData({ ...data, [name]: value });
-    console.log(data);
-  };
-
-  // set object with name features in data because backend need to save in this way
-  const featuresHandler = (name, value, feature) => {
     if (feature) {
-      setData({ ...data, features: { ...data.features, [name]: value } });
+      setData({
+        ...data,
+        [name]: value,
+        features: { ...data.features, [name]: value },
+      });
       return;
+    } else {
+      setData({ ...data, [name]: value });
     }
   };
 
@@ -151,7 +167,8 @@ function page() {
 
   const onSubmit = async (event) => {
     const { results } = await addPropertyMutateAsync({ data });
-    console.log(results.en);
+    Toast("success", results.en);
+    router.push("/");
   };
 
   // update formik schema dynamic
@@ -204,7 +221,6 @@ function page() {
             data={data}
             inputs={renderInputs()}
             handler={dataHandler}
-            featuresHandler={featuresHandler}
             mapHandler={mapHandler}
             selectValues={selectValues}
             setSelectValues={setSelectValues}

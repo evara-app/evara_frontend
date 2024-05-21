@@ -31,6 +31,7 @@ function Details({
   data,
   inputs,
   handler,
+  featuresHandler,
   mapHandler,
   selectValues,
   setSelectValues,
@@ -83,8 +84,6 @@ function Details({
     if (isValidated()) setIsDisabled(isValidated());
   }, [validation.errors]);
 
-  console.log(data);
-
   return (
     <form onSubmit={submit}>
       <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
@@ -105,7 +104,10 @@ function Details({
                   error={validation.errors[input.name] || ""}
                   touched={validation.touched[input.name]}
                   placeHolder={input.placeholder}
-                  handler={(e) => handler(input.name, e.target.value)}
+                  handler={(e) => {
+                    handler(input.name, e.target.value);
+                    featuresHandler(input.name, e.target.value, input.features);
+                  }}
                   blurHandler={validation.handleBlur}
                 />
               </div>
@@ -130,6 +132,8 @@ function Details({
                   placeHolder={input.placeholder}
                   items={selectValues[input.name]}
                   handler={handler}
+                  featuresHandler={featuresHandler}
+                  feature={input.features}
                   blurHandler={validation.handleBlur}
                 />
               </div>

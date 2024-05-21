@@ -22,6 +22,8 @@ function SelectInput({
   items,
   name,
   handler,
+  featuresHandler,
+  feature,
   blurHandler,
 }) {
   return (
@@ -72,6 +74,7 @@ function SelectInput({
                   }`}
                   onClick={() => {
                     handler(name, item.id, type, item?.lat, item?.long);
+                    featuresHandler(name, item.id, feature);
                     selectOpenHandler(name);
                   }}
                 >

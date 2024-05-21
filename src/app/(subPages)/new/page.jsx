@@ -90,6 +90,15 @@ function page() {
 
     // normal set state
     setData({ ...data, [name]: value });
+    console.log(data);
+  };
+
+  // set object with name features in data because backend need to save in this way
+  const featuresHandler = (name, value, feature) => {
+    if (feature) {
+      setData({ ...data, features: { ...data.features, [name]: value } });
+      return;
+    }
   };
 
   const imageHandler = (locations) => {
@@ -163,6 +172,8 @@ function page() {
     setData({ ...data, currency: currencyId });
   }, []);
 
+  // console.log(data);
+
   const renderSteps = () => {
     switch (step) {
       case 0:
@@ -193,6 +204,7 @@ function page() {
             data={data}
             inputs={renderInputs()}
             handler={dataHandler}
+            featuresHandler={featuresHandler}
             mapHandler={mapHandler}
             selectValues={selectValues}
             setSelectValues={setSelectValues}

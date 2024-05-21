@@ -83,7 +83,7 @@ function page() {
           [name]: data[name].filter((item) => item !== value),
           features: {
             ...data.features,
-            [name]: data[name].filter((item) => item !== value),
+            [value]: false,
           },
         });
       }
@@ -91,12 +91,12 @@ function page() {
         ? setData({
             ...data,
             [name]: [...data[name], value],
-            features: { ...data.features, [name]: [...data[name], value] },
+            features: { ...data.features, [value]: true },
           })
         : setData({
             ...data,
             [name]: [value],
-            features: { ...data.features, [name]: [value] },
+            features: { ...data.features, [value]: true },
           });
 
       return;
@@ -116,7 +116,7 @@ function page() {
       setData({ ...data, [name]: value });
     }
   };
-
+  console.log(data);
   const imageHandler = (locations) => {
     setData({ ...data, images: locations });
   };

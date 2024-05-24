@@ -2,11 +2,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 //? import compontns
-import Header from "@/app/(subPages)/properties/[slug]/Header";
-import AboutProperty from "@/app/(subPages)/properties/[slug]/AboutProperty";
-import PriceDetails from "@/app/(subPages)/properties/[slug]/PriceDetails";
-import PropertyAgent from "@/app/(subPages)/properties/[slug]/PropertyAgent";
-import TextAbout from "@/app/(subPages)/properties/[slug]/TextAbout";
+import Header from "@/app/(subPages)/property/[slug]/Header";
+import AboutProperty from "@/app/(subPages)/property/[slug]/AboutProperty";
+import PriceDetails from "@/app/(subPages)/property/[slug]/PriceDetails";
+import PropertyAgent from "@/app/(subPages)/property/[slug]/PropertyAgent";
+import TextAbout from "@/app/(subPages)/property/[slug]/TextAbout";
 
 //? icons
 import { HiOutlineLocationMarker } from "react-icons/hi";

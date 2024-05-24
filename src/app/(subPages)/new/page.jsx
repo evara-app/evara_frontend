@@ -166,9 +166,11 @@ function page() {
   };
 
   const onSubmit = async (event) => {
-    const { results } = await addPropertyMutateAsync({ data });
-    Toast("success", results.en);
-    router.push("/");
+    try {
+      const { results } = await addPropertyMutateAsync({ data });
+      Toast("success", results.en);
+      router.push("/");
+    } catch (error) {}
   };
 
   // update formik schema dynamic

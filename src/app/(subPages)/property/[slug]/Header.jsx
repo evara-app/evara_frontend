@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 
 //? import components
-import Carousel from "@/app/(subPages)/properties/[slug]/Carousel";
+import Carousel from "@/app/(subPages)/property/[slug]/Carousel";
 
 function Header() {
   const swiper1Ref = useRef();

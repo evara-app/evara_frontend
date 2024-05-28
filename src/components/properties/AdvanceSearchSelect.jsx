@@ -38,7 +38,7 @@ const multiInputStyle = {
 };
 const animatedComponents = makeAnimated();
 
-function AdvanceSearchSelect() {
+function AdvanceSearchSelect({ filter, filterHandler }) {
   const { data: country } = useGetCountry();
   const { data: rooms } = useGetRooms();
   const { data: propertyFields } = useGetPropertyFields();
@@ -48,36 +48,36 @@ function AdvanceSearchSelect() {
 
   useEffect(() => {
     const updatedOptions = { ...options };
+    // change structure of api data because react-select accept this way
     if (country && rooms && another_features) {
-      updatedOptions.country = country.map((item) => {
-        return { label: item.name, value: item.id };
-      });
-      updatedOptions.room = rooms.map((item) => {
-        return { label: item.name, value: item.id };
-      });
-      updatedOptions.features = another_features.map((item) => {
-        return { label: item.name, value: item.id };
-      });
+      const transformData = (data) =>
+        data.map((item) => ({ label: item.name, value: item.id }));
+      updatedOptions.country = transformData(country);
+      updatedOptions.room = transformData(rooms);
+      updatedOptions.features = transformData(another_features);
     }
     setOptions(updatedOptions);
   }, [country, rooms, another_features]);
+
+  useEffect(() => {}, []);
 
   console.log(options);
 
   return (
     <div>
-      {PropertiesFilter.map((filter) => {
-        return filter.type === "Select" ? (
+      {PropertiesFilter.map((filters) => {
+        return filters.type === "Select" ? (
           <AsyncSelect
-            key={filter.id}
+            key={filters.id}
             styles={multiInputStyle}
-            components={animatedComponents}
-            placeholder={filter.label}
-            defaultOptions={options[filter.name]}
             isMulti
+            components={animatedComponents}
+            placeholder={filters.label}
+            defaultOptions={options[filters.name]}
+            onChange={(event) => filterHandler(event, filters.name)}
           />
         ) : (
-          <input key={filter.id} type="text" />
+          <input key={filters.id} type="text" />
         );
       })}
     </div>

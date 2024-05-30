@@ -14,6 +14,7 @@
   --cyan-green: #03b9a2;
   --blue-gray: #f8f9fd;
   --border-gray: #9ca3af;
+  --green-dark: #21aa58;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -45,7 +46,7 @@ body {
     @apply text-white-two pb-1 relative hover:text-white before:absolute before:hover:w-full before:transition-all before:h-[2px] before:bg-green-blue before:bottom-0 before:w-0;
   }
   .SearchPanelButton {
-    @apply bg-white-two shadow-SearchPanelButton py-3 px-6 rounded-t-md relative text-white;
+    @apply bg-white-two shadow-SearchPanelButton py-3 px-2 md:px-6 text-xs md:text-base rounded-t-md relative text-white;
   }
   .checkBox {
     @apply form-checkbox w-5 h-5 rounded text-green-blue focus:ring-2 ring-offset-1 ring-offset-green-blue !ring-green-blue;
@@ -54,7 +55,7 @@ body {
     @apply rounded text-white font-medium bg-gradient-to-tr from-green-blue to-cyan-default py-2 px-6;
   }
   .disableButton {
-    @apply rounded text-white-two font-medium bg-gray-100 py-2 px-6;
+    @apply rounded text-white-two font-medium bg-gray-100 py-2 px-2 md:px-6 text-xs md:text-base;
   }
   .authActiveButton {
     @apply rounded-md text-white bg-[#85948b] py-4 flex-1;

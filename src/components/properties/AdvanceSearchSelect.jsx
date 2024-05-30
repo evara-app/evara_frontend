@@ -61,7 +61,9 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
 
   useEffect(() => {}, []);
 
-  console.log(options);
+  const loadOptions = async (inputValue, callback) => {
+    console.log(inputValue, callback);
+  };
 
   return (
     <div>
@@ -71,10 +73,12 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
             key={filters.id}
             styles={multiInputStyle}
             isMulti
+            instanceId
             components={animatedComponents}
             placeholder={filters.label}
             defaultOptions={options[filters.name]}
             onChange={(event) => filterHandler(event, filters.name)}
+            loadOptions={loadOptions}
           />
         ) : (
           <input key={filters.id} type="text" />

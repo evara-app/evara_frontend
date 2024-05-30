@@ -2,11 +2,10 @@
   {
     "type": "Buy",
     "fields": ["category", "city", "region", "quarter", "price", "room"]
-  }
-  ,
+  },
   {
     "type": "Rent",
-    "fields": ["city", "region", "quarter"]
+    "fields": ["category", "city", "region"]
   },
   {
     "type": "General",

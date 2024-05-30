@@ -14,6 +14,7 @@ const config: Config = {
       backgroundImage: {
         homeBackground:
           "linear-gradient(91deg,rgba(67,181,226,.5),rgba(136,197,71,.3)),linear-gradient(359deg,rgba(0,0,0,.5),rgba(0,0,0,.7)), url('/assets/img/navbarBg.jpg')",
+        posterBackground: "url('/assets/img/poster.jpg')",
       },
       colors: {
         "green-blue": "#00bb7e",
@@ -24,6 +25,7 @@ const config: Config = {
         "--cyan-green": "#03B9A2",
         "blue-gray": "#f8f9fd",
         "border-gray": "#9ca3af",
+        "green-dark": "#21aa58",
       },
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],

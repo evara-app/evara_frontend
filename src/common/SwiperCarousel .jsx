@@ -9,19 +9,27 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 //? import required modules
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay, FreeMode } from "swiper/modules";
 
 function SwiperCarousel({ list, children }) {
   return (
     <Swiper
-      slidesPerView={3}
-      spaceBetween={30}
+      className="py-5"
+      slidesPerView="auto"
+      spaceBetween={10}
+      freeMode={true}
       pagination={true}
-      modules={[Pagination]}
-      className="mySwiper"
+      loop={true}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      modules={[Pagination, FreeMode]}
     >
       {list.map((item) => (
-        <SwiperSlide key={item}>{children}</SwiperSlide>
+        <SwiperSlide key={item} className="max-w-xs">
+          {children}
+        </SwiperSlide>
       ))}
     </Swiper>
   );

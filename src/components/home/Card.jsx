@@ -9,15 +9,15 @@ import SizeIcon from "&/assets/svg/size.svg";
 import BedIcon from "&/assets/svg/bed.svg";
 import FloorIcon from "&/assets/svg/floor.svg";
 
-function RoundedCard() {
+function Card() {
   return (
     <Link href="#">
-      <div className="max-w-xs overflow-hidden relative bg-gray-100">
-        <div className="rounded__card__tl shadow-[0_10px_20px_0_rgb(0,0,0,10%)] bg-white">
-          <div className="aspect-w-16 aspect-h-14 rounded-tl-[50%]">
+      <div className="max-w-xs overflow-hidden relative bg-gray-100 rounded-md">
+        <div className="shadow-[0_10px_20px_0_rgb(0,0,0,10%)] bg-white p-4">
+          <div className="aspect-w-16 aspect-h-14 rounded-md">
             <Image
               src="/assets/img/auth.jpg"
-              className="rounded-tl-[50%]"
+              className="rounded-md"
               alt="thumbnail"
               fill
               objectFit="cover"
@@ -54,4 +54,4 @@ function RoundedCard() {
   );
 }
 
-export default RoundedCard;
+export default Card;

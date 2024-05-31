@@ -13,6 +13,7 @@ import {
   useGetRooms,
   useGetPropertyFields,
 } from "@/hooks/propertyDetails";
+import { useGetAllCategories } from "@/hooks/useCategories";
 
 // const options = [
 //   { value: "chocolate", label: "Chocolate" },
@@ -39,10 +40,29 @@ const multiInputStyle = {
 const animatedComponents = makeAnimated();
 
 function AdvanceSearchSelect({ filter, filterHandler }) {
+  const { data: allCategories, isLoading } = useGetAllCategories();
+  const { results: categories } = allCategories || {};
   const { data: country } = useGetCountry();
   const { data: rooms } = useGetRooms();
   const { data: propertyFields } = useGetPropertyFields();
   const { another_features } = propertyFields?.data || {};
+  const transactionType = [
+    {
+      id: 2,
+      name: "Sell",
+      type: "Sell",
+    },
+    {
+      id: 1,
+      name: "Rent",
+      type: "Rent",
+    },
+    {
+      id: 3,
+      name: "Daily rent",
+      type: "Rent",
+    },
+  ];
 
   const [options, setOptions] = useState({});
 
@@ -55,6 +75,12 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
       updatedOptions.country = transformData(country);
       updatedOptions.room = transformData(rooms);
       updatedOptions.features = transformData(another_features);
+      updatedOptions.transactionType = transformData(transactionType);
+      Object.keys(categories).map((item) => {
+        updatedOptions.propertyType = transformData(categories[item]);
+        // console.log(...categories[item]);
+      });
+      // updatedOptions.propertyType = transformData(categories);
     }
     setOptions(updatedOptions);
   }, [country, rooms, another_features]);
@@ -64,6 +90,9 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
   const loadOptions = async (inputValue, callback) => {
     console.log(inputValue, callback);
   };
+
+  console.log(options);
+  // console.log(categories);
 
   return (
     <div>

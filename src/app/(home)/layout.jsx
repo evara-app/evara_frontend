@@ -5,6 +5,7 @@ import estedadFont from "@/constants/localFonts";
 //? import components
 import Header from "@/app/(home)/header";
 import Provider from "@/app/Providers";
+import Footer from "@/app/(home)/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <Provider>
           <Header />
           {children}
+          <Footer />
         </Provider>
       </body>
     </html>

@@ -51,13 +51,13 @@ export const PropertiesFilter = [
     id: 9,
     label: "Select transaction type",
     type: "Select",
-    name: "sellOrRent",
+    name: "transactionType",
   },
   {
     id: 10,
     label: "Select propery type",
     type: "Select",
-    name: "type",
+    name: "propertyType",
   },
   {
     id: 11,

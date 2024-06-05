@@ -13,9 +13,9 @@ export const PropertiesFilter = [
   },
   {
     id: 3,
-    label: "Select region",
+    label: "Select province",
     type: "Select",
-    name: "region",
+    name: "province",
   },
   {
     id: 4,

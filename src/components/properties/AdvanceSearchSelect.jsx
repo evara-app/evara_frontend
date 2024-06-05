@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
-
+import { useMutation } from "@tanstack/react-query";
 //? import constants
 import { PropertiesFilter } from "@/constants/propertiesFilters";
 
@@ -14,6 +14,9 @@ import {
   useGetPropertyFields,
 } from "@/hooks/propertyDetails";
 import { useGetAllCategories } from "@/hooks/useCategories";
+
+//? import service
+import { getCities, getProvinces } from "@/services/properties";
 
 // const options = [
 //   { value: "chocolate", label: "Chocolate" },
@@ -37,6 +40,25 @@ const multiInputStyle = {
     ":hover": { backgroundColor: "#dcfce7" },
   }),
 };
+
+const groupStyles = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+};
+const groupBadgeStyles = {
+  backgroundColor: "#EBECF0",
+  borderRadius: "2em",
+  color: "#172B4D",
+  display: "inline-block",
+  fontSize: 12,
+  fontWeight: "normal",
+  lineHeight: "1",
+  minWidth: 1,
+  padding: "0.16666666666667em 0.5em",
+  textAlign: "center",
+};
+
 const animatedComponents = makeAnimated();
 
 function AdvanceSearchSelect({ filter, filterHandler }) {
@@ -64,6 +86,12 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
     },
   ];
 
+  // react query
+  const { isPending: citiesPending, mutateAsync: getCitiesMutate } =
+    useMutation({ mutationFn: getCities });
+  const { isPending: provincesPending, mutateAsync: getProvincesMutate } =
+    useMutation({ mutationFn: getProvinces });
+
   const [options, setOptions] = useState({});
 
   useEffect(() => {
@@ -85,14 +113,55 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
     setOptions(updatedOptions);
   }, [country, rooms, another_features]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const updatedOptions = { ...options };
+    // change structure of api data because react-select accept this way
+    const transformData = (data) =>
+      data.map((item) => ({ label: item.name, value: item.id }));
+
+    const transformDataWithParent = (data, parent) => console.log(data, parent);
+
+    // get cities options for select filter
+    const fetchCities = async () => {
+      try {
+        const { results } = await getCitiesMutate(filter.country);
+        updatedOptions.city = transformData(results);
+        setOptions(updatedOptions);
+      } catch (error) {}
+    };
+
+    // get province options for select filter
+    const fetchProvince = async () => {
+      try {
+        // get city name
+        const parent = options.city.find(
+          (item) => item.value == filter.city
+        )?.label;
+
+        const { results } = await getProvincesMutate(filter.city);
+
+        transformDataWithParent(results, parent);
+        // setOptions(updatedOptions);
+      } catch (error) {}
+    };
+
+    if (filter.country) fetchCities();
+    if (filter.city) fetchProvince();
+  }, [filter]);
 
   const loadOptions = async (inputValue, callback) => {
     console.log(inputValue, callback);
   };
 
-  console.log(options);
+  // console.log(options);
   // console.log(categories);
+
+  const formatGroupLabel = (data) => (
+    <div style={groupStyles}>
+      <span>{data.label}</span>
+      <span style={groupBadgeStyles}>{data.options.length}</span>
+    </div>
+  );
 
   return (
     <div>
@@ -100,14 +169,16 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
         return filters.type === "Select" ? (
           <AsyncSelect
             key={filters.id}
+            classNamePrefix="select2-selection"
             styles={multiInputStyle}
-            isMulti
+            isMulti={filters.name === "country" ? false : true}
             instanceId
             components={animatedComponents}
             placeholder={filters.label}
             defaultOptions={options[filters.name]}
             onChange={(event) => filterHandler(event, filters.name)}
             loadOptions={loadOptions}
+            formatGroupLabel={formatGroupLabel}
           />
         ) : (
           <input key={filters.id} type="text" />

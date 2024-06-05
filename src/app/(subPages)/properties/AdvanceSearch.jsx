@@ -9,7 +9,9 @@ function AdvanceSearch() {
   const [filter, setFilter] = useState({});
 
   const filterHandler = (event, name) => {
-    setFilter({ ...filter, [name]: event.map((item) => item.value) });
+    Array.isArray(event)
+      ? setFilter({ ...filter, [name]: event.map((item) => item.value) })
+      : setFilter({ ...filter, [name]: event.value });
   };
   console.log(filter);
   return (

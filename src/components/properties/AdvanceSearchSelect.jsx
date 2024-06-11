@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useMutation } from "@tanstack/react-query";
+
 //? import constants
 import { PropertiesFilter } from "@/constants/propertiesFilters";
 
@@ -17,12 +18,6 @@ import { useGetAllCategories } from "@/hooks/useCategories";
 
 //? import service
 import { getCities, getProvinces } from "@/services/properties";
-
-// const options = [
-//   { value: "chocolate", label: "Chocolate" },
-//   { value: "strawberry", label: "Strawberry" },
-//   { value: "vanilla", label: "Vanilla" },
-// ];
 
 const multiInputStyle = {
   control: (baseStyles, state) => ({
@@ -61,7 +56,7 @@ const groupBadgeStyles = {
 
 const animatedComponents = makeAnimated();
 
-function AdvanceSearchSelect({ filter, filterHandler }) {
+function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
   const { data: allCategories, isLoading } = useGetAllCategories();
   const { results: categories } = allCategories || {};
   const { data: country } = useGetCountry();
@@ -70,17 +65,17 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
   const { another_features } = propertyFields?.data || {};
   const transactionType = [
     {
-      id: 2,
+      id: "BU",
       name: "Sell",
       type: "Sell",
     },
     {
-      id: 1,
+      id: "RE",
       name: "Rent",
       type: "Rent",
     },
     {
-      id: 3,
+      id: "DR",
       name: "Daily rent",
       type: "Rent",
     },
@@ -119,7 +114,17 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
     const transformData = (data) =>
       data.map((item) => ({ label: item.name, value: item.id }));
 
-    const transformDataWithParent = (data, parent) => console.log(data, parent);
+    const transformDataWithParent = (data, parents) => {
+      return parents.map((parent) => ({
+        label: parent,
+        options: data
+          .filter((item) => item.parentLabel === parent)
+          .map((item) => ({
+            label: item.name,
+            value: item.id,
+          })),
+      }));
+    };
 
     // get cities options for select filter
     const fetchCities = async () => {
@@ -133,15 +138,19 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
     // get province options for select filter
     const fetchProvince = async () => {
       try {
-        // get city name
-        const parent = options.city.find(
-          (item) => item.value == filter.city
-        )?.label;
+        // get cities name in array
+        const parents = filter.city.map(
+          (item) => options.city.find((cit) => cit.value == item)?.label
+        );
 
+        // get province from data
         const { results } = await getProvincesMutate(filter.city);
 
-        transformDataWithParent(results, parent);
-        // setOptions(updatedOptions);
+        // set province names with parent name to options
+        updatedOptions.province = transformDataWithParent(results, parents);
+
+        // set options state
+        setOptions(updatedOptions);
       } catch (error) {}
     };
 
@@ -164,24 +173,34 @@ function AdvanceSearchSelect({ filter, filterHandler }) {
   );
 
   return (
-    <div>
+    <div className="grid grid-cols-2">
       {PropertiesFilter.map((filters) => {
         return filters.type === "Select" ? (
           <AsyncSelect
             key={filters.id}
             classNamePrefix="select2-selection"
+            className="col-span-2"
             styles={multiInputStyle}
             isMulti={filters.name === "country" ? false : true}
-            instanceId
+            instanceId={filters.id}
             components={animatedComponents}
             placeholder={filters.label}
             defaultOptions={options[filters.name]}
             onChange={(event) => filterHandler(event, filters.name)}
             loadOptions={loadOptions}
             formatGroupLabel={formatGroupLabel}
+            defaultValue={filter[filters.name]}
           />
         ) : (
-          <input key={filters.id} type="text" />
+          <input
+            className="border border-border-gray col-span-1 py-1 px-2 rounded m-1 outline-none focus:border-green-blue text-[#7F7F7F] placeholder:text-[#7F7F7F]"
+            key={filters.id}
+            placeholder={filters.label}
+            type="text"
+            name={filters.name}
+            onChange={inputHandler}
+            value={filter[filters.name]}
+          />
         );
       })}
     </div>

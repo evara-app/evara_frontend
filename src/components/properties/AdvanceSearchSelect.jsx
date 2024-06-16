@@ -101,12 +101,13 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
       updatedOptions.transactionType = transformData(transactionType);
       Object.keys(categories).map((item) => {
         updatedOptions.propertyType = transformData(categories[item]);
-        // console.log(...categories[item]);
       });
       // updatedOptions.propertyType = transformData(categories);
     }
     setOptions(updatedOptions);
   }, [country, rooms, another_features]);
+
+  // console.log(options);
 
   useEffect(() => {
     const updatedOptions = { ...options };
@@ -154,16 +155,13 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
       } catch (error) {}
     };
 
-    if (filter.country) fetchCities();
-    if (filter.city) fetchProvince();
-  }, [filter]);
+    if (filter.country && options.country) fetchCities();
+    if (filter.city.length) fetchProvince();
+  }, [filter, options.country, options.city]);
 
-  const loadOptions = async (inputValue, callback) => {
-    console.log(inputValue, callback);
-  };
+  const loadOptions = async (inputValue, callback) => {};
 
-  // console.log(options);
-  // console.log(categories);
+  // console.log(filter);
 
   const formatGroupLabel = (data) => (
     <div style={groupStyles}>
@@ -171,6 +169,17 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
       <span style={groupBadgeStyles}>{data.options.length}</span>
     </div>
   );
+
+  const valueHandler = (name) => {
+    if (Array.isArray(filter[name]) && options[name]) {
+      return filter[name].reduce((acc, filterValue) => {
+        acc.push(options[name]?.find((option) => option.value == filterValue));
+        return acc;
+      }, []);
+    } else {
+      return options[name]?.filter((item) => item.value == filter[name]);
+    }
+  };
 
   return (
     <div className="grid grid-cols-2">
@@ -189,7 +198,9 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
             onChange={(event) => filterHandler(event, filters.name)}
             loadOptions={loadOptions}
             formatGroupLabel={formatGroupLabel}
-            defaultValue={filter[filters.name]}
+            value={valueHandler(filters.name)}
+            getOptionLabel={({ label }) => label}
+            getOptionValue={({ value }) => value}
           />
         ) : (
           <input

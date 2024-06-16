@@ -38,15 +38,16 @@ function AdvanceSearch() {
 
   const createQueryString = useCallback(
     (query) => {
-      const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams();
       for (const [name, value] of Object.entries(query)) {
         if (Array.isArray(value)) {
           value.forEach((item) => params.append(name, item));
         } else {
-          params.append(name, value);
+          value && params.append(name, value);
         }
       }
 
+      console.log(params.toString());
       return params.toString();
     },
     [searchParams]

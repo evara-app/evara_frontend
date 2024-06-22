@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 //? import components
@@ -36,6 +36,7 @@ function AdvanceSearch() {
 
   const [filter, setFilter] = useState(urlParams || {});
 
+  // query handler
   const createQueryString = useCallback(
     (query) => {
       const params = new URLSearchParams();
@@ -46,8 +47,6 @@ function AdvanceSearch() {
           value && params.append(name, value);
         }
       }
-
-      console.log(params.toString());
       return params.toString();
     },
     [searchParams]
@@ -59,15 +58,14 @@ function AdvanceSearch() {
       : setFilter({ ...filter, [name]: event.value });
   };
 
-  const inputHandler = (event) => {
-    setFilter({ ...filter, [event.target.name]: event.target.value });
+  const inputHandler = (event, value) => {
+    setFilter({ ...filter, [event.target.name]: value });
   };
-
-  // console.log(filter);
 
   const submitHandler = () => {
     router.push(pathname + "?" + createQueryString(filter));
   };
+
   return (
     <div>
       <h5>Advanced Search</h5>

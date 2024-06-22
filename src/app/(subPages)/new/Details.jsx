@@ -44,8 +44,8 @@ function Details({
   const { data: countries } = useGetCountry();
   const { data: propertyFields } = useGetPropertyFields();
   const { data: currency, isLoading } = useGetCurrency();
-  const { data: lcoalCurrency } = useGetLocalCurrency();
-  const currencyId = lcoalCurrency || 1;
+  const { data: localCurrency } = useGetLocalCurrency();
+  const currencyId = localCurrency || 1;
 
   // states
   const [selectOpen, setSelectOpen] = useState(false);

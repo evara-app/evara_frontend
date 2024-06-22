@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useMutation } from "@tanstack/react-query";
+import { NumericFormat } from "react-number-format";
 
 //? import constants
 import { PropertiesFilter } from "@/constants/propertiesFilters";
@@ -157,7 +158,7 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
 
     if (filter.country && options.country) fetchCities();
     if (filter.city.length) fetchProvince();
-  }, [filter, options.country, options.city]);
+  }, [filter, options.country]);
 
   const loadOptions = async (inputValue, callback) => {};
 
@@ -172,8 +173,17 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
 
   const valueHandler = (name) => {
     if (Array.isArray(filter[name]) && options[name]) {
+      // if (name !== "province") {
       return filter[name].reduce((acc, filterValue) => {
-        acc.push(options[name]?.find((option) => option.value == filterValue));
+        name === "province"
+          ? acc.push(
+              options.province
+                .flatMap((provinceOption) => provinceOption.options)
+                .find((item) => item.value == filterValue)
+            )
+          : acc.push(
+              options[name]?.find((option) => option.value == filterValue)
+            );
         return acc;
       }, []);
     } else {
@@ -199,17 +209,18 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
             loadOptions={loadOptions}
             formatGroupLabel={formatGroupLabel}
             value={valueHandler(filters.name)}
-            getOptionLabel={({ label }) => label}
-            getOptionValue={({ value }) => value}
           />
         ) : (
-          <input
+          <NumericFormat
+            allowLeadingZeros
+            thousandSeparator=","
             className="border border-border-gray col-span-1 py-1 px-2 rounded m-1 outline-none focus:border-green-blue text-[#7F7F7F] placeholder:text-[#7F7F7F]"
             key={filters.id}
             placeholder={filters.label}
             type="text"
             name={filters.name}
-            onChange={inputHandler}
+            // onChange={inputHandler}
+            onValueChange={({ value }, { event }) => inputHandler(event, value)}
             value={filter[filters.name]}
           />
         );

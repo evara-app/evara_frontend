@@ -74,7 +74,7 @@ function AdvanceSearch() {
         filterHandler={filterHandler}
         inputHandler={inputHandler}
       />
-      <button className="button" onClick={submitHandler}>
+      <button className="button w-full" onClick={submitHandler}>
         Submit
       </button>
     </div>

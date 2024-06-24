@@ -14,10 +14,11 @@ async function page({ searchParams }) {
   const propertiesPromise = getProperties(queryString.stringify(searchParams));
 
   const [propertiesList] = await Promise.all([propertiesPromise]);
+  if (!propertiesList) return <Loading />;
 
   return (
-    <div className="grid grid-cols-8 gap-x-5">
-      <div className="col-span-2">
+    <div className="grid grid-cols-8 gap-x-5 rounded-md p-4 shadow-md">
+      <div className="col-span-2 border-r-2 border-r-border-gray/50 pr-4">
         <AdvanceSearch />
       </div>
       <div className="col-span-6">

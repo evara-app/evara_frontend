@@ -18,6 +18,11 @@ import FloorIcon from "&/assets/svg/floor.svg";
 import ShowerIcon from "&/assets/svg/shower.svg";
 import ToiletIcon from "&/assets/svg/wc.svg";
 
+//? import service
+import { getPropertyBySlug } from "@/services/properties";
+
+export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in pages Dir. :)
+
 const allFeatures = [
   {
     id: 1,
@@ -36,32 +41,26 @@ const allFeatures = [
   },
 ];
 
-async function getData() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts/1");
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
+async function page({ params }) {
+  const PropertyDetails = getPropertyBySlug(params.slug);
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch data");
-  }
+  const [{ results: property }] = await Promise.all([PropertyDetails]);
 
-  return res.json();
-}
-
-async function page() {
-  const data = await getData();
+  console.log(property);
   return (
     <div>
       {/* //* title and location ... */}
       <div>
         <div>
-          <h1 className="text-gray-default text-3xl">Ankara villa house</h1>
+          <h1 className="text-gray-default text-3xl">{property?.title}</h1>
         </div>
         <div className="flexItems justify-between mt-2">
           <div className="flexItems text-gray-default/80">
             <HiOutlineLocationMarker className="icon-stroke icon text-gray-default/80 " />
-            <p>ISTANBUL | ADALAR | BURGAZADA</p>
+            <p>
+              {property?.title} | {property?.country?.name} |
+              {property?.city?.name}
+            </p>
           </div>
           <div className="flexItems gap-x-2">
             <button className="flexItems">
@@ -89,11 +88,11 @@ async function page() {
             <div className="grid grid-cols-2 grid-rows-3 md:grid-cols-5 md:grid-rows-1 justify-items-stretch md:justify-items-center gap-y-4 text-white-two text-sm">
               <div className="flex items-center gap-x-1">
                 <SizeIcon className="svgIcon" />
-                <span>Gross M2</span>
+                <span>{property?.gross} Gross M2</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <SizeIcon className="svgIcon" />
-                <span>Net M2</span>
+                <span>{property?.net} Net M2</span>
               </div>
               <div className="flex items-center gap-x-1">
                 <FloorIcon className="svgIcon" />
@@ -110,7 +109,7 @@ async function page() {
             </div>
             <hr className="hidden md:block my-4" />
             <AboutProperty>
-              <TextAbout readMore={true} data={data.body} />
+              <TextAbout readMore={true} data={property?.description} />
             </AboutProperty>
           </div>
           {/* all features  */}
@@ -149,9 +148,9 @@ async function page() {
         </div>
         <div className="col-span-2">
           {/* property price information section  */}
-          <PriceDetails />
+          <PriceDetails property={property} />
           {/* property owner/agent details */}
-          <PropertyAgent />
+          <PropertyAgent property={property} />
           {/* other properties adv */}
           <div className="hidden md:block border border-zinc-200 p-4 rounded-lg">
             <span className="text-gray-default text-lg ">other properties</span>

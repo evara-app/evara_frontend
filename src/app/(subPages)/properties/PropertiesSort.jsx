@@ -8,6 +8,10 @@ import queryString from "query-string";
 import { CiCircleList } from "react-icons/ci";
 import { BsGrid } from "react-icons/bs";
 
+//? import mui
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+
 const sortButtons = [
   {
     id: 1,
@@ -35,6 +39,23 @@ const sortButtons = [
     query: "-created_at",
   },
 ];
+const viewType = [
+  {
+    id: 1,
+    label: "Map",
+    value: "Map",
+  },
+  {
+    id: 2,
+    label: "List + Map",
+    value: "List-Map",
+  },
+  {
+    id: 3,
+    label: "List",
+    value: "List",
+  },
+];
 
 function PropertiesSort({ count }) {
   const router = useRouter();
@@ -42,7 +63,8 @@ function PropertiesSort({ count }) {
   const searchParams = useSearchParams();
 
   const [view, setView] = useState(0);
-  const [sort, setSort] = useState(5);
+  const [sort, setSort] = useState();
+  const [activeView, setActiveView] = useState();
 
   // query handler
   const createQueryString = useCallback(
@@ -61,8 +83,14 @@ function PropertiesSort({ count }) {
     );
   };
 
+  const viewHandler = (value) => {
+    setActiveView(value);
+    router.push(pathname + "?" + createQueryString("viewType", value));
+  };
+
   useEffect(() => {
-    setSort(searchParams.get("ordering") || "");
+    setSort(searchParams.get("ordering") || "-created_at");
+    setActiveView(searchParams.get("viewType") || "List");
   }, [searchParams]);
 
   return (
@@ -81,21 +109,42 @@ function PropertiesSort({ count }) {
           </div>
         </div>
       </div>
-      <div className="mt-1 p-2 flex items-center gap-x-2">
-        <h5 className="text-gray-default">Sort : </h5>
-        {sortButtons.map((btn) => (
-          <button
-            key={btn.id}
-            className={`${
-              sort === btn.query ? "button" : "disableButton"
-            } md:px-2 text-sm bg-white`}
-            name={btn.name}
-            value={btn.query}
-            onClick={sortHandler}
-          >
-            {btn.name}
-          </button>
-        ))}
+      <div className="flex items-center justify-between">
+        <div className="mt-1 p-2 flex items-center gap-x-2">
+          <h5 className="text-gray-default">Sort : </h5>
+          {sortButtons.map((btn) => (
+            <button
+              key={btn.id}
+              className={`${
+                sort === btn.query ? "button" : "disableButton"
+              } md:px-2 text-sm bg-white`}
+              name={btn.name}
+              value={btn.query}
+              onClick={sortHandler}
+            >
+              {btn.name}
+            </button>
+          ))}
+        </div>
+        <ButtonGroup
+          variant="outlined"
+          color="success"
+          size="small"
+          aria-label="Basic button group"
+        >
+          {viewType.map((btn) => (
+            <Button
+              key={btn.id}
+              className={`${
+                btn.value === activeView &&
+                "bg-gradient-to-tr from-green-blue to-cyan-default text-white font-medium"
+              }`}
+              onClick={() => viewHandler(btn.value)}
+            >
+              {btn.label}
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
     </div>
   );

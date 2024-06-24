@@ -4,7 +4,9 @@ import React from "react";
 import SupportIcon from "&/assets/svg/support.svg";
 import MessageIcon from "&/assets/svg/message.svg";
 
-function PropertyAgent() {
+function PropertyAgent({ property }) {
+  const { user } = property;
+  const { profile } = user || {};
   return (
     <div className="w-full md:mx-auto">
       <div className="flex flex-col">
@@ -12,14 +14,18 @@ function PropertyAgent() {
           <div className="flex items-center md:items-start md:flex-col my-4 md:my-0">
             <div className="w-20 h-[70px] md:w-[150px] md:h-[150px] lg:w-[250px] lg:h-[250px] md:mx-auto overflow-hidden rounded-full">
               <img
-                src="https://backoffice.evara.com.tr/media/users/IMG_4977_huNyiV4.jpg"
+                src={
+                  profile?.avatar
+                    ? profile?.avatar
+                    : "https://backoffice.evara.com.tr/media/users/IMG_4977_huNyiV4.jpg"
+                }
                 alt="contactUs"
                 className=" w-full h-auto rounded-full"
               />
             </div>
             <div className="w-full flex flex-col justify-center items-center md:gap-y-4 md:my-4">
               <h1 className="font-bold text-lg lg:text-2xl">
-                Elham Derakhshandeh
+                {profile?.first_name} {profile?.last_name}
               </h1>
               <span className="text-white-two">Real estate consultant</span>
             </div>

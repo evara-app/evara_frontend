@@ -1,18 +1,21 @@
+"use client";
+
 import React from "react";
 
 //? icons
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { HiOutlineHeart } from "react-icons/hi";
-import { HiOutlineShare } from "react-icons/hi2";
-import SizeIcon from "&/assets/svg/size.svg";
-import BedIcon from "&/assets/svg/bed.svg";
-import FloorIcon from "&/assets/svg/floor.svg";
-import ParkingIcon from "&/assets/svg/parking.svg";
-import ShowerIcon from "&/assets/svg/shower.svg";
 import MoneyIcon from "&/assets/svg/moneyBag.svg";
 import Calendar from "&/assets/svg/calendar.svg";
 
-function PriceDetails() {
+//? import hooks
+import { useGetCurrency, useGetLocalCurrency } from "@/hooks/common";
+
+function PriceDetails({ property }) {
+  const { data: currency, isLoading } = useGetCurrency();
+  const { data: localCurrency } = useGetLocalCurrency();
+  const currencyId = localCurrency || 1;
+  const currencyName =
+    !isLoading && currency.find((item) => item.id == currencyId).abbreviation;
+
   return (
     <div className="w-full mb-10 rounded-lg  py-4 px-2 sm:px-8 sm:py-6 border border-zinc-200">
       <div className="flex items-center md:flex-col md:gap-y-2 md:items-start lg:flex-row justify-between mb-4">
@@ -30,7 +33,11 @@ function PriceDetails() {
           <span className="text-lg">
             Sell :
             <span className="text-green-blue font-medium">
-              31,482,990,000 - TRY
+              {!isLoading &&
+                property?.price
+                  .find((item) => item.name === currencyName.toLowerCase())
+                  ?.price.toLocaleString()}
+              {" - "} {currencyName}
             </span>
           </span>
         </div>

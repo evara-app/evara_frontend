@@ -22,7 +22,10 @@ async function page({ searchParams }) {
         <AdvanceSearch />
       </div>
       <div className="col-span-6">
-        <PropertyList propertiesList={propertiesList} />
+        <PropertyList
+          propertiesList={propertiesList}
+          searchParams={searchParams}
+        />
       </div>
     </div>
   );

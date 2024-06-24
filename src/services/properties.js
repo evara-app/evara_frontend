@@ -17,3 +17,9 @@ export function getProperties(filter) {
     .get(`/api/v2/front/property/list?${filter}`)
     .then(({ data }) => data);
 }
+
+export function getPropertyBySlug(slug) {
+  return http
+    .get(`/api/v2/front/property/object/${slug}/`)
+    .then(({ data }) => data);
+}

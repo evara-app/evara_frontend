@@ -15,7 +15,7 @@ import PropertyPrice from "@/app/(subPages)/properties/PropertyPrice";
 
 function Card({ cardData }) {
   return (
-    <Link href={`/property/slug=${cardData?.slug}`}>
+    <Link href={`/property/${cardData?.slug}`}>
       <div className="max-w-[250px] overflow-hidden relative bg-gray-100 rounded-md group shadow transition">
         <div className="bg-white p-4 border border-b-0 border-[#d1d5db] group-hover:border-[#4ade80]">
           <div className="aspect-w-16 aspect-h-14 rounded-md">

@@ -4,6 +4,7 @@ import React from "react";
 import Card from "@/components/properties/Card";
 import PropertiesSort from "@/app/(subPages)/properties/PropertiesSort";
 import Pagination from "@/common/Pagination";
+import Map from "@/components/properties/Map";
 
 //? import mui
 import Divider from "@mui/material/Divider";
@@ -11,8 +12,6 @@ import Divider from "@mui/material/Divider";
 function PropertyList({ propertiesList, searchParams }) {
   const { count, results } = propertiesList;
   const { viewType = "List" } = searchParams;
-
-  console.log(viewType);
 
   const renderViews = () => {
     switch (viewType) {
@@ -26,23 +25,15 @@ function PropertyList({ propertiesList, searchParams }) {
             ))}
           </div>
         );
-      // case 2:
-      //   return (
-      //     <CheckOtp
-      //       time={time}
-      //       setOtp={setOtp}
-      //       value={otp}
-      //       sendOtpHandler={sendOtpHandler}
-      //       checkOtpHandler={checkOtpHandler}
-      //     />
-      //   );
+      case "Map":
+        return <Map properties={results} />;
       default:
         break;
     }
   };
   return (
     <div>
-      <PropertiesSort count={count} />
+      <PropertiesSort count={count} queries={searchParams} />
       <Divider sx={{ margin: "10px 0px" }} />
       {renderViews()}
       <div className="flex justify-center mt-10">

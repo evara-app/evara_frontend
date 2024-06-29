@@ -100,13 +100,14 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
       updatedOptions.room = transformData(rooms);
       updatedOptions.features = transformData(another_features);
       updatedOptions.transactionType = transformData(transactionType);
-      Object.keys(categories).map((item) => {
-        updatedOptions.propertyType = transformData(categories[item]);
-      });
+      categories &&
+        Object.keys(categories).map((item) => {
+          updatedOptions.propertyType = transformData(categories[item]);
+        });
       // updatedOptions.propertyType = transformData(categories);
     }
     setOptions(updatedOptions);
-  }, [country, rooms, another_features]);
+  }, [country, rooms, another_features, categories]);
 
   // console.log(options);
 

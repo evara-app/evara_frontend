@@ -46,7 +46,6 @@ async function page({ params }) {
 
   const [{ results: property }] = await Promise.all([PropertyDetails]);
 
-  console.log(property);
   return (
     <div>
       {/* //* title and location ... */}

@@ -239,3 +239,34 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+table th:first-child {
+  border-radius: 10px 0 0 10px;
+  padding: 10px;
+}
+
+table th:last-child {
+  border-radius: 0 10px 10px 0;
+  padding: 10px;
+}
+
+tbody td:first-child {
+  border-radius: 10px 0 0 10px;
+  padding: 10px;
+}
+
+tbody td:last-child {
+  border-radius: 0 10px 10px 0;
+  padding: 10px;
+}
+.contactUs{
+  background-image: url("/assets/img/contactUs.png");
+  height: 750px;
+  width: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-size: cover;
+  background-position: 0% 30%;
+}

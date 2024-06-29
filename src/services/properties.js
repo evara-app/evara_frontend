@@ -23,3 +23,5 @@ export function getPropertyBySlug(slug) {
     .get(`/api/v2/front/property/object/${slug}/`)
     .then(({ data }) => data);
 }
+
+// export function getUserLikes

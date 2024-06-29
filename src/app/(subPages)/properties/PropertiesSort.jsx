@@ -11,6 +11,11 @@ import { BsGrid } from "react-icons/bs";
 //? import mui
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+
+//? import hooks
+import { useGetCountry } from "@/hooks/propertyDetails";
 
 const sortButtons = [
   {
@@ -57,7 +62,7 @@ const viewType = [
   },
 ];
 
-function PropertiesSort({ count }) {
+function PropertiesSort({ count, queries }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -65,6 +70,11 @@ function PropertiesSort({ count }) {
   const [view, setView] = useState(0);
   const [sort, setSort] = useState();
   const [activeView, setActiveView] = useState();
+  const [chipQueries, setChipQueries] = useState();
+
+  const { data: country } = useGetCountry();
+
+  // console.log(country);
 
   // query handler
   const createQueryString = useCallback(
@@ -88,9 +98,15 @@ function PropertiesSort({ count }) {
     router.push(pathname + "?" + createQueryString("viewType", value));
   };
 
+  const handleDelete = (event) => {
+    const params = new URLSearchParams(queries);
+    console.log(params);
+  };
+
   useEffect(() => {
     setSort(searchParams.get("ordering") || "-created_at");
     setActiveView(searchParams.get("viewType") || "List");
+    setChipQueries(queries);
   }, [searchParams]);
 
   return (
@@ -145,6 +161,20 @@ function PropertiesSort({ count }) {
             </Button>
           ))}
         </ButtonGroup>
+      </div>
+      <div className="p-2 border border-gray-200 shadow-sm rounded-md">
+        <Stack direction="row" spacing={1}>
+          {chipQueries?.country && (
+            <Chip
+              label={
+                country?.find((item) => item.id == chipQueries?.country)?.name
+              }
+              onDelete={handleDelete}
+            />
+          )}
+
+          <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
+        </Stack>
       </div>
     </div>
   );

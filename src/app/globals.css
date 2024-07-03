@@ -67,7 +67,7 @@ body {
     @apply flex items-center gap-x-1;
   }
   .saveAndShareBtn {
-    @apply w-7 h-7 text-gray-default/80 p-1 bg-white-two/40 rounded-full;
+    @apply w-8 h-8 text-gray-default/70 p-1 bg-white-two/20 rounded-full;
   }
   .detailsHeaderDeactiveBtn {
     @apply rounded-xl bg-none flex flex-col items-center justify-center text-white-two gap-y-4 font-medium text-xl;
@@ -110,6 +110,9 @@ body {
   }
   .image-upload-preview-overlay {
     @apply absolute top-0 left-0 w-full h-full;
+  }
+  .shareIcons {
+    @apply !py-2 px-4 w-full rounded-lg flex justify-center items-center gap-x-2 !text-white font-medium text-sm
   }
 }
 

@@ -24,4 +24,20 @@ export function getPropertyBySlug(slug) {
     .then(({ data }) => data);
 }
 
+export function getPropertyBySlugToken(slug, token) {
+  return http
+    .get(`/api/v2/front/property/object/${slug}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({ data }) => data);
+}
+
+export function likeProperty(id) {
+  return http
+    .post(`/api/v2/front/user-likes/`, { property: id })
+    .then(({ data }) => data);
+}
+
 // export function getUserLikes

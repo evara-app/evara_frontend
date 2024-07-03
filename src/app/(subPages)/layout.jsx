@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
 import estedadFont from "@/constants/localFonts";
+import { Toaster } from "react-hot-toast";
 
 //? import components
 import Provider from "@/app/Providers";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         className={`${estedadFont.variable} font-sans className="md:container md:max-w-[1440px] mx-auto`}
       >
         <Provider>
+          <Toaster position="top-center" />
           <Header />
           {children}
         </Provider>

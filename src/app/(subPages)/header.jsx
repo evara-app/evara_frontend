@@ -11,6 +11,7 @@ import LinkSelectMenu from "@/common/LinkSelectMenu";
 import LanguageMenu from "@/components/header/LanguageMenu";
 import CurrencyMenu from "@/components/header/CurrencyMenu";
 import NavbarDrawer from "@/components/header/NavbarDrawer";
+import LoginCheck from "@/app/(subPages)/LoginCheck";
 
 //? import icons
 import { IoSearch } from "react-icons/io5";
@@ -51,7 +52,7 @@ function Header() {
         </div>
         {/* //* Auth & Language Section */}
         <div className="flex items-center gap-x-2 lg:gap-x-3 text-gray-default">
-          <Link href="/">Login</Link>
+          <LoginCheck />
           <button className="px-2 py-1 border-2 border-green-blue rounded-md">
             Add Property
           </button>

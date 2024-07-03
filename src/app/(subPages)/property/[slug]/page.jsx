@@ -1,17 +1,18 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { cookies } from "next/headers";
+
 //? import compontns
 import Header from "@/app/(subPages)/property/[slug]/Header";
 import AboutProperty from "@/app/(subPages)/property/[slug]/AboutProperty";
 import PriceDetails from "@/app/(subPages)/property/[slug]/PriceDetails";
 import PropertyAgent from "@/app/(subPages)/property/[slug]/PropertyAgent";
 import TextAbout from "@/app/(subPages)/property/[slug]/TextAbout";
-
+import SaveAndShare from "@/app/(subPages)/property/[slug]/SaveAndShare";
+import Comments from "@/app/(subPages)/property/[slug]/Comments";
 //? icons
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { HiOutlineHeart } from "react-icons/hi";
-import { HiOutlineShare } from "react-icons/hi2";
 import SizeIcon from "&/assets/svg/size.svg";
 import BedIcon from "&/assets/svg/bed.svg";
 import FloorIcon from "&/assets/svg/floor.svg";
@@ -19,7 +20,10 @@ import ShowerIcon from "&/assets/svg/shower.svg";
 import ToiletIcon from "&/assets/svg/wc.svg";
 
 //? import service
-import { getPropertyBySlug } from "@/services/properties";
+import {
+  getPropertyBySlug,
+  getPropertyBySlugToken,
+} from "@/services/properties";
 
 export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in pages Dir. :)
 
@@ -42,34 +46,33 @@ const allFeatures = [
 ];
 
 async function page({ params }) {
-  const PropertyDetails = getPropertyBySlug(params.slug);
+  const cookieStore = cookies();
+  const token = cookieStore.get("access").value;
+
+  // only if token is available will be set in headers
+  const PropertyDetails = !!token
+    ? getPropertyBySlugToken(params.slug, token)
+    : getPropertyBySlug(params.slug);
 
   const [{ results: property }] = await Promise.all([PropertyDetails]);
 
   return (
     <div>
-      {/* //* title and location ... */}
+      {/* title and location ... */}
       <div>
         <div>
-          <h1 className="text-gray-default text-3xl">{property?.title}</h1>
+          <h1 className="text-3xl font-medium">{property?.title}</h1>
         </div>
         <div className="flexItems justify-between mt-2">
           <div className="flexItems text-gray-default/80">
             <HiOutlineLocationMarker className="icon-stroke icon text-gray-default/80 " />
             <p>
-              {property?.title} | {property?.country?.name} |
-              {property?.city?.name}
+              {property?.country?.name} | {property?.city?.name} | (Owner :
+              {property?.user?.profile?.first_name}{" "}
+              {property?.user?.profile?.last_name})
             </p>
           </div>
-          <div className="flexItems gap-x-2">
-            <button className="flexItems">
-              <HiOutlineHeart className="icon-stroke saveAndShareBtn" />
-              save
-            </button>
-            <button className="flexItems">
-              <HiOutlineShare className="icon-stroke saveAndShareBtn" /> share
-            </button>
-          </div>
+          <SaveAndShare property={property} />
         </div>
       </div>
       <Header />
@@ -136,14 +139,7 @@ async function page({ params }) {
             </div>
           </div>
           {/* comments  */}
-          <div className="w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border-b border-zinc-200 p-2">
-            <div className="flexItems justify-between">
-              <h5 className="text-sm md:text-xl font-bold">Comments</h5>
-              <button className="border-2 border-green-blue/50 hover:border-green-blue transition font-medium rounded-md py-2 px-4">
-                Add Comment
-              </button>
-            </div>
-          </div>
+          <Comments />
         </div>
         <div className="col-span-2">
           {/* property price information section  */}

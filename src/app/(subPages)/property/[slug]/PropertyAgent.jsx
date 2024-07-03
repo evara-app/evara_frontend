@@ -10,7 +10,7 @@ function PropertyAgent({ property }) {
   return (
     <div className="w-full md:mx-auto">
       <div className="flex flex-col">
-        <div className="w-full rounded-lg shadow-[0_0_5px_0_rgba(0,0,0,0.15)] p-4 mb-8 border border-zinc-200">
+        <div className="w-full rounded-lg p-4 mb-8 border border-zinc-200">
           <div className="flex items-center md:items-start md:flex-col my-4 md:my-0">
             <div className="w-20 h-[70px] md:w-[150px] md:h-[150px] lg:w-[250px] lg:h-[250px] md:mx-auto overflow-hidden rounded-full">
               <img

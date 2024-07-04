@@ -40,4 +40,15 @@ export function likeProperty(id) {
     .then(({ data }) => data);
 }
 
-// export function getUserLikes
+export function getAllComments(id, size) {
+  const commentSize = size || 1;
+  return http
+    .get(`/api/v2/front/property-comments/list/${id}/?page_size=${commentSize}`)
+    .then(({ data }) => data);
+}
+
+export function submitComment(data) {
+  return http
+    .post(`/api/v2/front/property-comments/`, data)
+    .then(({ data }) => data);
+}

@@ -27,11 +27,13 @@ const config: Config = {
         "blue-gray": "#f8f9fd",
         "border-gray": "#9ca3af",
         "green-dark": "#21aa58",
+        "box-default-gray": "#fcfcfc",
       },
       fontFamily: {
         sans: ["var(--font-estedad)", ...fontFamily.sans],
       },
       boxShadow: {
+        boxShadow: "0 3px 10px 0 rgba(0,0,0,0.16)",
         SearchPanelButton: "3px -3px 6px 0px rgba(0,0,0,0.28)",
         greenShaow: "0 15px 50px -15px rgba(0,187,125,0.5)",
         "input-focus": "0 12px 24px -8px rgb(var(--green-blue))",

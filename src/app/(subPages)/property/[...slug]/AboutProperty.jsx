@@ -6,7 +6,11 @@ function AboutProperty({ children }) {
   const [readMore, setReadMore] = useState(false);
 
   return (
-    <div className="hidden md:block relative">
+    <div
+      className={`hidden md:block relative ${
+        readMore ? "pb-6" : "max-h-52 overflow-hidden"
+      }`}
+    >
       <h3 className="text-sm md:text-lg mb-2 font-bold">About this property</h3>
       {/* <div
         dangerouslySetInnerHTML={{
@@ -20,8 +24,8 @@ function AboutProperty({ children }) {
       ></div> */}
       {children}
       <div
-        className={`flex items-end justify-center absolute -bottom-10 left-0 w-full ${
-          !readMore && "bg-gradient-to-t from-white via-white/70 h-60 bottom-0"
+        className={`flex items-end justify-center absolute -bottom-6 left-0 w-full ${
+          !readMore && "bg-gradient-to-t from-white via-white/70 h-60 !bottom-0"
         }   `}
       >
         <button

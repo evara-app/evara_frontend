@@ -17,7 +17,7 @@ function PriceDetails({ property }) {
     !isLoading && currency.find((item) => item.id == currencyId).abbreviation;
 
   return (
-    <div className="w-full mb-10 rounded-lg  py-4 px-2 sm:px-8 sm:py-6 border border-zinc-200">
+    <div className="w-full mb-10 rounded-lg  py-4 px-2 sm:px-8 sm:py-6 border border-gray-200 bg-box-default-gray shadow-boxShadow">
       <div className="flex items-center md:flex-col md:gap-y-2 md:items-start lg:flex-row justify-between mb-4">
         <span className="flex items-center gap-x-1">
           <MoneyIcon className="svgIcon" />

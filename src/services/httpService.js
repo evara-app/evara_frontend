@@ -5,6 +5,7 @@ const pathnames = [
   "/api/v2/front/profile/",
   "/api/v2/front/property/",
   "/api/v2/front/user-likes/",
+  "/api/v2/front/property-comments/",
 ];
 
 const app = axios.create({

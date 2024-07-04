@@ -3,14 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 
-//? import compontns
-import Header from "@/app/(subPages)/property/[slug]/Header";
-import AboutProperty from "@/app/(subPages)/property/[slug]/AboutProperty";
-import PriceDetails from "@/app/(subPages)/property/[slug]/PriceDetails";
-import PropertyAgent from "@/app/(subPages)/property/[slug]/PropertyAgent";
-import TextAbout from "@/app/(subPages)/property/[slug]/TextAbout";
-import SaveAndShare from "@/app/(subPages)/property/[slug]/SaveAndShare";
-import Comments from "@/app/(subPages)/property/[slug]/Comments";
+//? import components
+import Header from "@/app/(subPages)/property/[...slug]/Header";
+import AboutProperty from "@/app/(subPages)/property/[...slug]/AboutProperty";
+import PriceDetails from "@/app/(subPages)/property/[...slug]/PriceDetails";
+import PropertyAgent from "@/app/(subPages)/property/[...slug]/PropertyAgent";
+import TextAbout from "@/app/(subPages)/property/[...slug]/TextAbout";
+import SaveAndShare from "@/app/(subPages)/property/[...slug]/SaveAndShare";
+import Comments from "@/app/(subPages)/property/[...slug]/Comments";
 //? icons
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import SizeIcon from "&/assets/svg/size.svg";
@@ -23,6 +23,7 @@ import ToiletIcon from "&/assets/svg/wc.svg";
 import {
   getPropertyBySlug,
   getPropertyBySlugToken,
+  getAllComments,
 } from "@/services/properties";
 
 export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in pages Dir. :)
@@ -45,16 +46,23 @@ const allFeatures = [
   },
 ];
 
-async function page({ params }) {
+async function page({ params, searchParams }) {
   const cookieStore = cookies();
   const token = cookieStore.get("access").value;
 
   // only if token is available will be set in headers
-  const PropertyDetails = !!token
-    ? getPropertyBySlugToken(params.slug, token)
-    : getPropertyBySlug(params.slug);
+  const propertySlug = params.slug[0];
+  const propertyId = params.slug[1];
+  const commentSize = searchParams?.commentSize;
 
-  const [{ results: property }] = await Promise.all([PropertyDetails]);
+  const PropertyDetails = !!token
+    ? getPropertyBySlugToken(propertySlug, token)
+    : getPropertyBySlug(propertySlug);
+
+  const propertyComments = getAllComments(propertyId, commentSize);
+
+  const [{ results: property }, { count, results: comments }] =
+    await Promise.all([PropertyDetails, propertyComments]);
 
   return (
     <div>
@@ -79,7 +87,7 @@ async function page({ params }) {
       <div className="grid grid-cols-6 mt-10 gap-x-2">
         <div className="col-span-4">
           {/* Main features */}
-          <div className=" w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-zinc-200 p-2">
+          <div className=" w-full rounded-lg px-2 sm:px-8 sm:pb-1 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
             <div className="flex items-center justify-between mb-6">
               <h5 className="text-sm md:text-xl font-bold">Main features</h5>
               <div className="hidden md:flex items-center gap-x-4 rounded-md bg-white-two/25 px-2 py-1 text-xs">
@@ -115,7 +123,7 @@ async function page({ params }) {
             </AboutProperty>
           </div>
           {/* all features  */}
-          <div className="w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-zinc-200 p-2">
+          <div className="w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
             <h5 className="text-sm md:text-xl font-bold">All features</h5>
             <div className="grid grid-cols-3 gap-y-10 justify-items-center mt-10">
               {allFeatures.map((feature) => (
@@ -139,7 +147,7 @@ async function page({ params }) {
             </div>
           </div>
           {/* comments  */}
-          <Comments />
+          <Comments property={property} comments={comments} count={count} />
         </div>
         <div className="col-span-2">
           {/* property price information section  */}
@@ -147,14 +155,14 @@ async function page({ params }) {
           {/* property owner/agent details */}
           <PropertyAgent property={property} />
           {/* other properties adv */}
-          <div className="hidden md:block border border-zinc-200 p-4 rounded-lg">
+          <div className="hidden md:block border border-gray-200 bg-box-default-gray shadow-boxShadow p-4 rounded-lg">
             <span className="text-gray-default text-lg ">other properties</span>
             <hr className="bg-gray-default my-4" />
             {[1, 2, 3, 4].map((property) => {
               return (
                 <div
                   key={property}
-                  className="flex flex-col border-b border-zinc-200 py-4"
+                  className="flex flex-col border-b border-gray-200 py-4"
                 >
                   <Link legacyBehavior href="#">
                     <div className="flex items-center gap-x-4">

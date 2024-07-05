@@ -14,11 +14,16 @@ function PropertyPrice({ cardData }) {
 
   return (
     <>
-      {!isLoading &&
+      {!isLoading ? (
         cardData?.price
-          .find((item) => item.name === currencyName.toLowerCase())
-          ?.price.toLocaleString()}
-      {" - "} {currencyName}
+          .find(
+            (item) => item.name.toLowerCase() === currencyName.toLowerCase()
+          )
+          ?.price.toLocaleString()
+      ) : (
+        <span className="text-sm">Calculating price ...</span>
+      )}
+      {!isLoading && ` - ${currencyName}`}
     </>
   );
 }

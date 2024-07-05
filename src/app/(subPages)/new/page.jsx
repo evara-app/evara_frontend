@@ -116,7 +116,6 @@ function page() {
       setData({ ...data, [name]: value });
     }
   };
-  console.log(data);
   const imageHandler = (locations) => {
     setData({ ...data, images: locations });
   };
@@ -191,7 +190,7 @@ function page() {
     setData({ ...data, currency: currencyId });
   }, []);
 
-  // console.log(data);
+  console.log(data);
 
   const renderSteps = () => {
     switch (step) {

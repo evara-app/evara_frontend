@@ -5,7 +5,7 @@ import React, { useState, useRef } from "react";
 //? import components
 import Carousel from "@/app/(subPages)/property/[...slug]/Carousel";
 
-function Header() {
+function Header({ property }) {
   const swiper1Ref = useRef();
   const swiper2Ref = useRef();
 
@@ -25,6 +25,7 @@ function Header() {
     <div className="grid grid-cols-6 gap-x-2 mt-10">
       <div className="col-span-4">
         <Carousel
+          property={property}
           swiper1Ref={swiper1Ref}
           swiper2Ref={swiper2Ref}
           open={open}

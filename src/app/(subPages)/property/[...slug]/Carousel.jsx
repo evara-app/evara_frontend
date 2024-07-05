@@ -54,6 +54,7 @@ const carouselList = [
 ];
 
 function Carousel({
+  property,
   swiper1Ref,
   swiper2Ref,
   open,
@@ -78,11 +79,11 @@ function Carousel({
         className="rounded-xl max-h-[500px]"
         onClick={fullScreenHandler}
       >
-        {carouselList.map(({ id, src, alt }) => (
-          <SwiperSlide key={id} className="aspect-w-16 aspect-h-9">
+        {property?.gallery.map(({ file }) => (
+          <SwiperSlide key={file} className="aspect-w-16 aspect-h-9">
             <Image
-              src={src}
-              alt={alt}
+              src={file}
+              alt="property-images"
               fill
               objectFit="cover"
               objectPosition="center"
@@ -112,9 +113,13 @@ function Carousel({
             controller
             className="max-w-5xl"
           >
-            {carouselList.map(({ id, src, alt }) => (
-              <SwiperSlide key={id} className="aspect-w-16 aspect-h-9">
-                <img src={src} alt={alt} className="object-contain" />
+            {property?.gallery.map(({ file }) => (
+              <SwiperSlide key={file} className="aspect-w-16 aspect-h-9">
+                <img
+                  src={file}
+                  alt="property-images"
+                  className="object-contain"
+                />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -18,6 +18,7 @@ import BedIcon from "&/assets/svg/bed.svg";
 import FloorIcon from "&/assets/svg/floor.svg";
 import ShowerIcon from "&/assets/svg/shower.svg";
 import ToiletIcon from "&/assets/svg/wc.svg";
+import { FaCheck } from "react-icons/fa";
 
 //? import service
 import {
@@ -26,24 +27,17 @@ import {
   getAllComments,
 } from "@/services/properties";
 
+//? import mui
+import Divider from "@mui/material/Divider";
+
 export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in pages Dir. :)
 
-const allFeatures = [
-  {
-    id: 1,
-    label: "bed set",
-    icon: <BedIcon className="svgIcon" />,
-  },
-  {
-    id: 2,
-    label: "toilet",
-    icon: <ToiletIcon className="svgIcon" />,
-  },
-  {
-    id: 3,
-    label: "shower",
-    icon: <ShowerIcon className="svgIcon" />,
-  },
+const separatedFeatures = [
+  "room",
+  "bathroom",
+  "age",
+  "monthly_administrative_fees",
+  "floor",
 ];
 
 async function page({ params, searchParams }) {
@@ -83,7 +77,7 @@ async function page({ params, searchParams }) {
           <SaveAndShare property={property} />
         </div>
       </div>
-      <Header />
+      <Header property={property} />
       <div className="grid grid-cols-6 mt-10 gap-x-2">
         <div className="col-span-4">
           {/* Main features */}
@@ -106,15 +100,32 @@ async function page({ params, searchParams }) {
               </div>
               <div className="flex items-center gap-x-1">
                 <FloorIcon className="svgIcon" />
-                <span>Floor</span>
+                <span>
+                  {
+                    property?.feature?.find((item) => item.name === "floor")
+                      .value
+                  }{" "}
+                  Floor
+                </span>
               </div>
               <div className="flex items-center gap-x-1">
                 <BedIcon className="svgIcon" />
-                <span>Room</span>
+                <span>
+                  {
+                    property?.feature?.find((item) => item.name === "room")
+                      .value
+                  }{" "}
+                  Room
+                </span>
               </div>
               <div className="flex items-center gap-x-1">
                 <ShowerIcon className="svgIcon" />
-                <span>4</span>
+                <span>
+                  {
+                    property?.feature?.find((item) => item.name === "bathroom")
+                      .value
+                  }
+                </span>
               </div>
             </div>
             <hr className="hidden md:block my-4" />
@@ -125,24 +136,35 @@ async function page({ params, searchParams }) {
           {/* all features  */}
           <div className="w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
             <h5 className="text-sm md:text-xl font-bold">All features</h5>
-            <div className="grid grid-cols-3 gap-y-10 justify-items-center mt-10">
-              {allFeatures.map((feature) => (
-                <span
-                  className="flex items-center gap-x-2 text-white-two col-span-1"
-                  key={feature.id}
-                >
-                  {feature.icon}
-                  {feature.label}
-                </span>
-              ))}
+            <div className="grid grid-cols-3 gap-y-10 justify-items-start gap-x-2 mt-10">
+              {property.feature.map(
+                ({ name, value }) =>
+                  !separatedFeatures.includes(name) && (
+                    <span className="text-white-two col-span-1 flex items-center gap-x-2">
+                      <span className="first-letter:capitalize">
+                        {name?.split("_").join(" ")} :{" "}
+                      </span>
+                      {value.toString().toLowerCase() === "true" ? (
+                        <FaCheck className="icon text-green-500" />
+                      ) : (
+                        <span className="first-letter:capitalize">{value}</span>
+                      )}
+                    </span>
+                  )
+              )}
+            </div>
+            <Divider sx={{ margin: "10px 0px" }} />
+            <div className="grid grid-cols-3 gap-y-10 justify-items-start gap-x-2">
               <span className="text-white-two col-span-1">
-                The total area is : 500 meters
+                The total area is : {property?.gross} meters
               </span>
               <span className="text-white-two col-span-1">
-                The Foundation area is : 700 meters
+                The Foundation area is : {property?.net} meters
               </span>
               <span className="text-white-two col-span-1">
-                building age : 5 year
+                building age :
+                {property?.feature?.find((item) => item.name === "age").value}{" "}
+                year
               </span>
             </div>
           </div>

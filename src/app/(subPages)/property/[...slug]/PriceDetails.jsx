@@ -35,7 +35,10 @@ function PriceDetails({ property }) {
             <span className="text-green-blue font-medium">
               {!isLoading &&
                 property?.price
-                  .find((item) => item.name === currencyName.toLowerCase())
+                  .find(
+                    (item) =>
+                      item.name.toLowerCase() === currencyName.toLowerCase()
+                  )
                   ?.price.toLocaleString()}
               {" - "} {currencyName}
             </span>

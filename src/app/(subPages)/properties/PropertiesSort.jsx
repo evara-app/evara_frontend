@@ -15,7 +15,17 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 
 //? import hooks
-import { useGetCountry } from "@/hooks/propertyDetails";
+import {
+  useGetCountry,
+  useGetAllCities,
+  useGetAllProvince,
+  useGetRooms,
+  useGetPropertyFields,
+} from "@/hooks/propertyDetails";
+import { useGetAllCategories } from "@/hooks/useCategories";
+
+//? import constants
+import { PropertiesFilter } from "@/constants/propertiesFilters";
 
 const sortButtons = [
   {
@@ -62,19 +72,48 @@ const viewType = [
   },
 ];
 
+// convert this filter to string
+const notValItems = ["country", "minPrice", "maxPrice", "minGross", "maxGross"];
+
+export const dynamic = "force-static";
+export const revalidate = 86400000;
+
 function PropertiesSort({ count, queries }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const [options, setOptions] = useState({});
   const [view, setView] = useState(0);
   const [sort, setSort] = useState();
   const [activeView, setActiveView] = useState();
   const [chipQueries, setChipQueries] = useState();
 
+  const { data: allCategories, isLoading } = useGetAllCategories();
+  const { results: categories } = allCategories || {};
   const { data: country } = useGetCountry();
-
-  // console.log(country);
+  const { data: cities } = useGetAllCities();
+  const { data: provinces } = useGetAllProvince();
+  const { data: rooms } = useGetRooms();
+  const { data: propertyFields } = useGetPropertyFields();
+  const { another_features } = propertyFields?.data || {};
+  const transactionType = [
+    {
+      id: "BU",
+      name: "Sell",
+      type: "Sell",
+    },
+    {
+      id: "RE",
+      name: "Rent",
+      type: "Rent",
+    },
+    {
+      id: "DR",
+      name: "Daily rent",
+      type: "Rent",
+    },
+  ];
 
   // query handler
   const createQueryString = useCallback(
@@ -108,6 +147,25 @@ function PropertiesSort({ count, queries }) {
     setActiveView(searchParams.get("viewType") || "List");
     setChipQueries(queries);
   }, [searchParams]);
+
+  useEffect(() => {
+    const updatedOptions = { ...options };
+    if (country && cities && provinces && rooms && another_features) {
+      const transformData = (data) =>
+        data.map((item) => ({ label: item.name, value: item.id }));
+      updatedOptions.country = transformData(country);
+      updatedOptions.provinces = transformData(provinces);
+      updatedOptions.cities = transformData(cities);
+      updatedOptions.room = transformData(rooms);
+      updatedOptions.features = transformData(another_features);
+      updatedOptions.transactionType = transformData(transactionType);
+      categories &&
+        Object.keys(categories).map((item) => {
+          updatedOptions.propertyType = transformData(categories[item]);
+        });
+    }
+    setOptions(updatedOptions);
+  }, [country, cities, provinces, rooms, another_features, categories]);
 
   return (
     <div>

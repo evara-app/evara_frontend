@@ -12,6 +12,16 @@ export function getProvinces(province) {
     .then(({ data }) => data);
 }
 
+export function getAllProvinces() {
+  return http
+    .get("/api/v2/location/provinces/")
+    .then(({ data }) => data.results);
+}
+
+export function getAllCities() {
+  return http.get("/api/v2/location/cities/").then(({ data }) => data.results);
+}
+
 export function getProperties(filter) {
   return http
     .get(`/api/v2/front/property/list?${filter}`)

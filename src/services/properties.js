@@ -1,4 +1,5 @@
 import http from "./httpService";
+import axios from "axios";
 
 export function getCities(id) {
   return http
@@ -61,4 +62,8 @@ export function submitComment(data) {
   return http
     .post(`/api/v2/front/property-comments/`, data)
     .then(({ data }) => data);
+}
+
+export function getPost(id) {
+  return axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
 }

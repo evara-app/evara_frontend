@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import AsyncSelect from "react-select/async";
 import makeAnimated from "react-select/animated";
 import { useMutation } from "@tanstack/react-query";
@@ -19,6 +19,9 @@ import { useGetAllCategories } from "@/hooks/useCategories";
 
 //? import service
 import { getCities, getProvinces } from "@/services/properties";
+
+//? import components
+import Loading from "@/common/Loading";
 
 const multiInputStyle = {
   control: (baseStyles, state) => ({
@@ -196,21 +199,24 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
     <div className="grid grid-cols-2">
       {PropertiesFilter.map((filters) => {
         return filters.type === "Select" ? (
-          <AsyncSelect
-            key={filters.id}
-            classNamePrefix="select2-selection"
-            className="col-span-2"
-            styles={multiInputStyle}
-            isMulti={filters.name === "country" ? false : true}
-            instanceId={filters.id}
-            components={animatedComponents}
-            placeholder={filters.label}
-            defaultOptions={options[filters.name]}
-            onChange={(event) => filterHandler(event, filters.name)}
-            loadOptions={loadOptions}
-            formatGroupLabel={formatGroupLabel}
-            value={valueHandler(filters.name)}
-          />
+          <Suspense fallback={"loading ... "}>
+            <AsyncSelect
+              isLoading={!options[filters.name]}
+              key={filters.id}
+              classNamePrefix="select2-selection"
+              className="col-span-2"
+              styles={multiInputStyle}
+              isMulti={filters.name === "country" ? false : true}
+              instanceId={filters.id}
+              components={animatedComponents}
+              placeholder={filters.label}
+              defaultOptions={options[filters.name]}
+              onChange={(event) => filterHandler(event, filters.name)}
+              loadOptions={loadOptions}
+              formatGroupLabel={formatGroupLabel}
+              value={valueHandler(filters.name)}
+            />
+          </Suspense>
         ) : (
           <NumericFormat
             allowLeadingZeros

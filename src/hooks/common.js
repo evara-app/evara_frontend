@@ -6,7 +6,7 @@ export const useGetCurrency = () =>
     queryKey: ["get-currency"],
     queryFn: getCurrency,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
 // react query for update live currency from localstorage

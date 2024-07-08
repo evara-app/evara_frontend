@@ -12,7 +12,7 @@ export const useGetRooms = () =>
     queryKey: ["get-rooms"],
     queryFn: getRooms,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
 export const useGetCountry = () =>
@@ -20,7 +20,7 @@ export const useGetCountry = () =>
     queryKey: ["get-countries"],
     queryFn: getCountries,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
 export const useGetAllProvince = () =>
@@ -28,7 +28,7 @@ export const useGetAllProvince = () =>
     queryKey: ["get-all-province"],
     queryFn: getAllProvinces,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
 export const useGetAllCities = () =>
@@ -36,7 +36,7 @@ export const useGetAllCities = () =>
     queryKey: ["get-all-cities"],
     queryFn: getAllCities,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });
 
 export const useGetPropertyFields = () =>
@@ -44,5 +44,5 @@ export const useGetPropertyFields = () =>
     queryKey: ["get-property-fields"],
     queryFn: getPropertyFields,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });

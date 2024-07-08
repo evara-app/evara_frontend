@@ -13,5 +13,5 @@ export const useGetAllTickets = () =>
     queryKey: ["get-tickets"],
     queryFn: getAllTickets,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });

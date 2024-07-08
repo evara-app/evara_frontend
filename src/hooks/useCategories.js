@@ -6,5 +6,5 @@ export const useGetAllCategories = () =>
     queryKey: ["get-categories"],
     queryFn: getAllCategories,
     retry: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
   });

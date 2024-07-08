@@ -20,10 +20,10 @@ async function page({ searchParams }) {
         <AdvanceSearch />
       </div>
       <div className="col-span-6">
-        {/* <PropertyList
+        <PropertyList
           propertiesList={propertiesList}
           searchParams={searchParams}
-        /> */}
+        />
       </div>
     </div>
   );

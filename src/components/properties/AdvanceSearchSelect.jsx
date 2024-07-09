@@ -9,14 +9,6 @@ import { NumericFormat } from "react-number-format";
 //? import constants
 import { PropertiesFilter } from "@/constants/propertiesFilters";
 
-//? import hooks
-import {
-  useGetCountry,
-  useGetRooms,
-  useGetPropertyFields,
-} from "@/hooks/propertyDetails";
-import { useGetAllCategories } from "@/hooks/useCategories";
-
 //? import service
 import { getCities, getProvinces } from "@/services/properties";
 
@@ -60,13 +52,15 @@ const groupBadgeStyles = {
 
 const animatedComponents = makeAnimated();
 
-function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
-  const { data: allCategories, isLoading } = useGetAllCategories();
-  const { results: categories } = allCategories || {};
-  const { data: country } = useGetCountry();
-  const { data: rooms } = useGetRooms();
-  const { data: propertyFields } = useGetPropertyFields();
-  const { another_features } = propertyFields?.data || {};
+function AdvanceSearchSelect({
+  filter,
+  filterHandler,
+  inputHandler,
+  categories,
+  countries,
+  rooms,
+  propertyFields,
+}) {
   const transactionType = [
     {
       id: "BU",
@@ -96,23 +90,33 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
   useEffect(() => {
     const updatedOptions = { ...options };
     // change structure of api data because react-select accept this way
-    if (country && rooms && another_features) {
-      const transformData = (data) =>
-        data.map((item) => ({ label: item.name, value: item.id }));
-      updatedOptions.country = transformData(country);
-      updatedOptions.room = transformData(rooms);
-      updatedOptions.features = transformData(another_features);
-      updatedOptions.transactionType = transformData(transactionType);
-      categories &&
-        Object.keys(categories).map((item) => {
-          updatedOptions.propertyType = transformData(categories[item]);
-        });
-      // updatedOptions.propertyType = transformData(categories);
-    }
-    setOptions(updatedOptions);
-  }, [country, rooms, another_features, categories]);
+    const transformData = (data) =>
+      data.map((item) => ({ label: item.name, value: item.id }));
 
-  // console.log(options);
+    const transformDataWithParent = (data, parents) => {
+      return parents.map((parent) => ({
+        label: parent,
+        options: data[parent].map((item) => ({
+          label: item.name,
+          value: item.id,
+          parent: parent,
+        })),
+      }));
+    };
+
+    updatedOptions.country = transformData(countries);
+    updatedOptions.room = transformData(rooms);
+    updatedOptions.transactionType = transformData(transactionType);
+    updatedOptions.propertyType = transformDataWithParent(
+      categories,
+      Object.keys(categories)
+    );
+    updatedOptions.features = transformDataWithParent(
+      propertyFields.data,
+      Object.keys(propertyFields.data)
+    );
+    setOptions(updatedOptions);
+  }, []);
 
   useEffect(() => {
     const updatedOptions = { ...options };
@@ -166,8 +170,6 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
 
   const loadOptions = async (inputValue, callback) => {};
 
-  // console.log(filter);
-
   const formatGroupLabel = (data) => (
     <div style={groupStyles}>
       <span>{data.label}</span>
@@ -175,23 +177,35 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
     </div>
   );
 
-  const valueHandler = (name) => {
+  const valueHandler = (name, items) => {
     if (Array.isArray(filter[name]) && options[name]) {
-      // if (name !== "province") {
       return filter[name].reduce((acc, filterValue) => {
-        name === "province"
-          ? acc.push(
+        switch (name) {
+          case "province":
+            acc.push(
               options.province
                 .flatMap((provinceOption) => provinceOption.options)
-                .find((item) => item.value == filterValue)
-            )
-          : acc.push(
-              options[name]?.find((option) => option.value == filterValue)
+                .find((item) => item.value === filterValue)
             );
+            break;
+          case "features":
+            acc.push(
+              ...items.map((feature) => ({
+                label: feature,
+                value: feature.split(",")[1],
+                parent: feature.split(",")[0],
+              }))
+            );
+            break;
+          default:
+            acc.push(
+              options[name]?.find((option) => option.value === filterValue)
+            );
+        }
         return acc;
       }, []);
     } else {
-      return options[name]?.filter((item) => item.value == filter[name]);
+      return options[name]?.filter((item) => item.value === filter[name]);
     }
   };
 
@@ -199,24 +213,22 @@ function AdvanceSearchSelect({ filter, filterHandler, inputHandler }) {
     <div className="grid grid-cols-2">
       {PropertiesFilter.map((filters) => {
         return filters.type === "Select" ? (
-          <Suspense fallback={"loading ... "}>
-            <AsyncSelect
-              isLoading={!options[filters.name]}
-              key={filters.id}
-              classNamePrefix="select2-selection"
-              className="col-span-2"
-              styles={multiInputStyle}
-              isMulti={filters.name === "country" ? false : true}
-              instanceId={filters.id}
-              components={animatedComponents}
-              placeholder={filters.label}
-              defaultOptions={options[filters.name]}
-              onChange={(event) => filterHandler(event, filters.name)}
-              loadOptions={loadOptions}
-              formatGroupLabel={formatGroupLabel}
-              value={valueHandler(filters.name)}
-            />
-          </Suspense>
+          <AsyncSelect
+            isLoading={!options[filters.name]}
+            key={filters.id}
+            classNamePrefix="select2-selection"
+            className="col-span-2"
+            styles={multiInputStyle}
+            isMulti={filters.name === "country" ? false : true}
+            instanceId={filters.id}
+            components={animatedComponents}
+            placeholder={filters.label}
+            defaultOptions={options[filters.name]}
+            onChange={(event) => filterHandler(event, filters.name)}
+            loadOptions={loadOptions}
+            formatGroupLabel={formatGroupLabel}
+            value={valueHandler(filters.name, filter[filters.name])}
+          />
         ) : (
           <NumericFormat
             allowLeadingZeros

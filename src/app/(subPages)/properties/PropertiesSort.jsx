@@ -89,31 +89,31 @@ function PropertiesSort({ count, queries }) {
   const [activeView, setActiveView] = useState();
   const [chipQueries, setChipQueries] = useState();
 
-  const { data: allCategories, isLoading } = useGetAllCategories();
-  const { results: categories } = allCategories || {};
-  const { data: country } = useGetCountry();
-  const { data: cities } = useGetAllCities();
-  const { data: provinces } = useGetAllProvince();
-  const { data: rooms } = useGetRooms();
-  const { data: propertyFields } = useGetPropertyFields();
-  const { another_features } = propertyFields?.data || {};
-  const transactionType = [
-    {
-      id: "BU",
-      name: "Sell",
-      type: "Sell",
-    },
-    {
-      id: "RE",
-      name: "Rent",
-      type: "Rent",
-    },
-    {
-      id: "DR",
-      name: "Daily rent",
-      type: "Rent",
-    },
-  ];
+  // const { data: allCategories, isLoading } = useGetAllCategories();
+  // const { results: categories } = allCategories || {};
+  // const { data: country } = useGetCountry();
+  // const { data: cities } = useGetAllCities();
+  // const { data: provinces } = useGetAllProvince();
+  // const { data: rooms } = useGetRooms();
+  // const { data: propertyFields } = useGetPropertyFields();
+  // const { another_features } = propertyFields?.data || {};
+  // const transactionType = [
+  //   {
+  //     id: "BU",
+  //     name: "Sell",
+  //     type: "Sell",
+  //   },
+  //   {
+  //     id: "RE",
+  //     name: "Rent",
+  //     type: "Rent",
+  //   },
+  //   {
+  //     id: "DR",
+  //     name: "Daily rent",
+  //     type: "Rent",
+  //   },
+  // ];
 
   // query handler
   const createQueryString = useCallback(
@@ -148,24 +148,24 @@ function PropertiesSort({ count, queries }) {
     setChipQueries(queries);
   }, [searchParams]);
 
-  useEffect(() => {
-    const updatedOptions = { ...options };
-    if (country && cities && provinces && rooms && another_features) {
-      const transformData = (data) =>
-        data.map((item) => ({ label: item.name, value: item.id }));
-      updatedOptions.country = transformData(country);
-      updatedOptions.provinces = transformData(provinces);
-      updatedOptions.cities = transformData(cities);
-      updatedOptions.room = transformData(rooms);
-      updatedOptions.features = transformData(another_features);
-      updatedOptions.transactionType = transformData(transactionType);
-      categories &&
-        Object.keys(categories).map((item) => {
-          updatedOptions.propertyType = transformData(categories[item]);
-        });
-    }
-    setOptions(updatedOptions);
-  }, [country, cities, provinces, rooms, another_features, categories]);
+  // useEffect(() => {
+  //   const updatedOptions = { ...options };
+  //   if (country && cities && provinces && rooms && another_features) {
+  //     const transformData = (data) =>
+  //       data.map((item) => ({ label: item.name, value: item.id }));
+  //     updatedOptions.country = transformData(country);
+  //     updatedOptions.provinces = transformData(provinces);
+  //     updatedOptions.cities = transformData(cities);
+  //     updatedOptions.room = transformData(rooms);
+  //     updatedOptions.features = transformData(another_features);
+  //     updatedOptions.transactionType = transformData(transactionType);
+  //     categories &&
+  //       Object.keys(categories).map((item) => {
+  //         updatedOptions.propertyType = transformData(categories[item]);
+  //       });
+  //   }
+  //   setOptions(updatedOptions);
+  // }, [country, cities, provinces, rooms, another_features, categories]);
 
   return (
     <div>
@@ -222,15 +222,6 @@ function PropertiesSort({ count, queries }) {
       </div>
       <div className="p-2 border border-gray-200 shadow-sm rounded-md">
         <Stack direction="row" spacing={1}>
-          {chipQueries?.country && (
-            <Chip
-              label={
-                country?.find((item) => item.id == chipQueries?.country)?.name
-              }
-              onDelete={handleDelete}
-            />
-          )}
-
           <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
         </Stack>
       </div>

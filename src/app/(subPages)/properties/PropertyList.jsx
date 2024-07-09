@@ -33,7 +33,7 @@ function PropertyList({ propertiesList, searchParams }) {
   };
   return (
     <div>
-      {/* <PropertiesSort count={count} queries={searchParams} /> */}
+      <PropertiesSort count={count} queries={searchParams} />
       <Divider sx={{ margin: "10px 0px" }} />
       {renderViews()}
       <div className="flex justify-center mt-10">

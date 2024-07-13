@@ -58,6 +58,9 @@ body {
   .disableButton {
     @apply rounded text-white-two font-medium bg-gray-100 py-2 px-2 md:px-6 text-xs md:text-base;
   }
+  .borderButton {
+    @apply rounded w-full text-gray-default border border-gray-200 font-medium bg-transparent py-2 px-6;
+  }
   .authActiveButton {
     @apply rounded-md text-white bg-[#85948b] py-4 flex-1;
   }
@@ -113,7 +116,7 @@ body {
     @apply absolute top-0 left-0 w-full h-full;
   }
   .shareIcons {
-    @apply !py-2 px-4 w-full rounded-lg flex justify-center items-center gap-x-2 !text-white font-medium text-sm
+    @apply !py-2 px-4 w-full rounded-lg flex justify-center items-center gap-x-2 !text-white font-medium text-sm;
   }
 }
 
@@ -263,7 +266,7 @@ tbody td:last-child {
   border-radius: 0 10px 10px 0;
   padding: 10px;
 }
-.contactUs{
+.contactUs {
   background-image: url("/assets/img/contactUs.png");
   height: 750px;
   width: 100%;

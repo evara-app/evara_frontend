@@ -17,9 +17,9 @@ function PropertyList({ propertiesList, searchParams }) {
     switch (viewType) {
       case "List":
         return (
-          <div className="flex items-center justify-start gap-x-4 gap-y-2 flex-wrap">
+          <div className="flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
             {results.map((item) => (
-              <div className="flex-1">
+              <div className="md:flex-1">
                 <Card cardData={item} />
               </div>
             ))}
@@ -37,7 +37,7 @@ function PropertyList({ propertiesList, searchParams }) {
       <Divider sx={{ margin: "10px 0px" }} />
       {renderViews()}
       <div className="flex justify-center mt-10">
-        <Pagination count={10} />
+        <Pagination count={count} />
       </div>
     </div>
   );

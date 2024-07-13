@@ -41,20 +41,24 @@ function Card({ cardData }) {
           <span className="text-xl text-green-blue font-bold mb-5">
             <PropertyPrice cardData={cardData} />
           </span>
-          <p className="text-white-two text-sm mb-2">June 19, 2023</p>
+          <p className="text-white-two text-sm mb-2">
+            {convertTime(cardData?.approved_at, "en-US")}
+          </p>
           <Divider className="my-2" />
           <div className="flex items-center justify-between text-white-two text-xs mx-2 my-1">
-            <div className="flex items-center gap-x-1">
+            <div className="flex items-center gap-x-1 whitespace-nowrap">
               <BedIcon className="w-4 h-4 " />
-              <span>2 Bed</span>
+              <span>{cardData?.feature_metadata?.room} Bed</span>
             </div>
-            <div className="flex items-center gap-x-1">
+            <div className="flex items-center gap-x-1 whitespace-nowrap">
               <FloorIcon className="w-4 h-4" />
-              <span>3 Floor</span>
+              <span>{cardData?.feature_metadata?.floor} Floor</span>
             </div>
-            <div className="flex items-center gap-x-1">
+            <div className="flex items-center gap-x-1 whitespace-nowrap">
               <SizeIcon className="w-4 h-4" />
-              <span>1,500 M2</span>
+              <span className="flex items-center">
+                <p className="max-w-[40px] truncate">{cardData?.gross}</p> M2
+              </span>
             </div>
           </div>
         </div>

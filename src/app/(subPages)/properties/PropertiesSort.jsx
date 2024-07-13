@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import queryString from "query-string";
 
 //? import icons
-import { CiCircleList } from "react-icons/ci";
+import { CiCircleList, CiSearch } from "react-icons/ci";
 import { BsGrid } from "react-icons/bs";
 
 //? import mui
@@ -144,7 +144,7 @@ function PropertiesSort({ count, queries }) {
 
   useEffect(() => {
     setSort(searchParams.get("ordering") || "-created_at");
-    setActiveView(searchParams.get("viewType") || "List");
+    setActiveView(searchParams.get("viewType") || 3);
     setChipQueries(queries);
   }, [searchParams]);
 
@@ -169,9 +169,35 @@ function PropertiesSort({ count, queries }) {
 
   return (
     <div>
-      <div className="p-2 rounded-md text-gray-default border border-gray-200 shadow-sm">
-        <h5 className="font-medium text-lg">Results : {count} </h5>
-        <div className="flex items-end gap-x-2">
+      <div>
+        <div className="md:hidden">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search ..."
+              className="rounded-full w-full border border-gray-200 placeholder:text-gray-default p-3 focus:outline-none focus:border-green-blue"
+            />
+            <CiSearch className="w-7 h-7 text-gray-default absolute end-2 top-1/2 -translate-y-1/2" />
+          </div>
+          <button className="button mt-2 w-full">Search</button>
+        </div>
+        <div className="mt-2 flex items-center justify-between gap-x-2 text-xs sm:text-sm md:hidden">
+          <button
+            className={`${
+              activeView == 1
+                ? "borderButton text-white bg-gradient-to-tr from-green-blue to-cyan-default"
+                : "borderButton"
+            }`}
+            onClick={() => viewHandler(1)}
+          >
+            Map search
+          </button>
+          <button className="borderButton">Price changes chart</button>
+        </div>
+      </div>
+      <div className="p-2 rounded-md text-gray-default border border-gray-200 shadow-sm mt-2 md:mt-0">
+        <h5 className="font-medium text-lg px-2">Results : {count} </h5>
+        <div className="flex items-end gap-x-2 px-2">
           <p className="mt-1 text-base">List View : </p>
           <div className="flex items-center gap-x-1">
             <button>
@@ -182,8 +208,27 @@ function PropertiesSort({ count, queries }) {
             </button>
           </div>
         </div>
+        <div className="mt-2 p-2">
+          <select
+            className="md:hidden borderButton border-none bg-gray-100 px-2 py-2 text-gray-default focus:outline-none"
+            onChange={sortHandler}
+          >
+            {sortButtons.map((btn) => (
+              <React.Fragment key={btn.id}>
+                {sort === btn.query && <option selected>{btn.name}</option>}
+                <option
+                  selected={sort === btn.query}
+                  name={btn.name}
+                  value={btn.query}
+                >
+                  {btn.name}
+                </option>
+              </React.Fragment>
+            ))}
+          </select>
+        </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="hidden md:flex items-center justify-between">
         <div className="mt-1 p-2 flex items-center gap-x-2">
           <h5 className="text-gray-default">Sort : </h5>
           {sortButtons.map((btn) => (
@@ -220,7 +265,7 @@ function PropertiesSort({ count, queries }) {
           ))}
         </ButtonGroup>
       </div>
-      <div className="p-2 border border-gray-200 shadow-sm rounded-md">
+      <div className="p-2 border border-gray-200 shadow-sm rounded-md hidden">
         <Stack direction="row" spacing={1}>
           <Chip label="Deletable" variant="outlined" onDelete={handleDelete} />
         </Stack>

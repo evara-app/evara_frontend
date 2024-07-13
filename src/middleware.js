@@ -6,7 +6,7 @@ export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
 
   if (pathname.startsWith("/profile")) {
-    const user = await middlewareAuth(req);
+    const user = await middlewareAuth(req.cookies.get("access")?.value);
     if (!user) return NextResponse.redirect(new URL("/auth", url));
   }
 }

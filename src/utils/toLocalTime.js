@@ -1,4 +1,4 @@
-export function convertTime(time, local) {
+export function convertTime(time, local = "en-US") {
   const options = {
     year: "numeric",
     month: "long",

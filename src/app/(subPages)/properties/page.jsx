@@ -18,31 +18,24 @@ export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in p
 async function page({ searchParams }) {
   const propertiesPromise = getProperties(queryString.stringify(searchParams));
 
-  const [
-    propertiesList,
-    countries,
-    { results: categories },
-    rooms,
-    propertyFields,
-  ] = await Promise.all([
-    propertiesPromise,
-    getCountries(),
-    getAllCategories(),
-    getRooms(),
-    getPropertyFields(),
-  ]);
+  const [propertiesList, countries, { results: categories }, propertyFields] =
+    await Promise.all([
+      propertiesPromise,
+      getCountries(),
+      getAllCategories(),
+      getPropertyFields(),
+    ]);
 
   return (
     <div className="grid grid-cols-8 gap-x-5 rounded-md p-4 shadow-md">
-      <div className="col-span-2 border-r-2 border-r-border-gray/50 pr-4">
+      <div className="absolute top-0 py-5 md:py-0 translate-y-0 z-50 bg-white md:block w-full md:w-auto col-span-8 md:col-span-2 border-r-2 border-r-border-gray/50 pr-4">
         <AdvanceSearch
           categories={categories}
           countries={countries}
-          rooms={rooms}
           propertyFields={propertyFields}
         />
       </div>
-      <div className="col-span-6">
+      <div className="col-span-8 md:col-span-6">
         <PropertyList
           propertiesList={propertiesList}
           searchParams={searchParams}

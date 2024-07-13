@@ -15,6 +15,9 @@ import { getCities, getProvinces } from "@/services/properties";
 //? import components
 import Loading from "@/common/Loading";
 
+//? import hooks
+import { useGetCurrency, useGetLocalCurrency } from "@/hooks/common";
+
 const multiInputStyle = {
   control: (baseStyles, state) => ({
     ...baseStyles,
@@ -58,10 +61,9 @@ function AdvanceSearchSelect({
   inputHandler,
   categories,
   countries,
-  rooms,
   propertyFields,
 }) {
-  const transactionType = [
+  const listing = [
     {
       id: "BU",
       name: "Sell",
@@ -87,6 +89,13 @@ function AdvanceSearchSelect({
 
   const [options, setOptions] = useState({});
 
+  // get currency
+  const { data: currency, isLoading } = useGetCurrency();
+  const { data: localCurrency } = useGetLocalCurrency();
+  const currencyId = localCurrency || 1;
+  const currencyName =
+    !isLoading && currency.find((item) => item.id == currencyId).abbreviation;
+
   useEffect(() => {
     const updatedOptions = { ...options };
     // change structure of api data because react-select accept this way
@@ -105,8 +114,7 @@ function AdvanceSearchSelect({
     };
 
     updatedOptions.country = transformData(countries);
-    updatedOptions.room = transformData(rooms);
-    updatedOptions.transactionType = transformData(transactionType);
+    updatedOptions.listing = transformData(listing);
     updatedOptions.propertyType = transformDataWithParent(
       categories,
       Object.keys(categories)
@@ -196,6 +204,14 @@ function AdvanceSearchSelect({
                 parent: feature.split(",")[0],
               }))
             );
+          case "propertyType":
+            acc.push(
+              ...items.map((propertyType) => ({
+                label: propertyType,
+                value: propertyType.split(",")[1],
+                parent: propertyType.split(",")[0],
+              }))
+            );
             break;
           default:
             acc.push(
@@ -230,18 +246,26 @@ function AdvanceSearchSelect({
             value={valueHandler(filters.name, filter[filters.name])}
           />
         ) : (
-          <NumericFormat
-            allowLeadingZeros
-            thousandSeparator=","
-            className="border border-border-gray col-span-1 py-1 px-2 rounded m-1 outline-none focus:border-green-blue text-[#7F7F7F] placeholder:text-[#7F7F7F]"
-            key={filters.id}
-            placeholder={filters.label}
-            type="text"
-            name={filters.name}
-            // onChange={inputHandler}
-            onValueChange={({ value }, { event }) => inputHandler(event, value)}
-            value={filter[filters.name]}
-          />
+          <div className="relative col-span-1 m-1 overflow-hidden z-0">
+            <NumericFormat
+              allowLeadingZeros
+              thousandSeparator=","
+              className="w-full border border-border-gray py-1 px-2 rounded outline-none focus:border-green-blue text-[#7F7F7F] placeholder:text-[#7F7F7F]"
+              key={filters.id}
+              placeholder={filters.label}
+              type="text"
+              name={filters.name}
+              onValueChange={({ value }, { event }) =>
+                inputHandler(event, value, currencyName)
+              }
+              value={filter[filters.name]}
+            />
+            {["minPrice", "maxPrice"].includes(filters.name) && (
+              <span className="absolute end-0 text-[#7F7F7F] top-1/2 -translate-y-1/2 text-xs p-1 z-10">
+                {!isLoading && currencyName}
+              </span>
+            )}
+          </div>
         );
       })}
     </div>

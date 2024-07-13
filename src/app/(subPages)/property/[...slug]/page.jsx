@@ -30,6 +30,9 @@ import {
 //? import mui
 import Divider from "@mui/material/Divider";
 
+//? import utils
+import middlewareAuth from "@/utils/middlewareAut";
+
 export const dynamic = "force-dynamic"; // eq to {cache :"no-store"} or SSR in pages Dir. :)
 
 const separatedFeatures = [
@@ -43,13 +46,14 @@ const separatedFeatures = [
 async function page({ params, searchParams }) {
   const cookieStore = cookies();
   const token = cookieStore.get("access").value;
+  const user = await middlewareAuth(token);
 
   // only if token is available will be set in headers
   const propertySlug = params.slug[0];
   const propertyId = params.slug[1];
   const commentSize = searchParams?.commentSize;
 
-  const PropertyDetails = !!token
+  const PropertyDetails = user
     ? getPropertyBySlugToken(propertySlug, token)
     : getPropertyBySlug(propertySlug);
 

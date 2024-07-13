@@ -9,7 +9,7 @@ import AdvanceSearchSelect from "@/components/properties/AdvanceSearchSelect";
 //? import constants
 import { PropertiesFilter } from "@/constants/propertiesFilters";
 
-function AdvanceSearch({ categories, countries, rooms, propertyFields }) {
+function AdvanceSearch({ categories, countries, propertyFields }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -66,7 +66,7 @@ function AdvanceSearch({ categories, countries, rooms, propertyFields }) {
   );
 
   const filterHandler = (event, name) => {
-    if (name === "features")
+    if (name === "features" || name === "propertyType")
       return setFilter({
         ...filter,
         [name]: [
@@ -78,7 +78,8 @@ function AdvanceSearch({ categories, countries, rooms, propertyFields }) {
       : setFilter({ ...filter, [name]: event.value });
   };
 
-  const inputHandler = (event, value) => {
+  const inputHandler = (event, value, currencyName) => {
+    if (currencyName) setFilter({ ...filter, currency: currencyName });
     setFilter({ ...filter, [event.target.name]: value });
   };
 
@@ -97,7 +98,6 @@ function AdvanceSearch({ categories, countries, rooms, propertyFields }) {
         inputHandler={inputHandler}
         categories={categories}
         countries={countries}
-        rooms={rooms}
         propertyFields={propertyFields}
       />
       <button className="button w-full" onClick={submitHandler}>

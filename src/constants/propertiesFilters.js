@@ -17,12 +17,12 @@ export const PropertiesFilter = [
     type: "Select",
     name: "province",
   },
-  {
-    id: 4,
-    label: "Select room",
-    type: "Select",
-    name: "room",
-  },
+  // {
+  //   id: 4,
+  //   label: "Select room",
+  //   type: "Select",
+  //   name: "room",
+  // },
   {
     id: 5,
     label: "Min price",
@@ -49,13 +49,13 @@ export const PropertiesFilter = [
   },
   {
     id: 9,
-    label: "Select transaction type",
+    label: "Select listing type",
     type: "Select",
-    name: "transactionType",
+    name: "listing",
   },
   {
     id: 10,
-    label: "Select propery type",
+    label: "Select property type",
     type: "Select",
     name: "propertyType",
   },

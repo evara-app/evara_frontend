@@ -83,7 +83,7 @@ function page() {
       const { messages } = message;
       axios.post("/api/auth", message);
       Toast("success", messages.en);
-      // router.push("/");
+      router.push("/");
     } catch (error) {
       Toast("error", error?.response?.data?.message);
     }

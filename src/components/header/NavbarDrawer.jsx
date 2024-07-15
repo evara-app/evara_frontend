@@ -191,7 +191,7 @@ export default function SwipeableTemporaryDrawer() {
             className="appearance-none"
             onClick={toggleDrawer(anchor, true)}
           >
-            <IoMenu className="icon w-8 h-8" />
+            <IoMenu className="icon text-gray-default w-8 h-8" />
           </button>
           <SwipeableDrawer
             anchor={anchor}

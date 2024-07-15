@@ -62,6 +62,8 @@ async function page({ params, searchParams }) {
   const [{ results: property }, { count, results: comments }] =
     await Promise.all([PropertyDetails, propertyComments]);
 
+  console.log(property);
+
   return (
     <div>
       {/* title and location ... */}

@@ -1,6 +1,6 @@
 [
   {
-    "type": "Sell",
+    "type": "BU",
     "category": "All",
     "fields": [
       "amount",
@@ -27,7 +27,7 @@
     ]
   },
   {
-    "type": "Sell",
+    "type": "BU",
     "category": "Garden",
     "fields": [
       "amount",
@@ -43,7 +43,7 @@
     ]
   },
   {
-    "type": "Sell",
+    "type": "BU",
     "category": "Farm",
     "fields": [
       "amount",
@@ -59,7 +59,7 @@
     ]
   },
   {
-    "type": "Rent",
+    "type": "RE",
     "category": "All",
     "fields": [
       "price",

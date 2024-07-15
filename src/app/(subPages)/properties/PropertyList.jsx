@@ -9,9 +9,17 @@ import Map from "@/components/properties/Map";
 //? import mui
 import Divider from "@mui/material/Divider";
 
-function PropertyList({ propertiesList, searchParams }) {
+function PropertyList({
+  propertiesList,
+  searchParams,
+  categories,
+  countries,
+  propertyFields,
+}) {
   const { count, results } = propertiesList;
   const { viewType = "List" } = searchParams;
+
+  console.log(propertiesList);
 
   const renderViews = () => {
     switch (viewType) {
@@ -19,7 +27,7 @@ function PropertyList({ propertiesList, searchParams }) {
         return (
           <div className="flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
             {results.map((item) => (
-              <div className="md:flex-1">
+              <div className="flex-1">
                 <Card cardData={item} />
               </div>
             ))}
@@ -33,7 +41,13 @@ function PropertyList({ propertiesList, searchParams }) {
   };
   return (
     <div>
-      <PropertiesSort count={count} queries={searchParams} />
+      <PropertiesSort
+        count={count}
+        queries={searchParams}
+        categories={categories}
+        countries={countries}
+        propertyFields={propertyFields}
+      />
       <Divider sx={{ margin: "10px 0px" }} />
       {renderViews()}
       <div className="flex justify-center mt-10">

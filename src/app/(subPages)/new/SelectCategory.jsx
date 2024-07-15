@@ -10,11 +10,16 @@ import Loading from "@/common/Loading";
 import { HiChevronDown } from "react-icons/hi";
 
 //? import hooks
-import { useGetAllCategories } from "@/hooks/useCategories";
+import {
+  useGetAllCategories,
+  useGetPropertiesListing,
+} from "@/hooks/useCategories";
 import { includeObj } from "@/utils/objectUtils";
 
 function SelectCategory({ defaultValue, handler, setHandler }) {
   const { data: allCategories, isLoading } = useGetAllCategories();
+  const { data: listing } = useGetPropertiesListing();
+
   const { results } = allCategories || {};
   const [category, setCategory] = useState([]);
 
@@ -98,12 +103,29 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
         );
       case 2:
         return (
-          <CustomSelect
-            defaultValue={defaultValue}
-            items={sellOrRent}
-            name={"SellOrBuy"}
-            handler={handler}
-          />
+          <div className="absolute border border-white-two/40 w-full rounded top-12 bg-white start-0 z-20">
+            {listing.results ? (
+              <ul className="flex p-1 flex-col gap-y-1 cursor-pointer transition text-gray-default">
+                {listing.results.map((item) => (
+                  <li
+                    key={item.id}
+                    className="p-2 rounded hover:text-white hover:font-medium hover:bg-green-400 flex justify-start"
+                    onClick={() => {
+                      handler({
+                        ...defaultValue,
+                        SellOrBuy: item.listing_type,
+                        listing: item.id,
+                      });
+                    }}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Loading />
+            )}
+          </div>
         );
       default:
         break;

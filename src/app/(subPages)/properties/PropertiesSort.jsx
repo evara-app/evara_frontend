@@ -6,13 +6,17 @@ import queryString from "query-string";
 
 //? import icons
 import { CiCircleList, CiSearch } from "react-icons/ci";
-import { BsGrid } from "react-icons/bs";
+import { BsGrid, BsSliders } from "react-icons/bs";
 
 //? import mui
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+
+//? import components
+import AdvanceSearch from "@/app/(subPages)/properties/AdvanceSearch";
 
 //? import hooks
 import {
@@ -78,7 +82,13 @@ const notValItems = ["country", "minPrice", "maxPrice", "minGross", "maxGross"];
 export const dynamic = "force-static";
 export const revalidate = 86400000;
 
-function PropertiesSort({ count, queries }) {
+function PropertiesSort({
+  count,
+  queries,
+  categories,
+  countries,
+  propertyFields,
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -88,6 +98,10 @@ function PropertiesSort({ count, queries }) {
   const [sort, setSort] = useState();
   const [activeView, setActiveView] = useState();
   const [chipQueries, setChipQueries] = useState();
+  const [open, setOpen] = useState(false);
+  const [state, setState] = React.useState({
+    bottom: false,
+  });
 
   // const { data: allCategories, isLoading } = useGetAllCategories();
   // const { results: categories } = allCategories || {};
@@ -148,6 +162,18 @@ function PropertiesSort({ count, queries }) {
     setChipQueries(queries);
   }, [searchParams]);
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
   // useEffect(() => {
   //   const updatedOptions = { ...options };
   //   if (country && cities && provinces && rooms && another_features) {
@@ -192,7 +218,34 @@ function PropertiesSort({ count, queries }) {
           >
             Map search
           </button>
-          <button className="borderButton">Price changes chart</button>
+          <div>
+            {["bottom"].map((anchor, index) => (
+              <React.Fragment key={anchor}>
+                <button
+                  key={index}
+                  className="borderButton flex items-center justify-center gap-x-2"
+                  onClick={toggleDrawer(anchor, true)}
+                >
+                  <BsSliders className="w-4 h-4 text-gray-default" />
+                  Filter
+                </button>
+                <SwipeableDrawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                  onOpen={toggleDrawer(anchor, true)}
+                >
+                  <div className="px-4 py-10">
+                    <AdvanceSearch
+                      categories={categories}
+                      countries={countries}
+                      propertyFields={propertyFields}
+                    />
+                  </div>
+                </SwipeableDrawer>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       </div>
       <div className="p-2 rounded-md text-gray-default border border-gray-200 shadow-sm mt-2 md:mt-0">

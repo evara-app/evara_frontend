@@ -28,7 +28,7 @@ async function page({ searchParams }) {
 
   return (
     <div className="grid grid-cols-8 gap-x-5 rounded-md p-4 shadow-md">
-      <div className="absolute top-0 py-5 md:py-0 translate-y-0 z-50 bg-white md:block w-full md:w-auto col-span-8 md:col-span-2 border-r-2 border-r-border-gray/50 pr-4">
+      <div className="py-5 bg-white col-span-2 border-r-2 border-r-border-gray/50 px-2 hidden md:block">
         <AdvanceSearch
           categories={categories}
           countries={countries}
@@ -39,6 +39,9 @@ async function page({ searchParams }) {
         <PropertyList
           propertiesList={propertiesList}
           searchParams={searchParams}
+          categories={categories}
+          countries={countries}
+          propertyFields={propertyFields}
         />
       </div>
     </div>

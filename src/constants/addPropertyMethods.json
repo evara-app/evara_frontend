@@ -2,16 +2,16 @@
   {
     "id": 2,
     "title": "Sell",
-    "type": "Sell"
+    "type": "BU"
   },
   {
     "id": 1,
     "title": "Rent",
-    "type": "Rent"
+    "type": "RE"
   },
   {
     "id": 3,
     "title": "Daily rent",
-    "type": "Rent"
+    "type": "RE"
   }
 ]

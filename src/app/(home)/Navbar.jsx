@@ -11,6 +11,7 @@ import LinkSelectMenu from "@/common/LinkSelectMenu";
 import LanguageMenu from "@/components/header/LanguageMenu";
 import CurrencyMenu from "@/components/header/CurrencyMenu";
 import NavbarDrawer from "@/components/header/NavbarDrawer";
+import LoginCheck from "@/app/(subPages)/LoginCheck";
 
 //? import icons
 import { IoSearch } from "react-icons/io5";
@@ -20,15 +21,17 @@ function Navbar() {
     <>
       <div className="hidden md:flex items-center justify-between p-4">
         {/* //* Logo Section */}
-        <div className="flex items-center gap-x-2">
-          <Image src={EvaraLogoImage} alt="Evara Logo" width={50} />
-          <Image
-            className="hidden lg:flex "
-            src={EvaraTextImage}
-            alt="Evara Logo"
-            width={130}
-          />
-        </div>
+        <Link href="/">
+          <div className="flex items-center gap-x-2">
+            <Image src={EvaraLogoImage} alt="Evara Logo" width={50} />
+            <Image
+              className="hidden lg:flex "
+              src={EvaraTextImage}
+              alt="Evara Logo"
+              width={130}
+            />
+          </div>
+        </Link>
         {/* //* Buttons Section */}
         <div>
           <ul className="flex items-center gap-x-3">
@@ -36,7 +39,7 @@ function Navbar() {
               <Link href="/">Home</Link>
             </li>
             <li className="headerLi">
-              <Link href="/">About us</Link>
+              <Link href="/about-us">About us</Link>
             </li>
             <li className="headerLi">
               <LinkSelectMenu
@@ -53,22 +56,24 @@ function Navbar() {
               />
             </li>
             <li className="headerLi">
-              <Link href="/">Property list</Link>
+              <Link href="/properties">Property list</Link>
             </li>
             <li className="headerLi">
-              <Link href="/">Mag</Link>
+              <Link href="/mag">Mag</Link>
             </li>
             <li className="headerLi">
-              <Link href="/">Contact us</Link>
+              <Link href="/contact-us">Contact us</Link>
             </li>
           </ul>
         </div>
         {/* //* Auth & Language Section */}
         <div className="flex items-center gap-x-2 lg:gap-x-3 text-white">
-          <Link href="/">Login</Link>
-          <button className="px-2 py-1 border-2 border-green_blue rounded-md">
-            Add Property
-          </button>
+          <LoginCheck />
+          <Link href="/new">
+            <span className="px-2 py-1 border-2 border-green-blue rounded-md">
+              Add Property
+            </span>
+          </Link>
           <LanguageMenu />
           <CurrencyMenu />
         </div>

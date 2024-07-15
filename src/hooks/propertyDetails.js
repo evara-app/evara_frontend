@@ -3,6 +3,7 @@ import {
   getRooms,
   getCountries,
   getPropertyFields,
+  getPropertiesListing,
 } from "@/services/addProperty";
 
 import { getAllProvinces, getAllCities } from "@/services/properties";

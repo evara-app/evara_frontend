@@ -63,7 +63,3 @@ export function submitComment(data) {
     .post(`/api/v2/front/property-comments/`, data)
     .then(({ data }) => data);
 }
-
-export function getPost(id) {
-  return axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`);
-}

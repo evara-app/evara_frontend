@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 //? import images
 import EvaraLogoImage from "&/assets/img/evaraLogo.png";
@@ -46,16 +47,18 @@ function SideBar() {
       <div className="mt-5 pl-4">
         <ul className="flex flex-col gap-y-2">
           {profileList.map((item) => (
-            <li
-              key={item.id}
-              className={`flex items-center p-3 gap-x-2 hover:bg-white text-white-two hover:shadow-sm !hover:text-green-blue hover:fill-green-blue hover:stroke-green-blue stroke-white-two stroke-0 rounded-l cursor-pointer transition ${
-                item.value === "Profile" &&
-                "bg-white shadow-sm text-green-blue fill-green-blue"
-              }`}
-            >
-              {item.icon}
-              {item.label}
-            </li>
+            <Link href={item.href}>
+              <li
+                key={item.id}
+                className={`flex items-center p-3 gap-x-2 hover:bg-white text-white-two hover:shadow-sm !hover:text-green-blue hover:fill-green-blue hover:stroke-green-blue stroke-white-two stroke-0 rounded-l cursor-pointer transition ${
+                  item.value === "Profile" &&
+                  "bg-white shadow-sm text-green-blue fill-green-blue"
+                }`}
+              >
+                {item.icon}
+                {item.label}
+              </li>
+            </Link>
           ))}
         </ul>
       </div>

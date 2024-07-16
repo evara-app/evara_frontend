@@ -9,8 +9,12 @@ export async function middleware(req) {
     const user = await middlewareAuth(req.cookies.get("access")?.value);
     if (!user) return NextResponse.redirect(new URL("/auth", url));
   }
+  if (pathname.startsWith("/new")) {
+    const user = await middlewareAuth(req.cookies.get("access")?.value);
+    if (!user) return NextResponse.redirect(new URL("/auth", url));
+  }
 }
 
 export const config = {
-  matcher: ["/profile/:path*"],
+  matcher: ["/profile/:path*", "/new/:path*"],
 };

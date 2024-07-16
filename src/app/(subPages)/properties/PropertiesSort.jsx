@@ -99,6 +99,7 @@ function PropertiesSort({
   const [activeView, setActiveView] = useState();
   const [chipQueries, setChipQueries] = useState();
   const [open, setOpen] = useState(false);
+  const [generalSearch, setGeneralSearch] = useState("");
   const [state, setState] = React.useState({
     bottom: false,
   });
@@ -133,6 +134,15 @@ function PropertiesSort({
   const createQueryString = useCallback(
     (name, value) => {
       const params = new URLSearchParams(searchParams);
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const createGeneralSearchQueryString = useCallback(
+    (name, value) => {
+      const params = new URLSearchParams();
       params.set(name, value);
       return params.toString();
     },
@@ -174,6 +184,12 @@ function PropertiesSort({
     setState({ ...state, [anchor]: open });
   };
 
+  const generalSearchHandler = () => {
+    router.push(
+      pathname + "?" + createGeneralSearchQueryString("search", generalSearch)
+    );
+  };
+
   // useEffect(() => {
   //   const updatedOptions = { ...options };
   //   if (country && cities && provinces && rooms && another_features) {
@@ -202,10 +218,13 @@ function PropertiesSort({
               type="text"
               placeholder="Search ..."
               className="rounded-full w-full border border-gray-200 placeholder:text-gray-default p-3 focus:outline-none focus:border-green-blue"
+              onChange={(event) => setGeneralSearch(event.target.value)}
             />
             <CiSearch className="w-7 h-7 text-gray-default absolute end-2 top-1/2 -translate-y-1/2" />
           </div>
-          <button className="button mt-2 w-full">Search</button>
+          <button className="button mt-2 w-full" onClick={generalSearchHandler}>
+            Search
+          </button>
         </div>
         <div className="mt-2 flex items-center justify-between gap-x-2 text-xs sm:text-sm md:hidden">
           <button
@@ -240,6 +259,8 @@ function PropertiesSort({
                       categories={categories}
                       countries={countries}
                       propertyFields={propertyFields}
+                      onClose={toggleDrawer(anchor, false)}
+                      isMobile={true}
                     />
                   </div>
                 </SwipeableDrawer>

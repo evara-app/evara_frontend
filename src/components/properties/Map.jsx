@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -10,6 +11,7 @@ import {
 
 //? import components
 import Loading from "@/common/Loading";
+import PropertyPrice from "@/app/(subPages)/properties/PropertyPrice";
 
 const containerStyle = {
   width: "100%",
@@ -17,6 +19,7 @@ const containerStyle = {
 };
 
 function Map({ properties }) {
+  const [property, setProperty] = useState();
   const [infoWindowCoordinate, setInfoWindowCoordinate] = useState();
 
   const center = {
@@ -30,14 +33,13 @@ function Map({ properties }) {
     googleMapsApiKey: "AIzaSyDdBi-i25sCVM7TPAkDElGLX5z7J7S_mpM",
   });
 
-  const InfoWindowHandler = (lat, lng) => {
+  const InfoWindowHandler = (property, lat, lng) => {
+    setProperty(property);
     setInfoWindowCoordinate({ lat: lat, lng: lng });
   };
 
   const divStyle = {
     background: `white`,
-    border: `1px solid #ccc`,
-    padding: 15,
   };
 
   return (
@@ -50,16 +52,46 @@ function Map({ properties }) {
           // onLoad={onLoad}
           // onUnmount={onUnmount}
         >
-          {properties.map((item) => (
+          {properties.map((property) => (
             <MarkerF
-              position={{ lat: center.lat, lng: center.lng }}
-              onClick={() => InfoWindowHandler(center.lat, center.lng)}
+              position={{
+                lat: Number(property?.address_obj?.latitude),
+                lng: Number(property?.address_obj?.longitude),
+              }}
+              onClick={() =>
+                InfoWindowHandler(
+                  property,
+                  Number(property?.address_obj?.latitude),
+                  Number(property?.address_obj?.longitude)
+                )
+              }
             />
           ))}
           {infoWindowCoordinate && (
             <InfoWindowF position={infoWindowCoordinate}>
               <div style={divStyle}>
-                <h1>InfoWindow</h1>
+                <Link href={`/property/${property?.slug}/${property?.id}`}>
+                  <div className="flex items-center justify-between gap-x-4">
+                    <div>
+                      <img
+                        src={property?.banner}
+                        alt="property-banner"
+                        className="w-20 h-20 rounded-md"
+                      />
+                    </div>
+                    <div className="flex flex-col gap-y-2">
+                      <h1 className="text-lg text-gray-default font-medium">
+                        {property?.title}
+                      </h1>
+                      <h5 className="text-sm text-gray-default">
+                        {property?.country?.name} | {property?.province?.name}
+                      </h5>
+                      <p className="text-sm text-green-500">
+                        <PropertyPrice cardData={property} />
+                      </p>
+                    </div>
+                  </div>
+                </Link>
               </div>
             </InfoWindowF>
           )}

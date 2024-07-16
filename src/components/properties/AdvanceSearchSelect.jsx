@@ -230,8 +230,8 @@ function AdvanceSearchSelect({
       {PropertiesFilter.map((filters) => {
         return filters.type === "Select" ? (
           <AsyncSelect
-            isLoading={!options[filters.name]}
             key={filters.id}
+            isLoading={!options[filters.name]}
             classNamePrefix="select2-selection"
             className="col-span-2"
             styles={multiInputStyle}
@@ -246,12 +246,14 @@ function AdvanceSearchSelect({
             value={valueHandler(filters.name, filter[filters.name])}
           />
         ) : (
-          <div className="relative col-span-1 m-1 overflow-hidden z-0">
+          <div
+            key={filters.id}
+            className="relative col-span-1 m-1 overflow-hidden z-0"
+          >
             <NumericFormat
               allowLeadingZeros
               thousandSeparator=","
               className="w-full border border-border-gray py-1 px-2 rounded outline-none focus:border-green-blue text-[#7F7F7F] placeholder:text-[#7F7F7F]"
-              key={filters.id}
               placeholder={filters.label}
               type="text"
               name={filters.name}

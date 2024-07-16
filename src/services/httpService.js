@@ -3,6 +3,7 @@ import { deleteCookie, getCookie, setCookie } from "cookies-next";
 
 const pathnames = [
   "/api/v2/front/profile/",
+  "/api/v2/front/user-properties/",
   "/api/v2/front/property/",
   "/api/v2/front/user-likes/",
   "/api/v2/front/property-comments/",

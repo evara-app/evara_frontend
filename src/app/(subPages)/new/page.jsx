@@ -169,7 +169,9 @@ function page() {
       const { results } = await addPropertyMutateAsync({ data });
       Toast("success", results.en);
       router.push("/");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // update formik schema dynamic
@@ -189,8 +191,6 @@ function page() {
   useEffect(() => {
     setData({ ...data, currency: currencyId });
   }, []);
-
-  console.log(data);
 
   const renderSteps = () => {
     switch (step) {

@@ -19,15 +19,13 @@ function PropertyList({
   const { count, results } = propertiesList;
   const { viewType = "List" } = searchParams;
 
-  console.log(propertiesList);
-
   const renderViews = () => {
     switch (viewType) {
       case "List":
         return (
           <div className="flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
             {results.map((item) => (
-              <div className="flex-1">
+              <div className="flex-1 max-w-[250px]">
                 <Card cardData={item} />
               </div>
             ))}
@@ -35,6 +33,21 @@ function PropertyList({
         );
       case "Map":
         return <Map properties={results} />;
+      case "List-Map":
+        return (
+          <div className="grid grid-cols-2">
+            <div className="col-span-1 flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
+              {results.map((item) => (
+                <div className="flex-1 max-w-[250px]">
+                  <Card cardData={item} />
+                </div>
+              ))}
+            </div>
+            <div className="col-span-1">
+              <Map properties={results} />
+            </div>
+          </div>
+        );
       default:
         break;
     }

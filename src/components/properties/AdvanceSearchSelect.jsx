@@ -147,7 +147,7 @@ function AdvanceSearchSelect({
     // get cities options for select filter
     const fetchCities = async () => {
       try {
-        const { results } = await getCitiesMutate(filter.country);
+        const { results } = await getProvincesMutate(filter.country);
         updatedOptions.city = transformData(results);
         setOptions(updatedOptions);
       } catch (error) {}
@@ -162,7 +162,7 @@ function AdvanceSearchSelect({
         );
 
         // get province from data
-        const { results } = await getProvincesMutate(filter.city);
+        const { results } = await getCitiesMutate(filter.city);
 
         // set province names with parent name to options
         updatedOptions.province = transformDataWithParent(results, parents);
@@ -193,7 +193,7 @@ function AdvanceSearchSelect({
             acc.push(
               options.province
                 .flatMap((provinceOption) => provinceOption.options)
-                .find((item) => item.value === filterValue)
+                .find((item) => item.value == filterValue)
             );
             break;
           case "features":
@@ -215,13 +215,13 @@ function AdvanceSearchSelect({
             break;
           default:
             acc.push(
-              options[name]?.find((option) => option.value === filterValue)
+              options[name]?.find((option) => option.value == filterValue)
             );
         }
         return acc;
       }, []);
     } else {
-      return options[name]?.filter((item) => item.value === filter[name]);
+      return options[name]?.filter((item) => item.value == filter[name]);
     }
   };
 

@@ -92,7 +92,7 @@ function AdvanceSearch({
       return setFilter({
         ...filter,
         [name]: [
-          ...new Set(event.map((item) => `${item.parent},${item.value}`)),
+          ...new Set(event.map((item) => `${item.parent},${item.label}`)),
         ],
       });
     Array.isArray(event)

@@ -290,11 +290,7 @@ function PropertiesSort({
             {sortButtons.map((btn) => (
               <React.Fragment key={btn.id}>
                 {sort === btn.query && <option selected>{btn.name}</option>}
-                <option
-                  selected={sort === btn.query}
-                  name={btn.name}
-                  value={btn.query}
-                >
+                <option name={btn.name} value={btn.query}>
                   {btn.name}
                 </option>
               </React.Fragment>

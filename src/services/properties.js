@@ -1,13 +1,13 @@
 import http from "./httpService";
 import axios from "axios";
 
-export function getCities(id) {
+export function getProvinces(id) {
   return http
     .get(`/api/v2/location/province/nested/${id}/`)
     .then(({ data }) => data);
 }
 
-export function getProvinces(province) {
+export function getCities(province) {
   return http
     .post("/api/v2/location/city/by_province/", { provinces: province })
     .then(({ data }) => data);

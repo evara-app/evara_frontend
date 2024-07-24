@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 //? import icons
 import { HiChevronDown } from "react-icons/hi";
@@ -91,10 +91,10 @@ const mobileItemsStep2 = ["country", "province", "price", "features", "search"];
 function SearchPanelComponent({ categories, countries, propertyFields }) {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const [activeBtn, setActiveBtn] = useState("Buy");
-  const [activeItem, setActiveItem] = useState();
+  const [activeItem, setActiveItem] = useState("");
   const [filter, setFilter] = useState({});
   const [options, setOptions] = useState({});
 
@@ -195,39 +195,21 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
   };
 
   // query handler
-  const createQueryString = useCallback(
-    (query) => {
-      const params = new URLSearchParams();
-      const existQueries = [
-        {
-          label: "ordering",
-          value: searchParams.get("ordering"),
-        },
-        {
-          label: "viewType",
-          value: searchParams.get("viewType"),
-        },
-      ];
-      existQueries.forEach((query) => {
-        if (query.value !== null) params.append(query.label, query.value);
-      });
-      for (const [name, value] of Object.entries(query)) {
-        if (Array.isArray(value)) {
-          value.forEach((item) => params.append(name, item));
-        } else {
-          value && params.append(name, value);
-        }
+  const createQueryString = useCallback((query) => {
+    const params = new URLSearchParams();
+    for (const [name, value] of Object.entries(query)) {
+      if (Array.isArray(value)) {
+        value.forEach((item) => params.append(name, item));
+      } else {
+        value && params.append(name, value);
       }
-      return params.toString();
-    },
-    [searchParams]
-  );
+    }
+    return params.toString();
+  }, []);
 
   const queryHandler = () => {
     router.push("/properties" + "?" + createQueryString(filter));
   };
-
-  console.log(filter);
 
   return (
     <div className="relative -bottom-10">

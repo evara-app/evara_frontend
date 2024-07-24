@@ -4,6 +4,7 @@ import React from "react";
 import SpecialAds from "@/app/(home)/SpecialAds";
 import Poster from "@/app/(home)/Poster";
 import LatestProperties from "@/app/(home)/LatestProperties";
+
 function page() {
   return (
     <div className="bg-white">

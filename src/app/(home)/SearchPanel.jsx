@@ -4,13 +4,8 @@ import React from "react";
 import SearchPanelComponent from "@/components/header/SearchPanelComponent";
 
 //? import service
-import { getProperties } from "@/services/properties";
 import { getAllCategories } from "@/services/categoriesService";
-import {
-  getRooms,
-  getCountries,
-  getPropertyFields,
-} from "@/services/addProperty";
+import { getCountries, getPropertyFields } from "@/services/addProperty";
 
 async function SearchPanel() {
   const [countries, { results: categories }, propertyFields] =

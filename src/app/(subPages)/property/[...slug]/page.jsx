@@ -109,7 +109,7 @@ async function page({ params, searchParams }) {
                 <span>
                   {
                     property?.feature?.find((item) => item.name === "floor")
-                      .value
+                      ?.value
                   }{" "}
                   Floor
                 </span>
@@ -119,7 +119,7 @@ async function page({ params, searchParams }) {
                 <span>
                   {
                     property?.feature?.find((item) => item.name === "room")
-                      .value
+                      ?.value
                   }{" "}
                   Room
                 </span>
@@ -129,7 +129,7 @@ async function page({ params, searchParams }) {
                 <span>
                   {
                     property?.feature?.find((item) => item.name === "bathroom")
-                      .value
+                      ?.value
                   }
                 </span>
               </div>
@@ -169,7 +169,7 @@ async function page({ params, searchParams }) {
               </span>
               <span className="text-white-two col-span-1">
                 building age :
-                {property?.feature?.find((item) => item.name === "age").value}{" "}
+                {property?.feature?.find((item) => item.name === "age")?.value}{" "}
                 year
               </span>
             </div>

@@ -45,7 +45,7 @@ const separatedFeatures = [
 
 async function page({ params, searchParams }) {
   const cookieStore = cookies();
-  const token = cookieStore.get("access").value;
+  const token = cookieStore.get("access")?.value;
   const user = await middlewareAuth(token);
 
   // only if token is available will be set in headers

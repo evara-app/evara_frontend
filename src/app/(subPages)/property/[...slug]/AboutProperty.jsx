@@ -7,7 +7,7 @@ function AboutProperty({ children }) {
 
   return (
     <div
-      className={`hidden md:block relative ${
+      className={`md:block relative ${
         readMore ? "pb-6" : "max-h-52 overflow-hidden"
       }`}
     >

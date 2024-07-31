@@ -1,0 +1,91 @@
+[
+  {
+    "type": "BU",
+    "category": "All",
+    "fields": [
+      "title",
+      "base_price",
+      "monthly_administrative_fees",
+      "room",
+      "gross",
+      "net",
+      "bathroom",
+      "age",
+      "total_floor",
+      "floor",
+      "name",
+      "parking",
+      "view",
+      "building_status",
+      "completion_date",
+      "furnished",
+      "title_deed_type",
+      "using_status",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  },
+  {
+    "type": "BU",
+    "category": "Garden",
+    "fields": [
+      "title",
+      "base_price",
+      "gross",
+      "net",
+      "name",
+      "view",
+      "furnished",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  },
+  {
+    "type": "BU",
+    "category": "Farm",
+    "fields": [
+      "title",
+      "base_price",
+      "gross",
+      "net",
+      "name",
+      "view",
+      "furnished",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  },
+  {
+    "type": "RE",
+    "category": "All",
+    "fields": [
+      "title",
+      "price",
+      "payment_method",
+      "deposit",
+      "room",
+      "gross",
+      "net",
+      "bathroom",
+      "age",
+      "total_floor",
+      "floor",
+      "name",
+      "parking",
+      "view",
+      "furnished",
+      "using_status",
+      "monthly_administrative_fees",
+      "another_features",
+      "country",
+      "city",
+      "province"
+    ]
+  }
+]

@@ -62,9 +62,12 @@ function SaveAndShare({ property }) {
 
   const propertyLink = "https://evara.com.tr/";
   return (
-    <div>
+    <div className="">
       <div className="flexItems gap-x-2">
-        <button className="flexItems" onClick={likeHandler}>
+        <button
+          className="flexItems text-sm md:text-base"
+          onClick={likeHandler}
+        >
           {property.liked ? (
             <FcLike className="saveAndShareBtn" />
           ) : (
@@ -72,7 +75,7 @@ function SaveAndShare({ property }) {
           )}
           save
         </button>
-        <button className="flexItems" onClick={handleOpen}>
+        <button className="flexItems text-sm md:text-base" onClick={handleOpen}>
           <HiOutlineShare className="icon-stroke saveAndShareBtn" /> share
         </button>
       </div>

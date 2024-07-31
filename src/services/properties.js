@@ -63,3 +63,13 @@ export function submitComment(data) {
     .post(`/api/v2/front/property-comments/`, data)
     .then(({ data }) => data);
 }
+
+export function getPropertyDetails(slug, token) {
+  return http
+    .get(`/api/v2/front/property/user/profile/${slug}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({ data }) => data);
+}

@@ -6,7 +6,11 @@ import {
   getPropertiesListing,
 } from "@/services/addProperty";
 
-import { getAllProvinces, getAllCities } from "@/services/properties";
+import {
+  getAllProvinces,
+  getAllCities,
+  getPropertyDetails,
+} from "@/services/properties";
 
 export const useGetRooms = () =>
   useQuery({

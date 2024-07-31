@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        className={`${estedadFont.variable} font-sans className="md:container md:max-w-[1440px] mx-auto`}
+        className={`${estedadFont.variable} font-sans md:container md:max-w-[1440px] md:mx-auto mx-1`}
       >
         <Provider>
           <Toaster position="top-center" />

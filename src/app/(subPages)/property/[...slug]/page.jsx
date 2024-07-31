@@ -62,12 +62,10 @@ async function page({ params, searchParams }) {
   const [{ results: property }, { count, results: comments }] =
     await Promise.all([PropertyDetails, propertyComments]);
 
-  console.log(property);
-
   return (
     <div>
       {/* title and location ... */}
-      <div>
+      <div className="hidden md:block">
         <div>
           <h1 className="text-3xl font-medium">{property?.title}</h1>
         </div>
@@ -83,9 +81,27 @@ async function page({ params, searchParams }) {
           <SaveAndShare property={property} />
         </div>
       </div>
+      <div className="md:hidden">
+        <SaveAndShare property={property} />
+      </div>
       <Header property={property} />
+      <div className="md:hidden mt-10">
+        <div>
+          <h1 className="text-3xl font-medium">{property?.title}</h1>
+        </div>
+        <div className="flexItems justify-between mt-1">
+          <div className="flexItems text-gray-default/80">
+            <HiOutlineLocationMarker className="icon-stroke icon text-gray-default/80 " />
+            <p>
+              {property?.country?.name} | {property?.city?.name} | (Owner :
+              {property?.user?.profile?.first_name}{" "}
+              {property?.user?.profile?.last_name})
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="grid grid-cols-6 mt-10 gap-x-2">
-        <div className="col-span-4">
+        <div className="col-span-full md:col-span-4">
           {/* Main features */}
           <div className=" w-full rounded-lg px-2 sm:px-8 sm:pb-1 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
             <div className="flex items-center justify-between mb-6">
@@ -95,7 +111,7 @@ async function page({ params, searchParams }) {
                 <span>Jun 19</span>
               </div>
             </div>
-            <div className="grid grid-cols-2 grid-rows-3 md:grid-cols-5 md:grid-rows-1 justify-items-stretch md:justify-items-center gap-y-4 text-white-two text-sm">
+            <div className="grid grid-cols-3 grid-rows-3 md:grid-cols-5 md:grid-rows-1 justify-items-stretch md:justify-items-center gap-y-4 text-white-two text-sm">
               <div className="flex items-center gap-x-1">
                 <SizeIcon className="svgIcon" />
                 <span>{property?.gross} Gross M2</span>
@@ -135,14 +151,16 @@ async function page({ params, searchParams }) {
               </div>
             </div>
             <hr className="hidden md:block my-4" />
-            <AboutProperty>
-              <TextAbout readMore={true} data={property?.description} />
-            </AboutProperty>
+            <div className="hidden md:block">
+              <AboutProperty>
+                <TextAbout readMore={true} data={property?.description} />
+              </AboutProperty>
+            </div>
           </div>
           {/* all features  */}
           <div className="w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
             <h5 className="text-sm md:text-xl font-bold">All features</h5>
-            <div className="grid grid-cols-3 gap-y-10 justify-items-start gap-x-2 mt-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 md:gap-y-10 gap-y-2 justify-items-start gap-x-2 mt-10">
               {property.feature.map(
                 ({ name, value }) =>
                   !separatedFeatures.includes(name) && (
@@ -160,7 +178,7 @@ async function page({ params, searchParams }) {
               )}
             </div>
             <Divider sx={{ margin: "10px 0px" }} />
-            <div className="grid grid-cols-3 gap-y-10 justify-items-start gap-x-2">
+            <div className="grid grid-cols-1 md:grid-cols-3 md:gap-y-10 gap-y-2 justify-items-start gap-x-2">
               <span className="text-white-two col-span-1">
                 The total area is : {property?.gross} meters
               </span>
@@ -174,10 +192,17 @@ async function page({ params, searchParams }) {
               </span>
             </div>
           </div>
+          <div className="md:hidden w-full rounded-lg px-2 sm:px-8 sm:pb-6 mb-8 border border-gray-200 bg-box-default-gray shadow-boxShadow p-2">
+            <AboutProperty>
+              <TextAbout readMore={true} data={property?.description} />
+            </AboutProperty>
+          </div>
           {/* comments  */}
-          <Comments property={property} comments={comments} count={count} />
+          <div className="hidden md:block">
+            <Comments property={property} comments={comments} count={count} />
+          </div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-full md:col-span-2">
           {/* property price information section  */}
           <PriceDetails property={property} />
           {/* property owner/agent details */}
@@ -220,6 +245,9 @@ async function page({ params, searchParams }) {
                 </div>
               );
             })}
+          </div>
+          <div className="md:hidden w-full">
+            <Comments property={property} comments={comments} count={count} />
           </div>
         </div>
       </div>

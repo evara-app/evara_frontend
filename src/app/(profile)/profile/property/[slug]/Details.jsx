@@ -6,6 +6,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 
+//? import mui
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 //? import inputs json file
 import { EditPropertyInputs } from "@/constants/editPropertyInputs";
 import EditPropertyMethodTypes from "@/constants/editPropertyMethodTypes.json";
@@ -29,11 +33,22 @@ import { useGetCurrency, useGetLocalCurrency } from "@/hooks/common";
 
 function Details({ details }) {
   // get property details data
-  const { data: rooms } = useGetRooms();
-  const { data: countries } = useGetCountry();
-  const { data: propertyFields } = useGetPropertyFields();
-  const { data: currency, isLoading } = useGetCurrency();
-  const { data: localCurrency } = useGetLocalCurrency();
+  const { data: rooms, isLoading: isRoomsLoading } = useGetRooms();
+  const { data: countries, isLoading: isCountriesLoading } = useGetCountry();
+  const { data: propertyFields, isLoading: isPropertyFieldsLoading } =
+    useGetPropertyFields();
+  const { data: currency, isLoading: isCurrencyLoading } = useGetCurrency();
+  const { data: localCurrency, isLoading: isLocalCurrencyLoading } =
+    useGetLocalCurrency();
+
+  // Check if any of the queries are loading
+  const areAllQueriesComplete =
+    !isRoomsLoading &&
+    !isCountriesLoading &&
+    !isPropertyFieldsLoading &&
+    !isCurrencyLoading &&
+    !isLocalCurrencyLoading;
+
   const currencyId = localCurrency || 1;
 
   // states
@@ -140,11 +155,11 @@ function Details({ details }) {
     setSelectOpen(name);
   };
 
-  useEffect(() => {
-    console.log(details);
-    details.country && dataHandler("country", details.country);
-    details.province && dataHandler("city", details.province);
-  }, []);
+  console.log(details);
+  // useEffect(() => {
+  //   details.country && dataHandler("country", details.country.id);
+  //   details.province && dataHandler("city", details.province.id);
+  // }, []);
 
   // update and set state select values data
   useEffect(() => {
@@ -226,9 +241,19 @@ function Details({ details }) {
     validateOnMount: true,
     enableReinitialize: true,
   });
-  console.log(selectValues);
+
+  if (!areAllQueriesComplete)
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={true}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+
   return (
-    <div>
+    <form>
       <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
         {renderInputs().map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
@@ -240,7 +265,7 @@ function Details({ details }) {
                   name={input.name}
                   type={input.type}
                   currency={
-                    !isLoading &&
+                    !isCurrencyLoading &&
                     currency.find((item) => item.id == currencyId).abbreviation
                   }
                   value={
@@ -294,7 +319,12 @@ function Details({ details }) {
           }
         })}
       </div>
-    </div>
+      <div className="mt-5">
+        <button type="submit" className="button px-10">
+          Submit
+        </button>
+      </div>
+    </form>
   );
 }
 

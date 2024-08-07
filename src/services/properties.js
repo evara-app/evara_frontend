@@ -73,3 +73,10 @@ export function getPropertyDetails(slug, token) {
     })
     .then(({ data }) => data);
 }
+
+export function getSpecialAds() {
+  return http.get("/api/v2/front/special-properties/").then(({ data }) => data);
+}
+export function getLastProperties() {
+  return http.get("/api/v2/front/last-properties/").then(({ data }) => data);
+}

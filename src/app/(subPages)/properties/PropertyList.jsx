@@ -17,20 +17,23 @@ function PropertyList({
   propertyFields,
 }) {
   const { count, results } = propertiesList;
-  const { viewType = "List" } = searchParams;
+  const { viewType = "List", listView = "Grid" } = searchParams;
 
   const renderViews = () => {
     switch (viewType) {
       case "List":
-        return (
-          <div className="flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
-            {results.map((item) => (
-              <div className="flex-1 max-w-[250px]">
-                <Card cardData={item} />
-              </div>
-            ))}
-          </div>
-        );
+        if (listView === "Grid") {
+          return (
+            <div className="flex items-center justify-center md:justify-start gap-x-4 gap-y-2 flex-wrap">
+              {results.map((item) => (
+                <div className="flex-1 max-w-[250px]">
+                  <Card cardData={item} />
+                </div>
+              ))}
+            </div>
+          );
+        }
+        return <div>list view</div>;
       case "Map":
         return <Map properties={results} />;
       case "List-Map":

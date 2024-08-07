@@ -277,3 +277,7 @@ tbody td:last-child {
   background-size: cover;
   background-position: 0% 30%;
 }
+.swiper-pagination{
+  position: static!important;
+  margin-top: 10px!important;
+}

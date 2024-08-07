@@ -54,7 +54,7 @@ const inputsList = [
   {
     id: 4,
     label: "City",
-    name: "City",
+    name: "city",
     parent: true,
   },
   {
@@ -81,7 +81,7 @@ const inputsList = [
 
 const mobileItemsStep1 = [
   "propertyType",
-  "country",
+  "province",
   "price",
   "features",
   "search",

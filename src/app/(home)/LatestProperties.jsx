@@ -3,7 +3,7 @@ import React from "react";
 //? import components
 import Card from "@/components/home/Card";
 
-function LatestProperties() {
+function LatestProperties({ data }) {
   return (
     <div className="mt-10">
       <div>
@@ -17,9 +17,9 @@ function LatestProperties() {
         </p>
       </div>
       <div className="w-full mt-10 flex items-center justify-evenly flex-wrap gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
+        {data.map((item) => (
           <div className="min-w-[320px]">
-            <Card />
+            <Card data={item} />
           </div>
         ))}
       </div>

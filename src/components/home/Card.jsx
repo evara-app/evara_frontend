@@ -9,14 +9,20 @@ import SizeIcon from "&/assets/svg/size.svg";
 import BedIcon from "&/assets/svg/bed.svg";
 import FloorIcon from "&/assets/svg/floor.svg";
 
-function Card() {
+//? import components
+import PropertyPrice from "@/app/(subPages)/properties/PropertyPrice";
+
+//? import utils
+import { convertTime } from "@/utils/toLocalTime";
+
+function Card({ data }) {
   return (
     <Link href="#">
       <div className="max-w-xs overflow-hidden relative bg-gray-100 rounded-md">
         <div className="shadow-[0_10px_20px_0_rgb(0,0,0,10%)] bg-white p-4">
           <div className="aspect-w-16 aspect-h-14 rounded-md">
-            <Image
-              src="/assets/img/auth.jpg"
+            <img
+              src={data?.banner}
               className="rounded-md"
               alt="thumbnail"
               fill
@@ -24,28 +30,32 @@ function Card() {
             />
           </div>
         </div>
-        <div className="text-start rounded-b-md p-2 bg-white shadow-[0_10px_20px_0_rgb(0,0,0,10%)]">
-          <h5 className="relative text-xl text-gray-default font-bold">
-            Ankara villa house
+        <div className="text-start rounded-b-md p-2 bg-white shadow-[0_10px_20px_0_rgb(0,0,0,10%)] h-[185px]">
+          <h5 className="relative line-clamp-2 text-xl text-gray-default font-bold h-14">
+            {data?.title}
           </h5>
-          <p className="text-white-two text-sm mb-2">Shiraz - Qasrdasht</p>
+          <p className="text-white-two text-sm mb-2">
+            {data?.country?.name} - {data?.province?.name}
+          </p>
           <span className="text-xl text-green-blue font-bold mb-5">
-            2,5000,000 USD
+            <PropertyPrice cardData={data} />
           </span>
-          <p className="text-white-two text-sm mb-2">June 19, 2023</p>
+          <p className="text-white-two text-sm mb-2">
+            {convertTime(data?.approved_at, "en-US")}
+          </p>
           <Divider className="my-2" />
           <div className="flex items-center justify-between text-white-two text-xs mx-2 my-1">
             <div className="flex items-center gap-x-1">
               <BedIcon className="w-4 h-4 " />
-              <span>2 Bed</span>
+              <span>{data?.feature_metadata?.room} Bed</span>
             </div>
             <div className="flex items-center gap-x-1">
               <FloorIcon className="w-4 h-4" />
-              <span>3 Floor</span>
+              <span>{data?.feature_metadata?.floor} Floor</span>
             </div>
             <div className="flex items-center gap-x-1">
               <SizeIcon className="w-4 h-4" />
-              <span>1,500 M2</span>
+              <span>{data?.gross} M2</span>
             </div>
           </div>
         </div>

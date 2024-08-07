@@ -11,7 +11,10 @@ import "swiper/css/pagination";
 //? import required modules
 import { Pagination, Autoplay, FreeMode } from "swiper/modules";
 
-function SwiperCarousel({ list, children }) {
+//? import components
+import RoundedCard from "@/components/home/RoundedCard";
+
+function SwiperCarousel({ data }) {
   return (
     <Swiper
       className="py-5"
@@ -26,9 +29,9 @@ function SwiperCarousel({ list, children }) {
       }}
       modules={[Pagination, FreeMode]}
     >
-      {list.map((item) => (
-        <SwiperSlide key={item} className="max-w-xs">
-          {children}
+      {data.map((item) => (
+        <SwiperSlide key={item.id} className="max-w-xs">
+          <RoundedCard data={item} />
         </SwiperSlide>
       ))}
     </Swiper>

@@ -2,9 +2,8 @@ import React from "react";
 
 //? import components
 import SwiperCarousel from "@/common/SwiperCarousel ";
-import RoundedCard from "@/components/home/RoundedCard";
 
-function SpecialAds() {
+function SpecialAds({ data }) {
   return (
     <div className="mt-20 flex flex-col md:grid grid-cols-6 gap-x-6 items-center overflow-hidden">
       <div className="md:col-span-2 flex flex-col gap-y-10 text-center md:text-start">
@@ -22,11 +21,9 @@ function SpecialAds() {
         </button>
       </div>
       <div className="md:col-span-4 overflow-hidden mt-10 md:mt-0">
-        <SwiperCarousel list={[1, 2, 3, 4, 5]}>
-          <RoundedCard />
-        </SwiperCarousel>
+        <SwiperCarousel data={data} />
       </div>
-      <button className="button max-w-lg w-full md:hidden mt-5">
+      <button className="button max-w-lg w-10/12 mx-auto md:w-full md:hidden mt-5 py-3">
         Show all the advertisments
       </button>
     </div>

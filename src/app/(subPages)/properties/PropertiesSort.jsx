@@ -100,6 +100,7 @@ function PropertiesSort({
   const [chipQueries, setChipQueries] = useState();
   const [open, setOpen] = useState(false);
   const [generalSearch, setGeneralSearch] = useState("");
+  const [listView, setListView] = useState("");
   const [state, setState] = React.useState({
     bottom: false,
   });
@@ -190,6 +191,10 @@ function PropertiesSort({
     );
   };
 
+  const listViewHandler = (name) => {
+    router.push(pathname + "?" + createQueryString("listView", name));
+  };
+
   // useEffect(() => {
   //   const updatedOptions = { ...options };
   //   if (country && cities && provinces && rooms && another_features) {
@@ -274,10 +279,10 @@ function PropertiesSort({
         <div className="flex items-end gap-x-2 px-2">
           <p className="mt-1 text-base">List View : </p>
           <div className="flex items-center gap-x-1">
-            <button>
+            <button onClick={() => listViewHandler("List")}>
               <CiCircleList className="w-6 h-6 text-gray-default" />
             </button>
-            <button>
+            <button onClick={() => listViewHandler("Grid")}>
               <BsGrid className="icon text-gray-default" />
             </button>
           </div>

@@ -14,7 +14,7 @@ export default function MultiSelect({
 }) {
   return (
     <div className={status ? "block" : "hidden"}>
-      <div className="absolute z-50 min-w-full top-20 max-h-[400px] rounded-md border border-gray-default/20 bg-white/50 backdrop-blur-md p-2 overflow-y-auto overflow-x-hidden">
+      <div className="absolute z-50 min-w-full start-0 top-20 max-h-[400px] rounded-md border border-gray-default/20 bg-white/50 backdrop-blur-md p-2 overflow-y-auto overflow-x-hidden">
         {!options[status.name] ? (
           <Loading />
         ) : (

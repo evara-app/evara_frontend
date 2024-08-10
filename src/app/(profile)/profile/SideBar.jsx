@@ -47,7 +47,7 @@ function SideBar() {
       <div className="mt-5 pl-4">
         <ul className="flex flex-col gap-y-2">
           {profileList.map((item) => (
-            <Link href={item.href}>
+            <Link key={item.id} href={item.href}>
               <li
                 key={item.id}
                 className={`flex items-center p-3 gap-x-2 hover:bg-white text-white-two hover:shadow-sm !hover:text-green-blue hover:fill-green-blue hover:stroke-green-blue stroke-white-two stroke-0 rounded-l cursor-pointer transition ${

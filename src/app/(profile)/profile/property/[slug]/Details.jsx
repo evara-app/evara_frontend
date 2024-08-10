@@ -155,12 +155,6 @@ function Details({ details }) {
     setSelectOpen(name);
   };
 
-  console.log(details);
-  // useEffect(() => {
-  //   details.country && dataHandler("country", details.country.id);
-  //   details.province && dataHandler("city", details.province.id);
-  // }, []);
-
   // update and set state select values data
   useEffect(() => {
     const updatedSelectValues = { ...selectValues };
@@ -173,6 +167,29 @@ function Details({ details }) {
     }
     setSelectValues(updatedSelectValues);
   }, [rooms, countries, propertyFields]);
+
+  useEffect(() => {
+    const countryId = details.country;
+    const provinceId = details.province;
+    if (!selectValues.province) {
+      (async () => {
+        try {
+          const cityData = await getProvinceMutateAsync({ value: countryId });
+          setSelectValues({ ...selectValues, province: cityData });
+        } catch (error) {}
+      })();
+      console.log("run province");
+    }
+    if (!selectValues.city) {
+      (async () => {
+        try {
+          const provinceData = await getCityMutateAsync({ value: provinceId });
+          setSelectValues({ ...selectValues, city: provinceData });
+        } catch (error) {}
+      })();
+      console.log("run city");
+    }
+  }, [selectValues]);
 
   // render property details page inputs
   const renderInputs = () => {
@@ -254,6 +271,7 @@ function Details({ details }) {
 
   return (
     <form>
+      {/* {console.log(data)} */}
       <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
         {renderInputs().map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {

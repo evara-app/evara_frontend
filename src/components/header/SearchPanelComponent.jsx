@@ -86,7 +86,7 @@ const mobileItemsStep1 = [
   "features",
   "search",
 ];
-const mobileItemsStep2 = ["country", "province", "price", "features", "search"];
+const mobileItemsStep2 = ["province", "price", "features", "search"];
 
 function SearchPanelComponent({ categories, countries, propertyFields }) {
   const router = useRouter();
@@ -168,6 +168,7 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
   }, [filter.country]);
 
   const itemsComponentHandler = (name) => {
+    if (name === activeItem) return setActiveItem(null);
     setActiveItem(name);
   };
 
@@ -224,7 +225,10 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
                 activeBtn == btn.type && "text-black bg-white"
               } SearchPanelButton`}
               value={btn.title}
-              onClick={() => setActiveBtn(btn.type)}
+              onClick={() => {
+                setActiveBtn(btn.type);
+                setActiveItem(null);
+              }}
             >
               {btn.title}
             </button>
@@ -235,25 +239,37 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
       <div className=" bg-white rounded-md rounded-tl-none flex items-center p-1 gap-x-2 border border-gray-default/20 overflow-x-hidden-hidden shadow-greenShaow">
         {renderInputs().map((item, index) =>
           !item.type ? (
-            <button
-              key={index}
-              className={`flex-1 relative flex flex-col p-3 text-start border-r border-r-gray-default/40 gap-y-1 cursor-pointer ${
-                activeBtn === "Buy" && !mobileItemsStep1.includes(item?.name)
-                  ? "md:block"
-                  : activeBtn === "Rent" &&
-                    !mobileItemsStep2.includes(item?.name)
-                  ? "md:block"
-                  : "hidden md:block"
-              }`}
-              onClick={() => itemsComponentHandler(item?.name)}
+            <div
+              className={` relative
+            ${
+              activeBtn === "Buy" && !mobileItemsStep1.includes(item?.name)
+                ? "md:block w-full"
+                : activeBtn === "Rent" && !mobileItemsStep2.includes(item?.name)
+                ? "md:block w-full"
+                : "hidden w-full md:block"
+            }
+            `}
             >
-              <div>{item?.label}</div>
-              <div className="flex items-center justify-between mx-1 text-xs md:text-base">
-                <span className="text-gray-default text-xs md:text-sm">
-                  {item?.label}
-                </span>
-                <HiChevronDown className="icon text-black" />
-              </div>
+              <button
+                key={index}
+                className={`w-full flex-1 relative flex flex-col p-3 text-start border-r border-r-gray-default/40 gap-y-1 cursor-pointer ${
+                  activeBtn === "Buy" && !mobileItemsStep1.includes(item?.name)
+                    ? "md:block"
+                    : activeBtn === "Rent" &&
+                      !mobileItemsStep2.includes(item?.name)
+                    ? "md:block"
+                    : "hidden md:block"
+                }`}
+                onClick={() => itemsComponentHandler(item?.name)}
+              >
+                <div>{item?.label}</div>
+                <div className="flex items-center justify-between mx-1 text-xs md:text-base">
+                  <span className="text-gray-default text-xs md:text-sm">
+                    {item?.label}
+                  </span>
+                  <HiChevronDown className="icon text-black" />
+                </div>
+              </button>
               {item.name === activeItem && (
                 <MultiSelect
                   key={item.name}
@@ -263,7 +279,7 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
                   filterHandler={filterHandler}
                 />
               )}
-            </button>
+            </div>
           ) : (
             <div className="flex-1">
               <input

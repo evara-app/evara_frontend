@@ -132,7 +132,7 @@ function page() {
     const type = limitedTypes.includes(data.category) ? data.category : "All";
     const activeFields = AddPropertyMethodTypes.find(
       (item) => item.type === data.SellOrBuy && item.category === type
-    ).fields;
+    )?.fields;
     const inputs = AddPropertyInputs.filter((input) =>
       activeFields.includes(input.name)
     );
@@ -192,6 +192,7 @@ function page() {
     setData({ ...data, currency: currencyId });
   }, []);
 
+  console.log(data);
   const renderSteps = () => {
     switch (step) {
       case 0:

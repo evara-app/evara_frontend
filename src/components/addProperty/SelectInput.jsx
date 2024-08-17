@@ -36,7 +36,7 @@ function SelectInput({
       <button
         type="button"
         name={name}
-        className={`border border-white-two p-2 rounded outline-none w-full text-start flex justify-between items-center ${
+        className={`border border-white-two p-2 rounded outline-none w-full text-start flex justify-between items-center truncate ${
           error ? "focus:border-red-500" : "focus:border-green-blue"
         }`}
         onClick={(e) => {

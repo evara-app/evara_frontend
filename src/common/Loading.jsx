@@ -1,12 +1,12 @@
 import { ThreeDots } from "react-loader-spinner";
 
-function Loading({ width = "75", heigh = "40" }) {
+function Loading({ width = "75", heigh = "40", white = false }) {
   return (
     <ThreeDots
       height={heigh}
       width={width}
       radius="9"
-      color="var(--cyan-green)"
+      color={white ? "#fff" : "var(--cyan-green)"}
       ariaLabel="three-dots-loading"
       wrapperStyle={{
         display: "flex",

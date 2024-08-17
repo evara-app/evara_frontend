@@ -105,8 +105,8 @@ function Details({ details }) {
         return setData({
           ...data,
           [name]: data[name].filter((item) => item !== value),
-          features: {
-            ...data.features,
+          feature: {
+            ...data.feature,
             [value]: false,
           },
         });
@@ -115,12 +115,12 @@ function Details({ details }) {
         ? setData({
             ...data,
             [name]: [...data[name], value],
-            features: { ...data.features, [value]: true },
+            feature: { ...data.feature, [value]: true },
           })
         : setData({
             ...data,
             [name]: [value],
-            features: { ...data.features, [value]: true },
+            feature: { ...data.feature, [value]: true },
           });
 
       return;
@@ -133,7 +133,7 @@ function Details({ details }) {
       setData({
         ...data,
         [name]: value,
-        features: { ...data.features, [name]: value },
+        feature: { ...data.feature, [name]: value },
       });
       return;
     } else {
@@ -157,7 +157,10 @@ function Details({ details }) {
 
   // update and set state select values data
   useEffect(() => {
+    const countryId = details.country;
+    const provinceId = details.province;
     const updatedSelectValues = { ...selectValues };
+
     if (rooms) updatedSelectValues.room = rooms;
     if (countries) updatedSelectValues.country = countries;
     if (propertyFields) {
@@ -165,30 +168,45 @@ function Details({ details }) {
         (item) => (updatedSelectValues[item] = propertyFields.data[item])
       );
     }
-    setSelectValues(updatedSelectValues);
-  }, [rooms, countries, propertyFields]);
 
-  useEffect(() => {
-    const countryId = details.country;
-    const provinceId = details.province;
     if (!selectValues.province) {
       (async () => {
         try {
           const cityData = await getProvinceMutateAsync({ value: countryId });
-          setSelectValues({ ...selectValues, province: cityData });
+          updatedSelectValues.province = cityData;
         } catch (error) {}
       })();
-      console.log("run province");
     }
     if (!selectValues.city) {
       (async () => {
         try {
           const provinceData = await getCityMutateAsync({ value: provinceId });
-          setSelectValues({ ...selectValues, city: provinceData });
+          updatedSelectValues.city = provinceData;
         } catch (error) {}
       })();
-      console.log("run city");
     }
+
+    setSelectValues(updatedSelectValues);
+  }, [rooms, countries, propertyFields]);
+
+  useEffect(() => {
+    const updatedData = { ...data };
+    details.feature.forEach((item) => (updatedData[item.name] = item.value));
+    const views = selectValues.view?.map(
+      (item) =>
+        formik.values.feature?.find((view) => view.name == item.id)?.name
+    );
+    const otherFeatures = selectValues.another_features?.map(
+      (item) =>
+        formik.values.feature?.find((view) => view.name == item.id)?.name
+    );
+    updatedData.view = views?.filter((view) => view !== undefined);
+    updatedData.another_features = otherFeatures?.filter(
+      (feature) => feature !== undefined
+    );
+    updatedData.latitude = details.address_obj.latitude;
+    updatedData.longitude = details.address_obj.longitude;
+    setData(updatedData);
   }, [selectValues]);
 
   // render property details page inputs
@@ -216,9 +234,6 @@ function Details({ details }) {
     yupFields.description = Yup.string()
       .required("Description is required field")
       .min(3, "The description must have at least 3 characters");
-    yupFields.images = Yup.array()
-      .required("Images is required field")
-      .min(3, "You must choose at least 3 photos");
     yupFields.longitude = Yup.string().required("Map is required field");
     renderInputs().forEach(
       (input) =>
@@ -269,9 +284,10 @@ function Details({ details }) {
       </Backdrop>
     );
 
+  console.log(formik.errors);
+
   return (
-    <form>
-      {/* {console.log(data)} */}
+    <form onSubmit={formik.handleSubmit}>
       <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
         {renderInputs().map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
@@ -286,13 +302,7 @@ function Details({ details }) {
                     !isCurrencyLoading &&
                     currency.find((item) => item.id == currencyId).abbreviation
                   }
-                  value={
-                    input.features
-                      ? formik.values.feature?.find(
-                          (item) => item.name === input.name
-                        )?.value
-                      : formik.values[input.name] || ""
-                  }
+                  value={formik.values[input.name] || ""}
                   error={formik.errors[input.name] || ""}
                   touched={formik.touched[input.name]}
                   placeHolder={input.placeholder}
@@ -317,13 +327,7 @@ function Details({ details }) {
                   label={input.label}
                   type={input.type}
                   name={input.name}
-                  value={
-                    input.features
-                      ? formik.values.feature?.find(
-                          (item) => item.name === input.name
-                        )?.value
-                      : formik.values[input.name] || ""
-                  }
+                  value={formik.values[input.name] || ""}
                   error={formik.errors[input.name] || ""}
                   touched={formik.touched[input.name]}
                   placeHolder={input.placeholder}

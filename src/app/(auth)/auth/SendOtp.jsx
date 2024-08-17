@@ -10,8 +10,9 @@ import { HiUserCircle } from "react-icons/hi";
 
 //? import components
 import TextField from "@/components/auth/TextField";
+import Loading from "@/common/Loading";
 
-function CheckOtp({ data, dataHandler, sendOtpHandler, loginMethod }) {
+function CheckOtp({ data, dataHandler, loading, sendOtpHandler, loginMethod }) {
   const [passwordStatus, setPasswordStatus] = useState("hidden");
 
   const passwordIconHandler = (status) => {
@@ -67,8 +68,8 @@ function CheckOtp({ data, dataHandler, sendOtpHandler, loginMethod }) {
       </div>
       {/* login submit button */}
       <div className="mt-12">
-        <button type="submit" className="button py-3 w-full">
-          Login
+        <button type="submit" className="button py-3 w-full" disabled={loading}>
+          {loading ? <Loading white={true} /> : "Login"}
         </button>
       </div>
     </form>

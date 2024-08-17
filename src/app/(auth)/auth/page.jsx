@@ -42,6 +42,7 @@ function page() {
   const {
     error: otpError,
     data: getOtpData,
+    isPending: getOtpPending,
     mutateAsync: getOtpMutate,
   } = useMutation({
     mutationFn: getOtp,
@@ -51,6 +52,7 @@ function page() {
   const {
     error: checkOtpError,
     data: checkOtpData,
+    isPending: checkOtpPending,
     mutateAsync: checkOtpMutate,
   } = useMutation({
     mutationFn: checkOtp,
@@ -107,6 +109,7 @@ function page() {
           <SendOtp
             data={data}
             dataHandler={dataHandler}
+            loading={getOtpPending}
             loginMethod={loginMethod}
             sendOtpHandler={sendOtpHandler}
           />
@@ -117,6 +120,7 @@ function page() {
             time={time}
             setOtp={setOtp}
             value={otp}
+            loading={checkOtpPending}
             sendOtpHandler={sendOtpHandler}
             checkOtpHandler={checkOtpHandler}
           />

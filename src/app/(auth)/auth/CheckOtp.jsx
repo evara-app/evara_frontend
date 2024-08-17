@@ -2,11 +2,19 @@ import React from "react";
 
 //? import components
 import OTPInput from "react-otp-input";
+import Loading from "@/common/Loading";
 
 //? import icon
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 
-function SendOtp({ value, time, setOtp, checkOtpHandler, sendOtpHandler }) {
+function SendOtp({
+  value,
+  loading,
+  time,
+  setOtp,
+  checkOtpHandler,
+  sendOtpHandler,
+}) {
   return (
     <form onSubmit={checkOtpHandler}>
       <div className="mt-10 text-white-two flex items-center gap-x-1 text-sm">
@@ -22,6 +30,7 @@ function SendOtp({ value, time, setOtp, checkOtpHandler, sendOtpHandler }) {
           value={value}
           onChange={setOtp}
           numInputs={5}
+          shouldAutoFocus
           renderSeparator={<span>-</span>}
           inputStyle="form-input border border-white-two rounded-2xl font-bold focus:outline-none focus:border-green-blue !focus:shadow-greenShaow"
           containerStyle="containerStyle flex gap-x-2 justify-between"
@@ -46,8 +55,8 @@ function SendOtp({ value, time, setOtp, checkOtpHandler, sendOtpHandler }) {
             </button>
           )}
         </div>
-        <button type="submit" className="button py-3 w-full">
-          Send Code
+        <button type="submit" className="button py-3 w-full" disabled={loading}>
+          {loading ? <Loading white={true} /> : "Send Code"}
         </button>
       </div>
     </form>

@@ -74,6 +74,16 @@ export function getPropertyDetails(slug, token) {
     .then(({ data }) => data);
 }
 
+export function editPropertyDetails({ data }, token) {
+  return http
+    .patch(`/api/v2/front/property/user/profile/${slug}/`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({ data }) => data);
+}
+
 export function getSpecialAds() {
   return http.get("/api/v2/front/special-properties/").then(({ data }) => data);
 }

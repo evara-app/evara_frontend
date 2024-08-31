@@ -10,6 +10,16 @@ export const EditPropertyInputs = [
     requiredError: "title is required field",
   },
   {
+    id: 22,
+    label: "description",
+    type: "Text",
+    name: "description",
+    placeholder: "description ...",
+    features: false,
+    required: true,
+    requiredError: "Description is required field",
+  },
+  {
     id: 1,
     label: "price",
     type: "Number",

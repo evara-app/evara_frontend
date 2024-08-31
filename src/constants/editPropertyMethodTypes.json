@@ -4,6 +4,7 @@
     "category": "All",
     "fields": [
       "title",
+      "description",
       "base_price",
       "monthly_administrative_fees",
       "room",
@@ -32,6 +33,7 @@
     "category": "Garden",
     "fields": [
       "title",
+      "description",
       "base_price",
       "gross",
       "net",
@@ -49,6 +51,7 @@
     "category": "Farm",
     "fields": [
       "title",
+      "description",
       "base_price",
       "gross",
       "net",
@@ -66,6 +69,7 @@
     "category": "All",
     "fields": [
       "title",
+      "description",
       "price",
       "payment_method",
       "deposit",

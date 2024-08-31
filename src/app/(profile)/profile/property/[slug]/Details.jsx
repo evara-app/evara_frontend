@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import { Editor } from "@tinymce/tinymce-react";
 
 //? import mui
 import Backdrop from "@mui/material/Backdrop";
@@ -18,10 +19,11 @@ import EditPropertyMethodTypes from "@/constants/editPropertyMethodTypes.json";
 import TextField from "@/common/TextField";
 import CustomSelect from "@/common/CustomSelect";
 import SelectInput from "@/components/addProperty/SelectInput";
-import Map from "@/components/addProperty/Map";
+import Map from "@/app/(profile)/profile/property/[slug]/Map";
 
 //? import service
 import { getCity, getProvince, addProperty } from "@/services/addProperty";
+import { editPropertyDetails } from "@/services/properties";
 
 //? import hooks
 import {
@@ -32,6 +34,8 @@ import {
 import { useGetCurrency, useGetLocalCurrency } from "@/hooks/common";
 
 function Details({ details }) {
+  const editorRef = useRef(null);
+
   // get property details data
   const { data: rooms, isLoading: isRoomsLoading } = useGetRooms();
   const { data: countries, isLoading: isCountriesLoading } = useGetCountry();
@@ -68,9 +72,9 @@ function Details({ details }) {
     mutationFn: getProvince,
   });
 
-  //add property request
-  const { mutateAsync: addPropertyMutateAsync } = useMutation({
-    mutationFn: addProperty,
+  //edit property request
+  const { mutateAsync: editPropertyMutateAsync } = useMutation({
+    mutationFn: editPropertyDetails,
   });
 
   // our backend accept unnecessary fields in an object named "features" because of that we had to make object named "features" in data state and in the other hand we need to validate fields to handel this we need to set field directly in data. we send "features" object to data
@@ -248,14 +252,13 @@ function Details({ details }) {
   };
 
   const onSubmit = async (event) => {
-    // try {
-    //   const { results } = await addPropertyMutateAsync({ data });
-    //   Toast("success", results.en);
-    //   router.push("/");
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log("true");
+    try {
+      const { results } = await editPropertyMutateAsync({ data });
+      Toast("success", results.en);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // update formik schema dynamic
@@ -284,15 +287,59 @@ function Details({ details }) {
       </Backdrop>
     );
 
-  console.log(formik.errors);
-
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="grid grid=cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-2 gap-y-4">
         {renderInputs().map((input) => {
           if (input.type !== "Select" && input.type !== "Checkbox") {
-            return (
-              <div key={input.id} className="col-span-1">
+            return input.name === "description" ? (
+              <div className="col-span-3">
+                {/* tinymce for description */}
+                <label
+                  htmlFor="description"
+                  className="flex items-center justify-between"
+                >
+                  Description
+                  <span className="text-red-500 text-xs truncate max-w-xs">
+                    {formik.touched.description &&
+                      formik.errors.description &&
+                      formik.errors.description}
+                  </span>
+                </label>
+                <Editor
+                  id="description"
+                  name="description"
+                  onInit={(evt, editor) => (editorRef.current = editor)}
+                  onSelectionChange={() =>
+                    dataHandler("description", editorRef.current.getContent())
+                  }
+                  onBlur={(e) => formik.handleBlur(e)}
+                  initialValue={formik.values.description}
+                  apiKey="zc1euwls8684f7d9ag3r5q5iec187sjbhlvls32ibw1ra6hl"
+                  init={{
+                    highlight_on_focus: false,
+                    selector: "textarea#open-source-plugins",
+                    plugins:
+                      "preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons",
+                    imagetools_cors_hosts: ["picsum.photos"],
+                    menubar: "file edit view format help",
+                    toolbar:
+                      "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | fullscreen  preview save | ltr rtl",
+                    toolbar_sticky: true,
+                    autosave_ask_before_unload: true,
+                    autosave_interval: "30s",
+                    autosave_prefix: "{path}{query}-{id}-",
+                    autosave_restore_when_empty: false,
+                    autosave_retention: "2m",
+                    image_advtab: true,
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                key={input.id}
+                className={input.name === "title" ? "col-span-3" : "col-span-1"}
+              >
                 <TextField
                   id={input.id}
                   label={input.label}
@@ -341,6 +388,12 @@ function Details({ details }) {
           }
         })}
       </div>
+      <Map
+        latitude={formik.values?.latitude}
+        longitude={formik.values?.longitude}
+        handler={mapHandler}
+        validation={formik}
+      />
       <div className="mt-5">
         <button type="submit" className="button px-10">
           Submit

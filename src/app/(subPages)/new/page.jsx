@@ -192,7 +192,6 @@ function page() {
     setData({ ...data, currency: currencyId });
   }, []);
 
-  console.log(data);
   const renderSteps = () => {
     switch (step) {
       case 0:

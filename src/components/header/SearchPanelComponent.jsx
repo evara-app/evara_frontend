@@ -212,6 +212,9 @@ function SearchPanelComponent({ categories, countries, propertyFields }) {
     router.push("/properties" + "?" + createQueryString(filter));
   };
 
+  console.log(options);
+  console.log(filter);
+
   return (
     <div className="relative -bottom-10">
       {/* select search type buttons  */}

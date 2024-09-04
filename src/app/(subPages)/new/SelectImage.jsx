@@ -31,6 +31,7 @@ function SelectImage({
   const [images, setImages] = useState([]);
   const [imagesBlob, setImagesBlob] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [mainImages, setMainImages] = useState([]);
 
   // upload images to amazon server and get location of images
   async function uploadImagesAws() {
@@ -80,6 +81,10 @@ function SelectImage({
     setImages([]);
   };
 
+  const selectMainImages = (id) => {
+    console.log("locations", locations);
+  };
+
   // check is all inputs validated
   const isValidated = () => {
     const inputs = ["images", "title", "description"];
@@ -126,7 +131,7 @@ function SelectImage({
         {imagesBlob.map((image) => (
           <div
             key={image.id}
-            className="image-upload-preview"
+            className="image-upload-preview relative group"
             style={{
               backgroundImage: `url(${image.blob})`,
             }}
@@ -150,6 +155,12 @@ function SelectImage({
                 <div id={image.id} className="progress-bar__inner"></div>
               </div>
             </div>
+            <button
+              className="absolute top-0 left-0 hidden group-hover:block"
+              onClick={() => selectMainImages(image.id)}
+            >
+              select main image
+            </button>
           </div>
         ))}
       </div>

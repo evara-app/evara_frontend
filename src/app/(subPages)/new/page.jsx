@@ -126,6 +126,10 @@ function page() {
     setData({ ...data, latitude: latitude, longitude: longitude });
   };
 
+  const mainImageHandler = (images) => {
+    setData({ ...data, primary_images: images });
+  };
+
   // render property details page inputs
   const renderInputs = () => {
     const limitedTypes = ["Garden", "Farm"];
@@ -213,6 +217,7 @@ function page() {
             validation={formik}
             submit={formik.handleSubmit}
             handler={imageHandler}
+            mainImageHandler={mainImageHandler}
             stepHandler={setStep}
           />
         );

@@ -13,11 +13,15 @@ import { imageUpload } from "@/services/images";
 //? import components
 import TeaxtField from "@/common/TextField";
 
+//? import hooks
+import { Toast } from "@/hooks/Toast";
+
 function SelectImage({
   data,
   setData,
   dataHandler,
   handler,
+  mainImageHandler,
   validation,
   submit,
   stepHandler,
@@ -71,6 +75,13 @@ function SelectImage({
 
   //delete image handler
   const imageDelHandler = (id) => {
+    if (mainImages.includes(locations[`image${id}`])) {
+      console.log("run");
+      const filterImages = mainImages.filter(
+        (image) => image !== locations[`image${id}`]
+      );
+      setMainImages(filterImages);
+    }
     delete locations[`image${id}`];
     handler(locations);
     setImages(images.filter((img) => img.id !== id));
@@ -79,11 +90,31 @@ function SelectImage({
 
   const clearHandler = () => {
     setImages([]);
+    mainImages([]);
   };
 
   const selectMainImages = (id) => {
-    console.log("locations", locations);
+    if (
+      !mainImages.includes(locations[`image${id}`]) &&
+      mainImages.length >= 3
+    ) {
+      Toast("error", "Only 3 images can be selected !");
+      return;
+    }
+    if (mainImages.includes(locations[`image${id}`])) {
+      const filterImages = mainImages.filter(
+        (image) => image !== locations[`image${id}`]
+      );
+      setMainImages(filterImages);
+    } else {
+      mainImages.length > 0
+        ? setMainImages((prev) => [...prev, locations[`image${id}`]])
+        : setMainImages([locations[`image${id}`]]);
+    }
+    mainImageHandler(mainImages);
   };
+
+  console.log(mainImages);
 
   // check is all inputs validated
   const isValidated = () => {
@@ -155,12 +186,25 @@ function SelectImage({
                 <div id={image.id} className="progress-bar__inner"></div>
               </div>
             </div>
-            <button
-              className="absolute top-0 left-0 hidden group-hover:block"
-              onClick={() => selectMainImages(image.id)}
-            >
-              select main image
-            </button>
+            {mainImages.includes(locations[`image${image.id}`]) && (
+              <span className="absolute top-0 left-0 bg-green-blue text-white p-2 rounded-sm">
+                {Number(mainImages.indexOf(locations[`image${image.id}`])) + 1}
+              </span>
+            )}
+            <div className="absolute top-0 left-0 hidden group-hover:flex  backdrop-blur-sm w-full h-full items-center justify-center">
+              <button
+                className="bg-green-700/60 text-white p-2 rounded-md"
+                onClick={() => selectMainImages(image.id)}
+              >
+                {mainImages.includes(locations[`image${image.id}`])
+                  ? `Deselect image ${
+                      mainImages.indexOf(locations[`image${image.id}`]) + 1
+                    }`
+                  : `
+                select as image ${mainImages.length + 1}
+                `}
+              </button>
+            </div>
           </div>
         ))}
       </div>

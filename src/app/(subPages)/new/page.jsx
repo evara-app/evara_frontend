@@ -138,7 +138,7 @@ function page() {
       (item) => item.type === data.SellOrBuy && item.category === type
     )?.fields;
     const inputs = AddPropertyInputs.filter((input) =>
-      activeFields.includes(input.name)
+      activeFields?.includes(input.name)
     );
     return inputs;
   };
@@ -242,6 +242,7 @@ function page() {
             handler={dataHandler}
             validation={formik}
             submit={formik.handleSubmit}
+            stepHandler={setStep}
           />
         );
       default:

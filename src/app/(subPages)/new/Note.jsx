@@ -1,7 +1,6 @@
 import React from "react";
 
-function Note({ data, handler, validation, submit }) {
-  console.log(validation);
+function Note({ data, handler, validation, submit, stepHandler }) {
   return (
     <form onSubmit={submit} className="flex flex-col gap-y-2">
       <label htmlFor="note" className="flex items-center justify-between">
@@ -21,6 +20,13 @@ function Note({ data, handler, validation, submit }) {
       <div>
         <button type="submit" className="button px-10">
           Submit
+        </button>
+        <button
+          type="button"
+          className="rounded text-white font-medium bg-gray-500 py-2 px-6"
+          onClick={() => stepHandler((prevstate) => prevstate - 1)}
+        >
+          Back
         </button>
       </div>
     </form>

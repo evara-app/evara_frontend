@@ -104,7 +104,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
       case 2:
         return (
           <div className="absolute border border-white-two/40 w-full rounded top-12 bg-white start-0 z-20">
-            {listing.results ? (
+            {listing?.results ? (
               <ul className="flex p-1 flex-col gap-y-1 cursor-pointer transition text-gray-default">
                 {listing.results.map((item) => (
                   <li
@@ -113,7 +113,8 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
                     onClick={() => {
                       handler({
                         ...defaultValue,
-                        SellOrBuy: item.listing_type,
+                        SellOrBuy:
+                          item.listing_type !== "BU" ? "RE" : item.listing_type,
                         listing: item.id,
                       });
                     }}
@@ -174,7 +175,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
               ? "button px-10"
               : "disableButton px-10"
           }
-          onClick={() => setHandler((prevstate) => prevstate + 1)}
+          onClick={() => setHandler((prevstate) => prevstate + 2)}
         >
           Next
         </button>

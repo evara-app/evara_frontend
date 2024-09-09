@@ -25,7 +25,6 @@ export function getCity({ value }) {
 }
 
 export function getProvince({ value }) {
-  console.log(value);
   return http
     .get(`/api/v2/location/province/nested/${value}/`)
     .then(({ data }) => data.results);

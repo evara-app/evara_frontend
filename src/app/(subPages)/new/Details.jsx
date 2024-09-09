@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { NumericFormat } from "react-number-format";
 
 //? import inputs json file
 import AddPropertyMethods from "@/constants/addPropertyMethods.json";
@@ -91,24 +92,59 @@ function Details({
           if (input.type !== "Select" && input.type !== "Checkbox") {
             return (
               <div key={input.id} className="col-span-1">
-                <TextField
-                  id={input.id}
-                  label={input.label}
-                  name={input.name}
-                  type={input.type}
-                  currency={
-                    !isLoading &&
-                    currency.find((item) => item.id == currencyId).abbreviation
-                  }
-                  value={validation.values[input.name] || ""}
-                  error={validation.errors[input.name] || ""}
-                  touched={validation.touched[input.name]}
-                  placeHolder={input.placeholder}
-                  handler={(e) =>
-                    handler(input.name, e.target.value, input.features)
-                  }
-                  blurHandler={validation.handleBlur}
-                />
+                {input.type === "Number" ? (
+                  <div className="flex flex-col gap-y-1 mt-2 relative">
+                    <label
+                      htmlFor={input.id}
+                      className="flex items-center justify-between"
+                    >
+                      {input.label}
+                      <span className="text-red-500 text-xs truncate max-w-xs">
+                        {validation?.touched[input.name] &&
+                          validation?.errors[input.name] &&
+                          validation?.errors[input.name]}
+                      </span>
+                    </label>
+                    <NumericFormat
+                      id={input.id}
+                      allowLeadingZeros
+                      thousandSeparator=","
+                      className={`border border-white-two p-2 rounded w-full overflow-hidden ${
+                        validation?.errors[input.name]
+                          ? "focus:border-red-500"
+                          : "focus:border-green-blue"
+                      } outline-none`}
+                      placeHolder={input.placeholder}
+                      type="text"
+                      name={input.name}
+                      onValueChange={({ value }) =>
+                        handler(input.name, value, input.features)
+                      }
+                      value={validation.values[input.name] || ""}
+                      onBlur={validation.handleBlur}
+                    />
+                  </div>
+                ) : (
+                  <TextField
+                    id={input.id}
+                    label={input.label}
+                    name={input.name}
+                    type={input.type}
+                    currency={
+                      !isLoading &&
+                      currency.find((item) => item.id == currencyId)
+                        .abbreviation
+                    }
+                    value={validation.values[input.name] || ""}
+                    error={validation.errors[input.name] || ""}
+                    touched={validation.touched[input.name]}
+                    placeHolder={input.placeholder}
+                    handler={(e) =>
+                      handler(input.name, e.target.value, input.features)
+                    }
+                    blurHandler={validation.handleBlur}
+                  />
+                )}
               </div>
             );
           } else if (input.type === "Select" || input.type === "Checkbox") {
@@ -157,6 +193,13 @@ function Details({
           onClick={() => stepHandler((prevstate) => prevstate + 1)}
         >
           Next
+        </button>
+        <button
+          type="button"
+          className="rounded text-white font-medium bg-gray-500 py-2 px-6"
+          onClick={() => stepHandler((prevstate) => prevstate - 1)}
+        >
+          Back
         </button>
       </div>
     </form>

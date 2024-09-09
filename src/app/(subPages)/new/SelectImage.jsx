@@ -94,13 +94,6 @@ function SelectImage({
   };
 
   const selectMainImages = (id) => {
-    if (
-      !mainImages.includes(locations[`image${id}`]) &&
-      mainImages.length >= 3
-    ) {
-      Toast("error", "Only 3 images can be selected !");
-      return;
-    }
     if (mainImages.includes(locations[`image${id}`])) {
       const filterImages = mainImages.filter(
         (image) => image !== locations[`image${id}`]
@@ -113,8 +106,6 @@ function SelectImage({
     }
     mainImageHandler(mainImages);
   };
-
-  console.log(mainImages);
 
   // check is all inputs validated
   const isValidated = () => {
@@ -273,6 +264,13 @@ function SelectImage({
             onClick={() => stepHandler((prevstate) => prevstate + 1)}
           >
             Next
+          </button>
+          <button
+            type="button"
+            className="rounded text-white font-medium bg-gray-500 py-2 px-6"
+            onClick={() => stepHandler((prevstate) => prevstate - 1)}
+          >
+            Back
           </button>
           <button
             type="button"

@@ -31,7 +31,5 @@ export function getProvince({ value }) {
 }
 
 export function addProperty({ data }) {
-  return http
-    .post(`/api/v2/front/property/`, data)
-    .then(({ data }) => data.data);
+  return http.post(`/api/v2/front/property/`, data).then(({ data }) => data);
 }

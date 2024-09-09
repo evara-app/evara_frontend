@@ -172,6 +172,7 @@ function page() {
     try {
       const { results } = await addPropertyMutateAsync({ data });
       Toast("success", results.en);
+      console.log(results);
       router.push("/");
     } catch (error) {
       console.log(error);

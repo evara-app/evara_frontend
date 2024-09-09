@@ -175,7 +175,7 @@ function SelectCategory({ defaultValue, handler, setHandler }) {
               ? "button px-10"
               : "disableButton px-10"
           }
-          onClick={() => setHandler((prevstate) => prevstate + 2)}
+          onClick={() => setHandler((prevstate) => prevstate + 1)}
         >
           Next
         </button>

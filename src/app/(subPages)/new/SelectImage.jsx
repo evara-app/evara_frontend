@@ -100,9 +100,7 @@ function SelectImage({
       );
       setMainImages(filterImages);
     } else {
-      mainImages.length > 0
-        ? setMainImages((prev) => [...prev, locations[`image${id}`]])
-        : setMainImages([locations[`image${id}`]]);
+      setMainImages((prev) => [...prev, locations[`image${id}`]]);
     }
     mainImageHandler(mainImages);
   };

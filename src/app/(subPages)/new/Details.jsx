@@ -185,7 +185,7 @@ function Details({
         }}
       />
       <Map data={data} handler={mapHandler} validation={validation} />
-      <div>
+      <div className="flex items-center justify-start gap-x-2">
         <button
           disabled={!isDisabled}
           type="submit"

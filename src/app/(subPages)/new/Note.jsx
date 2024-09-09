@@ -17,7 +17,7 @@ function Note({ data, handler, validation, submit, stepHandler }) {
         }`}
         onChange={(e) => handler("note", e.target.value)}
       ></textarea>
-      <div>
+      <div className="flex items-center justify-start gap-x-2">
         <button type="submit" className="button px-10">
           Submit
         </button>

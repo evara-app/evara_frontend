@@ -90,3 +90,13 @@ export function getSpecialAds() {
 export function getLastProperties() {
   return http.get("/api/v2/front/last-properties/").then(({ data }) => data);
 }
+
+export function getGalleryImages(slug, token) {
+  return http
+    .get(`/api/v2/front/property/gallery/profile/${slug}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(({ data }) => data);
+}

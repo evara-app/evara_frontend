@@ -10,6 +10,7 @@ import {
   getAllProvinces,
   getAllCities,
   getPropertyDetails,
+  getGalleryImages,
 } from "@/services/properties";
 
 export const useGetRooms = () =>

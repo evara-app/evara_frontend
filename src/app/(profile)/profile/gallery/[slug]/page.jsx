@@ -15,7 +15,7 @@ async function page({ params }) {
 
   return (
     <div>
-      <GalleryComponent images={images} />
+      <GalleryComponent DBImages={images} />
     </div>
   );
 }

@@ -1,22 +1,75 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 //? import icons
 import { IoImagesOutline } from "react-icons/io5";
 import { FaTrashCan, FaTruckFieldUn } from "react-icons/fa6";
 
-function GalleryComponent({ images }) {
+//? import service
+import { imageUpload } from "@/services/images";
+
+function GalleryComponent({ DBImages }) {
   const uploadImage = useRef();
 
   // const { gallery, primary_images } = images;
-  const [primaryImages, setPrimaryImages] = useState(images.primary_images);
+  const [locations, setLocations] = useState([]);
+  const [imagesFinished, setImagesFinished] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imagesBlob, setImagesBlob] = useState([]);
+
+  const [primaryImages, setPrimaryImages] = useState(DBImages.primary_images);
   const [galleryImages, setGalleryImages] = useState(
-    images.gallery.filter(
+    DBImages.gallery.filter(
       (img) =>
         img.file !==
         Object.values(primaryImages).find((item) => item === img.file)
     )
+  );
+
+  // upload images to amazon server and get location of images
+  async function uploadImagesAws() {
+    let imagesLocation = [];
+    const locationsArray = {};
+    images.forEach(async (image, index, array) => {
+      const { Location } = await imageUpload(image).then((data) =>
+        data.promise()
+      );
+      locationsArray[`image${[image.id]}`] = Location;
+      imagesLocation.push(Location);
+      if (imagesLocation.length === array.length) {
+        // handler(imagesLocation);
+        setLocations(locationsArray);
+      }
+    });
+  }
+
+  // show thumbnail for user
+  const thumbnailHandler = (event) => {
+    let id = images.length && images[images.length - 1].id;
+    const files = event.target.files;
+    Object.keys(files).forEach((item, index) => {
+      files[item].id = id ? id + index + 1 : index + 1;
+      setImages((prevstate) => [...prevstate, files[item]]);
+      setImagesBlob((prevstate) => [
+        ...prevstate,
+        { id: files[item].id, blob: URL.createObjectURL(files[item]) },
+      ]);
+    });
+    setImagesFinished(files);
+  };
+
+  useEffect(() => {
+    if (imagesFinished.length) uploadImagesAws();
+  }, [imagesFinished]);
+
+  console.log(
+    "images",
+    images,
+    "images blob",
+    imagesBlob,
+    "finish",
+    imagesFinished
   );
 
   //delete image handler
@@ -40,7 +93,6 @@ function GalleryComponent({ images }) {
       return;
     }
   };
-  console.log(primaryImages);
 
   return (
     <div>
@@ -60,7 +112,7 @@ function GalleryComponent({ images }) {
             name="images"
             ref={uploadImage}
             className="hidden"
-            // onChange={thumbnailHandler}
+            onChange={thumbnailHandler}
             // onClick={(e) => validation.handleBlur(e)}
           />
         </div>
@@ -150,6 +202,54 @@ function GalleryComponent({ images }) {
                 {Object.values(primaryImages).includes(img.file)
                   ? `Deselect image ${Object.values(primaryImages).indexOf(
                       img.file
+                    )}`
+                  : `
+                select as image ${Object.keys(primaryImages).length + 1}
+                `}
+              </button>
+            </div>
+          </div>
+        ))}
+        {imagesBlob.map((image) => (
+          <div
+            key={image.id}
+            className="image-upload-preview relative group"
+            style={{
+              backgroundImage: `url(${image.blob})`,
+            }}
+          >
+            <button
+              onClick={() => imageDelHandler(image.id)}
+              type="button"
+              className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-10 hover:bg-gray-700/60 transition"
+            >
+              <FaTrashCan className="w-4 h-4 text-white" />
+            </button>
+            <div
+              id={`image_preview${image.id}`}
+              className="image-upload-preview-overlay bg-gray-200/80 z-30"
+            ></div>
+            <div className="image-upload-preview-overlay flex items-center justify-center">
+              <div
+                id={`image-upload-progress${image.id}`}
+                className="image-upload-preview__progress-overlay"
+              >
+                <div id={image.id} className="progress-bar__inner"></div>
+              </div>
+            </div>
+            {/* {mainImages.includes(locations[`image${image.id}`]) && (
+              <span className="absolute top-0 left-0 bg-green-blue text-white p-2 rounded-sm">
+                {Number(mainImages.indexOf(locations[`image${image.id}`])) + 1}
+              </span>
+            )} */}
+            <div className="absolute top-0 left-0 hidden group-hover:flex  backdrop-blur-sm w-full h-full items-center justify-center">
+              <button
+                className="bg-green-700/60 text-white p-2 rounded-md"
+                onClick={() => selectMainImages(image.file)}
+              >
+                {Object.values(primaryImages).includes(image.file)
+                  ? `Deselect image ${Object.values(primaryImages).indexOf(
+                      image.file
                     )}`
                   : `
                 select as image ${Object.keys(primaryImages).length + 1}

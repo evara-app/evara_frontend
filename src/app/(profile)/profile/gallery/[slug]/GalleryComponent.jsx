@@ -56,21 +56,12 @@ function GalleryComponent({ DBImages }) {
         { id: files[item].id, blob: URL.createObjectURL(files[item]) },
       ]);
     });
-    setImagesFinished(files);
+    setImagesFinished((prevstate) => Number(prevstate) + Number(files.length));
   };
 
   useEffect(() => {
-    if (imagesFinished.length) uploadImagesAws();
+    if (imagesFinished === imagesBlob.length) uploadImagesAws();
   }, [imagesFinished]);
-
-  console.log(
-    "images",
-    images,
-    "images blob",
-    imagesBlob,
-    "finish",
-    imagesFinished
-  );
 
   //delete image handler
   const imageDelHandler = (image) => {
@@ -86,11 +77,21 @@ function GalleryComponent({ DBImages }) {
     // setImagesBlob(imagesBlob.filter((img) => img.id !== id));
   };
 
-  const selectMainImages = (file) => {
-    if (Object.values(primaryImages) !== file) {
+  const selectMainImages = (file, blob = "") => {
+    if (!Object.values(primaryImages).includes(file)) {
       const key = Object.keys(primaryImages).length + 1;
       setPrimaryImages({ ...primaryImages, [key]: file });
+      setGalleryImages(galleryImages.filter((item) => item.file !== file));
+      blob &&
+        setImagesBlob(imagesBlob.filter((item) => item.blob !== blob.blob));
       return;
+    } else {
+      const key = Object.keys(primaryImages).find(
+        (key) => primaryImages[key] === file
+      );
+      delete primaryImages[key];
+      const id = galleryImages[galleryImages.length - 1].id + 1;
+      setGalleryImages((prevstate) => [...prevstate, { id: id, file: file }]);
     }
   };
 
@@ -151,7 +152,7 @@ function GalleryComponent({ DBImages }) {
             <div className="absolute top-0 left-0 hidden group-hover:flex  backdrop-blur-sm w-full h-full items-center justify-center">
               <button
                 className="bg-green-700/60 text-white p-2 rounded-md"
-                // onClick={() => selectMainImages(image.id)}
+                onClick={() => selectMainImages(primaryImages[id])}
               >
                 {Object.values(primaryImages).includes(primaryImages[id])
                   ? `Deselect image ${id}`
@@ -245,11 +246,13 @@ function GalleryComponent({ DBImages }) {
             <div className="absolute top-0 left-0 hidden group-hover:flex  backdrop-blur-sm w-full h-full items-center justify-center">
               <button
                 className="bg-green-700/60 text-white p-2 rounded-md"
-                onClick={() => selectMainImages(image.file)}
+                onClick={() =>
+                  selectMainImages(locations[`image${image.id}`], image)
+                }
               >
-                {Object.values(primaryImages).includes(image.file)
+                {Object.values(primaryImages).includes(image.id)
                   ? `Deselect image ${Object.values(primaryImages).indexOf(
-                      image.file
+                      image.id
                     )}`
                   : `
                 select as image ${Object.keys(primaryImages).length + 1}

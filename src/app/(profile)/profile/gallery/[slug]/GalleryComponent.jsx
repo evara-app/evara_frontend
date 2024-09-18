@@ -94,11 +94,11 @@ function GalleryComponent({ DBImages }) {
         (key) => primaryImages[key] === file
       );
       delete primaryImages[key];
-      const id = galleryImages[galleryImages.length - 1].id + 1;
+      const id = galleryImages[galleryImages.length - 1]?.id + 1 || 1;
       setGalleryImages((prevstate) => [...prevstate, { id: id, file: file }]);
     }
   };
-  console.log(primaryImages);
+  console.log(galleryImages);
 
   return (
     <div>
@@ -149,11 +149,11 @@ function GalleryComponent({ DBImages }) {
                 <div id={image.id} className="progress-bar__inner"></div>
               </div>
             </div> */}
-            {/* {mainImages.includes(locations[`image${image.id}`]) && (
-              <span className="absolute top-0 left-0 bg-green-blue text-white p-2 rounded-sm">
-                {Number(mainImages.indexOf(locations[`image${image.id}`])) + 1}
-              </span>
-            )} */}
+            <span className="absolute top-0 left-0 bg-green-blue text-white p-2 rounded-sm">
+              {Object.keys(primaryImages).find(
+                (key) => primaryImages[key] === primaryImages[id]
+              )}
+            </span>
             <div className="absolute top-0 left-0 hidden group-hover:flex  backdrop-blur-sm w-full h-full items-center justify-center">
               <button
                 className="bg-green-700/60 text-white p-2 rounded-md"

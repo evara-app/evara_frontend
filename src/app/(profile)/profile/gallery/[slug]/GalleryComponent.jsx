@@ -68,14 +68,18 @@ function GalleryComponent({ DBImages }) {
   }, [imagesFinished]);
 
   //delete image handler
-  const imageDelHandler = (image) => {
+  const imageDelHandler = (image, type) => {
+    if (type === "primary") {
+      delete primaryImages[image];
+    } else {
+      setGalleryImages(galleryImages.filter((item) => item.id !== image));
+    }
     //   if (mainImages.includes(locations[`image${id}`])) {
     //     const filterImages = mainImages.filter(
     //       (image) => image !== locations[`image${id}`]
     //     );
     //     setMainImages(filterImages);
     //   }
-    delete primaryImages[id];
     // handler(locations);
     // setImages(images.filter((img) => img.id !== id));
     // setImagesBlob(imagesBlob.filter((img) => img.id !== id));
@@ -131,7 +135,7 @@ function GalleryComponent({ DBImages }) {
             }}
           >
             <button
-              onClick={() => imageDelHandler(id)}
+              onClick={() => imageDelHandler(id, "primary")}
               type="button"
               className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-10 hover:bg-gray-700/60 transition"
             >
@@ -177,7 +181,7 @@ function GalleryComponent({ DBImages }) {
             }}
           >
             <button
-              onClick={() => imageDelHandler(img.id)}
+              onClick={() => imageDelHandler(img.id, "gallery")}
               type="button"
               className="absolute top-2 right-2 p-2 bg-gray-700/30 rounded z-10 hover:bg-gray-700/60 transition"
             >

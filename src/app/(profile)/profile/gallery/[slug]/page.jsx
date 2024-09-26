@@ -15,7 +15,7 @@ async function page({ params }) {
 
   return (
     <div>
-      <GalleryComponent DBImages={images} />
+      <GalleryComponent DBImages={images} slug={params.slug} token={token} />
     </div>
   );
 }

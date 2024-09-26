@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //? import icons
 import { IoImagesOutline } from "react-icons/io5";
@@ -9,8 +10,14 @@ import { FaCircle } from "react-icons/fa6";
 
 //? import service
 import { imageUpload } from "@/services/images";
+import { galleryEdit } from "@/services/profile";
 
-function GalleryComponent({ DBImages }) {
+function GalleryComponent({ DBImages, slug, token }) {
+  // react query gallery profile mutation
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: galleryEdit,
+  });
+
   const uploadImage = useRef();
 
   // const { gallery, primary_images } = images;
@@ -18,6 +25,7 @@ function GalleryComponent({ DBImages }) {
   const [imagesFinished, setImagesFinished] = useState([]);
   const [images, setImages] = useState([]);
   const [imagesBlob, setImagesBlob] = useState([]);
+  const [random, setRandom] = useState();
 
   const [primaryImages, setPrimaryImages] = useState(DBImages.primary_images);
   const [galleryImages, setGalleryImages] = useState(
@@ -71,18 +79,10 @@ function GalleryComponent({ DBImages }) {
   const imageDelHandler = (image, type) => {
     if (type === "primary") {
       delete primaryImages[image];
+      setRandom((Math.random() + 1).toString(36).substring(7));
     } else {
       setGalleryImages(galleryImages.filter((item) => item.id !== image));
     }
-    //   if (mainImages.includes(locations[`image${id}`])) {
-    //     const filterImages = mainImages.filter(
-    //       (image) => image !== locations[`image${id}`]
-    //     );
-    //     setMainImages(filterImages);
-    //   }
-    // handler(locations);
-    // setImages(images.filter((img) => img.id !== id));
-    // setImagesBlob(imagesBlob.filter((img) => img.id !== id));
   };
 
   const selectMainImages = (file, blob = "") => {
@@ -102,7 +102,18 @@ function GalleryComponent({ DBImages }) {
       setGalleryImages((prevstate) => [...prevstate, { id: id, file: file }]);
     }
   };
-  console.log(galleryImages);
+
+  const submitHandler = async () => {
+    // try {
+    const { results } = await mutateAsync({
+      slug,
+      primaryImages,
+      galleryImages,
+      token,
+    });
+    Toast("success", results.en);
+    // } catch (error) {}
+  };
 
   return (
     <div>
@@ -220,6 +231,11 @@ function GalleryComponent({ DBImages }) {
             </div>
           </div>
         ))}
+      </div>
+      <div className="mt-5">
+        <button className="button" onClick={submitHandler}>
+          Upload
+        </button>
       </div>
     </div>
   );

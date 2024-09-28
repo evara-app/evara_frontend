@@ -100,3 +100,13 @@ export function getGalleryImages(slug, token) {
     })
     .then(({ data }) => data);
 }
+
+export function DeleteProperty(data) {
+  return http
+    .delete(`/api/v2/front/property/user/profile/${data.slug}/`, {
+      headers: {
+        Authorization: `Bearer ${data.token}`,
+      },
+    })
+    .then(({ data }) => data);
+}

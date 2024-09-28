@@ -2,21 +2,47 @@
 
 import React from "react";
 import Link from "next/link";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { getCookie } from "cookies-next";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 //? import hooks
 import { useGetUserAllProperties } from "@/hooks/profile";
+import { Toast } from "@/hooks/Toast";
 
 //? import components
 import PropertyPrice from "@/app/(subPages)/properties/PropertyPrice";
 import Loading from "@/common/Loading";
 
+//? import service
+import { DeleteProperty } from "@/services/properties";
+
 function page() {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const queryClient = useQueryClient();
+
   const { data: properties, isPending } = useGetUserAllProperties();
+  const { mutateAsync: deletePropertyMutation } = useMutation({
+    mutationFn: DeleteProperty,
+  });
+
   if (isPending)
     return (
       <div className="flex items-center justify-center h-full">
         <Loading />
       </div>
     );
+
+  const deleteProperty = async (slug) => {
+    const token = getCookie("access");
+    try {
+      const { results } = await deletePropertyMutation({ slug, token });
+      Toast("success", results.en);
+      queryClient.invalidateQueries({ queryKey: ["get-user-properties"] });
+    } catch (error) {}
+  };
   return (
     <div className="p-2">
       <h1 className="text-lg font-medium">Latest news and announcements</h1>
@@ -51,9 +77,16 @@ function page() {
                 <td>1,221</td>
                 <td>Fixed</td>
                 <td>
-                  <div className="flex items-center gap-x-1">
-                    <button>Delete</button>
-                    <button>Edit</button>
+                  <div className="flex items-center gap-x-2">
+                    <button onClick={() => deleteProperty(property?.slug)}>
+                      Delete
+                    </button>
+                    <Link href={`/profile/property/${property?.slug}/`}>
+                      Edit
+                    </Link>
+                    <Link href={`/profile/gallery/${property?.slug}/`}>
+                      Gallery
+                    </Link>
                     <Link href={`/property/${property?.slug}/${property?.id}`}>
                       Show
                     </Link>

@@ -33,7 +33,7 @@ function SideBar() {
         <div className="w-full flex items-center justify-center mt-5">
           <img
             className="w-32 h-32 object-cover object-center rounded-full ring-2 ring-aqua-green ring-offset-2"
-            src="/assets/img/profile.jpeg"
+            src={user?.avatar || "/assets/img/user.png"}
             alt="profile image"
           />
         </div>

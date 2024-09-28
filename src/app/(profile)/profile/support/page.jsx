@@ -43,9 +43,7 @@ function page() {
     // send ticket fields
     const { message } = await mutateAsync({ data });
   };
-
-  console.log(allTicketsData);
-
+  console.log(data);
   return (
     <div className="max-w-3xl flex flex-col gap-y-3">
       <h1 className="text-2xl">Evara Support</h1>
@@ -67,7 +65,7 @@ function page() {
             }`}
           />
         </button>
-        {open && <CustomSelect items={supportSelect} handler={selectHandler} />}
+        {open && <CustomSelect items={supportSelect} name="title" handler={selectHandler} />}
       </div>
       <div>
         <TextField

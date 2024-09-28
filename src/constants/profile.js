@@ -64,7 +64,7 @@ export const profileList = [
     label: "Support",
     value: "Support",
     icon: <Support className="svgIcon" />,
-    href: "/profile",
+    href: "/profile/support",
   },
   {
     id: 9,

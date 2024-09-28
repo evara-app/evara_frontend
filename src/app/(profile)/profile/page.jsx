@@ -73,6 +73,8 @@ function page() {
     if (user) setData(includeObj(user, includeskey));
   }, [user]);
 
+  console.log(user);
+
   return (
     <div
       className={`grid grid-cols-3 items-center md:p-6 gap-x-20 transition duration-300 ${
